@@ -5,10 +5,10 @@ const PostContent = ({ post }) => (
     {post.content.text && (
       <p className="px-2 pt-2 text-sm font-semibold">{post.content.text}</p>
     )}
-    {post.content.postImageUrl && (
+    {post.content.imageUrl && (
       <Link to={`/post/${post._id}`}>
         <img
-          src={post.content.postImageUrl}
+          src={post.content.imageUrl}
           alt="Post"
           className="w-full object-cover rounded-lg md:h-[550px] h-56"
         />

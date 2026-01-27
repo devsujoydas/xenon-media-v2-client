@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
     return (
-        <div className="min-h-screen font-family-Poppins  bg-gray-50">
+        <div className="min-h-screen   bg-gray-50">
           
             <div className=" bg-white shadow-md flex md:flex-row flex-col items-baseline justify-between gap-2 p-3 md:p-6 sticky top-0 z-50">
                 <Link to={"/"} className="md:text-3xl text-xl font-semibold   text-blue-600">Xenon Media Admin Panel</Link>

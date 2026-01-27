@@ -3,14 +3,37 @@ import signupPhoto from '../../../public/loginphoto.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import SignInWithGoogle from './SignInWithGoogle'
+import api from '../../services/api'
+import toast from 'react-hot-toast'
+import { useQueryClient } from '@tanstack/react-query'
 
 const LoginUpdated = () => {
   const [show, setShow] = useState(true)
   const navigate = useNavigate()
+const queryClient = useQueryClient();
+
+  const logInHandler = (e) => {
+    e.preventDefault() 
+    const email = e.target.email.value
+    const password = e.target.password.value
+
+    api.post("/auth/signin", { email, password })
+      .then(res => {
+        console.log(res.data)
+        queryClient.setQueryData(["profile"], res.data.user);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        toast.success(res.data.message)
+        navigate("/profile")
+      })
+      .catch(err => {
+        console.log(err.response?.data?.message);
+        toast.error(err.response?.data?.message)
+      });
+  }
 
   return (
-    <div className='font-family-poppins min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0'>
-      <h1 className='fixed top-3 left-5 text-blue-700 font-bold font-momo-poppins text-2xl'>Xenon Media v2</h1>
+    <div className=' min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0'>
+      <Link to={"/"} className='fixed top-3 left-5 text-blue-700 font-bold font-momo-poppins text-2xl'>Xenon Media v2</Link>
 
       <div className='w-full max-w-md md:max-w-xl lg:max-w-4xl xl:max-w-6xl  rounded-2xl overflow-hidden xl:grid xl:grid-cols-2 lg:shadow-lg lg:border border-zinc-100 p-4'>
 
@@ -47,12 +70,13 @@ const LoginUpdated = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={(e) => e.preventDefault()} className='mt-8 sm:mt-10 grid gap-4 sm:gap-5 font-family-inter'>
+            <form onSubmit={(e) => logInHandler(e)} className='mt-8 sm:mt-10 grid gap-4 sm:gap-5 '>
 
               {/* Email */}
               <div>
                 <label className='font-medium text-sm'>Email Address</label>
                 <input
+                  name='email'
                   className='w-full mt-1 border rounded-full px-4 py-3 outline-none focus:border-zinc-400 border-zinc-300'
                   placeholder='Email Address'
                 />
@@ -63,6 +87,7 @@ const LoginUpdated = () => {
                 <label className='font-medium text-sm'>Password</label>
                 <div className='relative mt-1 border focus:border-zinc-400 border-zinc-300 rounded-full px-4 py-3 flex items-center'>
                   <input
+                    name='password'
                     type={show ? 'password' : 'text'}
                     className='w-full outline-none'
                     placeholder='Password'

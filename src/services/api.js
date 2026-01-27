@@ -57,7 +57,7 @@ api.interceptors.response.use(
       } catch (refreshError) { 
         localStorage.removeItem("accessToken");
         delete api.defaults.headers.common["Authorization"];
-        window.location.href = "/signin";
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

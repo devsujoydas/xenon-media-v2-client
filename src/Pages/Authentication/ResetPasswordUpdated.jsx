@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import resetpassimg from '../../../public/resetpassimg.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react' 
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 
 const ResetPasswordUpdated = () => {
     const [show, setShow] = useState(true)
@@ -9,9 +9,10 @@ const ResetPasswordUpdated = () => {
 
 
     return (
-        <div className='font-family-poppins min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0'>
-           
-            
+        <div className='  min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0'>
+            <Link to={"/"} className='fixed top-3 left-5 text-blue-700 font-bold font-momo-poppins text-2xl'>Xenon Media v2</Link>
+
+
             <div className='w-full max-w-md md:max-w-xl lg:max-w-4xl xl:max-w-6xl  rounded-2xl overflow-hidden xl:grid xl:grid-cols-2 lg:shadow-lg lg:border border-zinc-100 p-4'>
 
                 {/* Image Section */}
@@ -44,7 +45,7 @@ const ResetPasswordUpdated = () => {
                         </div>
 
                         {/* Form */}
-                        <form onSubmit={(e) => e.preventDefault()} className='mt-8 sm:mt-10 grid gap-4 sm:gap-5 font-family-inter'>
+                        <form onSubmit={(e) => e.preventDefault()} className='mt-8 sm:mt-10 grid gap-4 sm:gap-5 '>
 
 
 

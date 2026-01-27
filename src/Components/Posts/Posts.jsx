@@ -1,16 +1,18 @@
-
-import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import PostCard from "../PostCard/PostCard";
 import PostSkeleton from "./PostSkeleton";
-// import { useAuth } from "../../hooks/useAuth";
+import { usePosts } from "../../hooks/usePosts";
 
 const Posts = () => {
-  const { postsData, loading } = useAuth();
+  const {
+    data: posts,
+    isLoading,
+    isFetching,
+  } = usePosts();
 
+  const skeletons = Array.from({ length: 1 });
 
-  const skeletons = Array.from({ length: 3 });
-
-  if (loading || postsData?.length === 0) {
+  // 1️⃣ Loading state → Skeleton
+  if (isLoading || isFetching) {
     return (
       <div className="grid md:gap-5 gap-3">
         {skeletons.map((_, idx) => (
@@ -20,7 +22,8 @@ const Posts = () => {
     );
   }
 
-  if (!loading && (!postsData || postsData.length === 0)) {
+  // 2️⃣ Empty state
+  if (!posts || posts.length === 0) {
     return (
       <div className="flex justify-center items-center py-10">
         <h1 className="text-zinc-400 text-lg">No posts found...</h1>
@@ -28,9 +31,10 @@ const Posts = () => {
     );
   }
 
+  // 3️⃣ Success state
   return (
     <div className="grid md:gap-5 gap-2 ">
-      {postsData.map((post) => (
+      {posts.map((post) => (
         <PostCard key={post._id} post={post} variant="feed" />
       ))}
     </div>

@@ -13,7 +13,6 @@ import EventsPage from '../Pages/EventsPage/EventsPage.jsx';
 import Memories from '../Pages/Memories/Memories.jsx';
 import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword.jsx';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage.jsx';
-import PrivateRoutes from './PrivateRoutes.jsx';
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
 import ProfileImageUpload from '../Pages/ProfileImageUpload/ProfileImageUpload.jsx';
 import AdminDashboard from '../Pages/Admin/AdminDashboard.jsx';
@@ -27,6 +26,7 @@ import LoginUpdated from '../Pages/Authentication/LoginUpdated.jsx';
 import SignupUpdated from '../Pages/Authentication/SignupUpdated.jsx';
 import ForgotPasswordUpdated from '../Pages/Authentication/ForgotPasswordUpdated.jsx';
 import ResetPasswordUpdated from '../Pages/Authentication/ResetPasswordUpdated.jsx';
+import PrivateRoute from './PrivateRoutes.jsx';
 // import Chats from '../Pages/ChatBox/Chats.jsx';
 // import ChatBox from '../Pages/ChatBox/ChatBox.jsx'; 
 
@@ -34,7 +34,7 @@ import ResetPasswordUpdated from '../Pages/Authentication/ResetPasswordUpdated.j
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <PrivateRoutes><Layout /></PrivateRoutes>,
+    element: <PrivateRoute><Layout /></PrivateRoute>,
     errorElement: <ErrorPage />,
     children: [
       {

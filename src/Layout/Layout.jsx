@@ -1,15 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../Components/Navbar/Navbar";
 import Loading from "../Components/Loading/Loading"; 
-import { Toaster } from "react-hot-toast";
 import { useAuth } from "../AuthProvider/AuthProviderNew";
 
 const Layout = () => {
   const { loading } = useAuth()
 
   return (
-    <div className="font-family-manrope">
-      <Toaster position="bottom-center" reverseOrder={false} />
+    <div className="font-family-poppins">  
 
       {loading ? (
         <Loading />

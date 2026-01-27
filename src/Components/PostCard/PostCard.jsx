@@ -7,13 +7,14 @@ import PostContent from "./PostContent.jsx";
 import PostStats from "./PostStats.jsx";
 import ActionButtons from "./ActionButtons.jsx";
 import CommentInput from "./CommentInput.jsx";
+import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 // import { useAuth } from "../../hooks/useAuth.js";
 
 const PostCard = ({ post, variant = "feed", onRemove }) => {
-  const { userData, savePostHandler, removeSavedPostHandler } = useAuth();
+  const { user, savePostHandler, removeSavedPostHandler } = useAuth();
 
-  const initialLiked = userData
-    ? post.likes.some(u => u._id === userData._id)
+  const initialLiked = user
+    ? post.likes.some(u => u._id === user._id)
     : false;
 
   const [liked, setLiked] = useState(initialLiked);
@@ -23,12 +24,12 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
   const [showUsers, setShowUsers] = useState(false);
 
   const likeHandler = async () => {
-    if (!userData?._id) return toast.error("Please login first");
+    if (!user?._id) return toast.error("Please login first");
 
     try {
       const { data } = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-        { userId: userData._id }
+        { userId: user._id }
       );
 
       const { message, likesCount: newLikesCount } = data;
@@ -37,13 +38,13 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
       if (message === "Liked") {
         setLiked(true);
         setReactorsUsers(prev => {
-          if (!prev.some(u => u._id === userData._id)) return [...prev, userData];
+          if (!prev.some(u => u._id === user._id)) return [...prev, user];
           return prev;
         });
         toast.success("Liked!");
       } else {
         setLiked(false);
-        setReactorsUsers(prev => prev.filter(u => u._id !== userData._id));
+        setReactorsUsers(prev => prev.filter(u => u._id !== user._id));
         toast.success("Disliked!");
       }
     } catch (err) {
@@ -61,7 +62,7 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
     <div className="shadow-xl  border-t border-t-zinc-300 md:w-full   rounded-2xl md:rounded-3xl bg-white">
       <AuthorInfo
         post={post}
-        userData={userData}
+        user={user}
         showMenu={showMenu}
         setShowMenu={setShowMenu}
         variant={variant}
@@ -87,14 +88,14 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
         likeHandler={likeHandler}
         sharePostHandler={sharePostHandler}
         post={post}
-        userData={userData}
+        user={user}
         savePostHandler={savePostHandler}
         removeSavedPostHandler={removeSavedPostHandler}
       />
 
       <hr className="text-zinc-300" />
 
-      <CommentInput userData={userData} />
+      <CommentInput user={user} />
     </div>
   );
 };

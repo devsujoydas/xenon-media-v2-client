@@ -11,10 +11,13 @@ import { BsFillCameraFill } from "react-icons/bs";
 import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.jsx";
 import ContactInfo from "./ContactInfo.jsx";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
+import api from "../../services/api.js";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 // import { useAuth } from "../../hooks/useAuth.js";
 
 const ProfileSidebar = () => {
-  const { signOutUser, userData, usersPostsData, deleteAccount } = useAuth()
+  const {  user, usersPostsData, deleteAccount } = useAuth()
 
   const [showEdit, setShowEdit] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +25,8 @@ const ProfileSidebar = () => {
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
+
 
   const swalWithTailwind = Swal.mixin({
     customClass: {
@@ -34,29 +39,36 @@ const ProfileSidebar = () => {
   });
 
 
+const logOutHandler = () => {
+  swalWithTailwind.fire({
+    title: "Logout! Are you sure?",
+    text: "You won’t be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, Logout!",
+    cancelButtonText: "No, cancel!",
+    reverseButtons: true,
+  }).then(async (result) => {
+    if (!result.isConfirmed) return;
 
-  const signOutHandler = () => {
-    swalWithTailwind
-      .fire({
-        title: "Logout! Are you sure?",
-        text: "You won’t be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, Logout!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          signOutUser().finally(() => navigate("/login"));
-          swalWithTailwind.fire({
-            title: "Logout!",
-            text: "Logout Successfully.",
-            icon: "success",
-          });
-        }
-      });
-  };
+    try {
+      await api.post("/auth/logout");
+
+      localStorage.removeItem("accessToken");
+
+      queryClient.setQueryData(["profile"], null);
+
+      toast.success("Logged out successfully");
+
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Logout failed");
+    }
+  });
+};
+
+
+
+
   return (
     <div className="w-full">
       {/* Modals */}
@@ -75,7 +87,7 @@ const ProfileSidebar = () => {
         {/* Cover */}
         <div
           style={{
-            backgroundImage: `url(${userData?.profile?.coverPhotoUrl ||
+            backgroundImage: `url(${user?.profile?.coverPhoto ||
               "/default-cover.jpg"
               })`,
           }}
@@ -113,7 +125,7 @@ const ProfileSidebar = () => {
                   <FaUserEdit className="text-emerald-600" /> Edit Profile
                 </button>
                 <button
-                  onClick={signOutHandler}
+                  onClick={logOutHandler}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
                   <FiLogOut className="text-zinc-500" /> Log Out
@@ -135,7 +147,7 @@ const ProfileSidebar = () => {
           <div className="relative">
             <img
               className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-              src={userData?.profile?.profilePhotoUrl || "/default.jpg"}
+              src={user?.profile?.profilePhoto || "/default.jpg"}
               alt="Profile"
             />
             <div
@@ -149,17 +161,17 @@ const ProfileSidebar = () => {
           {/* Name & Username */}
           <div className="mt-4 text-center">
             <h1 className="font-semibold text-xl">
-              {userData?.name || "Your Name"}
+              {user?.name || "Your Name"}
             </h1>
             <div className="flex items-center justify-center gap-2 text-zinc-500">
-              <span>@{userData?.username || "username"}</span>
+              <span>@{user?.username || "username"}</span>
               <MdEdit
                 onClick={() => setShowUsernameModal(true)}
                 className="p-1 text-xl rounded-full hover:bg-zinc-200 cursor-pointer transition"
               />
             </div>
             <p className="text-sm text-zinc-400">
-              {userData?.location?.livesIn || "Address not added"}
+              {user?.location?.livesIn || "Address not added"}
             </p>
           </div>
 
@@ -173,7 +185,7 @@ const ProfileSidebar = () => {
             </div>
             <Link to={"/friends"} className="text-center border-x px-6">
               <h1 className="text-lg font-semibold">
-                {userData?.myFriends?.length || 0}
+                {user?.myFriends?.length || 0}
               </h1>
               <p className="text-sm text-zinc-500">Friends</p>
             </Link>
@@ -188,11 +200,11 @@ const ProfileSidebar = () => {
             <div>
               <h1 className="font-semibold text-lg mb-1">About Me</h1>
               <p className="text-sm text-zinc-600">
-                {userData?.profile?.bio || "No bio added."}
+                {user?.profile?.bio || "No bio added."}
               </p>
             </div>
 
-            <ContactInfo userData={userData} />
+            <ContactInfo user={user} />
           </div>
         </div>
       </div>

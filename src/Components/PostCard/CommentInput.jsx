@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 
 
-const CommentInput = ({ userData }) => (
+const CommentInput = ({ user }) => (
   <form className="p-3 md:p-4 flex justify-between items-center gap-2 md:gap-16">
 
     <div className="flex items-center gap-2 md:gap-3 w-full  ">
@@ -14,8 +14,8 @@ const CommentInput = ({ userData }) => (
       <div className=" w-10 h-10 md:w-12 md:h-12 box-border">
         <Link to="/profile" className="box-border">
           <img
-            src={userData?.profile?.profilePhotoUrl || "/default.jpg"}
-            alt={userData?.name}
+            src={user?.profile?.profilePhoto}
+            alt={user?.name}
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer box-border"
           />
         </Link>

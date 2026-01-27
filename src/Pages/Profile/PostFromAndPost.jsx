@@ -6,11 +6,10 @@ import UsersPosts from "../../Components/UsersPosts/UsersPosts";
 import Loading from "../../Components/Loading/Loading";
 import UploadPostModal from "../../Components/Modals/UploadPostModal";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../AuthProvider/AuthProviderNew"; 
+import { useAuth } from "../../AuthProvider/AuthProviderNew";
 
 const PostFromAndPost = () => {
-  const { userData, usersPostsData } = useAuth()
-
+  const { user } = useAuth()
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -26,10 +25,7 @@ const PostFromAndPost = () => {
             <Link to={"/profile"}>
               <img
                 className="h-full w-full object-cover rounded-full"
-                src={
-                  userData?.profile?.profilePhotoUrl
-                    ? `${userData?.profile?.profilePhotoUrl}`
-                    : `/default.jpg`
+                src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile.profilePhoto}`
                 }
                 alt=""
               />
@@ -73,11 +69,7 @@ const PostFromAndPost = () => {
       </div>
 
       <div className="mt-3">
-        {!usersPostsData ? <Loading /> :
-          <div>
-            <UsersPosts />
-          </div>
-        }
+        <UsersPosts />
       </div>
     </>
   );

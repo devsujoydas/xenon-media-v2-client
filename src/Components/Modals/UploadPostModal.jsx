@@ -2,12 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
+import api from "../../services/api";
 // import { useAuth } from "../../hooks/useAuth"; 
 
 const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
 export default function UploadPostModal({ isOpen, setIsOpen }) {
-  const { userData, postsData, setPostsData, usersPostsData, setUsersPostsData } = useAuth();
+  const { user, postsData, setPostsData, usersPostsData, setUsersPostsData } = useAuth();
+
+
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [url, setUrl] = useState("");
@@ -76,7 +79,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
       }
  
       const postData = {
-        authorId: userData._id,
+        authorId: user._id,
         content: {
           text,
           postImageUrl: finalImageUrl || null,
@@ -102,7 +105,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
  
       if (res.data?.result?.insertedId) {
 
-        api.get(`/posts?authorId=${userData._id}`)
+        api.get(`/posts?authorId=${user._id}`)
         .then(res=>{setUsersPostsData(res.data)})
 
         api.get(`/posts`)
@@ -146,12 +149,12 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-zinc-200">
           <img
-            src={userData?.profile?.profilePhotoUrl || "/default-avatar.png"}
+            src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile.profilePhoto}`}
             alt="profile"
             className="w-10 h-10 rounded-full"
           />
           <h2 className="font-medium text-gray-800">
-            Create Post as {userData?.name || "User"}
+            Create Post as {user?.name || "User"}
           </h2>
           <button
             onClick={() => setIsOpen(false)}
@@ -166,7 +169,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           {/* Caption */}
           <textarea
             name="postContent"
-            placeholder={`What's on your mind, ${userData?.name || "friend"}?`}
+            placeholder={`What's on your mind, ${user?.name || "friend"}?`}
             className="w-full p-4 text-gray-700 resize-none min-h-[100px] focus:outline-none"
           ></textarea>
 

@@ -1,14 +1,21 @@
-import PostCard from "../PostCard/PostCard"; 
+import { useMyPosts } from "../../hooks/useMyPosts";
+import PostCard from "../PostCard/PostCard";
 // import { useAuth } from "../../hooks/useAuth";
 import PostSkeleton from "../Posts/PostSkeleton";
 
 const UsersPosts = () => {
-  const {usersPostsData, deletePostHandler } = useAuth()
+  const {
+    data: myPosts,
+    isLoading,
+    isFetching,
+  } = useMyPosts();
 
-  const hasPosts = usersPostsData && usersPostsData.length > 0;
-  const skeletons = Array.from({ length: 3 });
+  console.log(myPosts)
 
-  if (usersPostsData.length === 0) {
+  const skeletons = Array.from({ length: 1 });
+
+  // 1️⃣ Loading state → Skeleton
+  if (isLoading || isFetching) {
     return (
       <div className="grid md:gap-5 gap-3">
         {skeletons.map((_, idx) => (
@@ -18,26 +25,21 @@ const UsersPosts = () => {
     );
   }
 
-  return (
-    <div className="rounded-2xl">
+  // 2️⃣ Empty state
+  if (!myPosts || myPosts.length === 0) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <h1 className="text-zinc-400 text-lg">No posts found...</h1>
+      </div>
+    );
+  }
 
-      
-      {!hasPosts ? (
-        <div className="flex justify-center items-center h-full text-zinc-400">
-          <h1>No posts found...</h1>
-        </div>
-      ) : (
-        <div className="grid md:gap-5 gap-3">
-          {usersPostsData.map((post) => (
-            <PostCard
-              key={post._id}
-              post={post}
-              variant="user"
-              onDelete={deletePostHandler}
-            />
-          ))}
-        </div>
-      )}
+  // 3️⃣ Success state
+  return (
+    <div className="grid md:gap-5 gap-2">
+      {myPosts.map((post) => (
+        <PostCard key={post._id} post={post} variant="feed" />
+      ))}
     </div>
   );
 };

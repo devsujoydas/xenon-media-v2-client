@@ -1,9 +1,9 @@
 import { BiLike, BiSolidLike, BiCommentDots } from "react-icons/bi";
 import { CiBookmark } from "react-icons/ci"; 
 import { IoBookmark } from "react-icons/io5";
-import { PiShareFatBold } from "react-icons/pi";
-// import { useAuth } from "../../hooks/useAuth";
+import { PiShareFatBold } from "react-icons/pi"; 
 import { Link } from "react-router-dom";
+import { useAuth } from "../../AuthProvider/AuthProviderNew";
 
 const ActionButtons = ({
   liked,

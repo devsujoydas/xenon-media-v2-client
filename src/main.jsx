@@ -11,12 +11,12 @@ import { AuthProviderNew } from './AuthProvider/AuthProviderNew.jsx'
 const queryClient = new QueryClient();
 
 
-const lenis = new Lenis();
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
+// const lenis = new Lenis();
+// function raf(time) {
+//   lenis.raf(time);
+//   requestAnimationFrame(raf);
+// }
+// requestAnimationFrame(raf);
 
 
 createRoot(document.getElementById('root')).render(

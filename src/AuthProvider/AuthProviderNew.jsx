@@ -24,22 +24,15 @@ export const AuthProviderNew = ({ children }) => {
     refetchOnWindowFocus: false,
   });
 
-  const logout = async () => {
-    try {
-      await api.post("/auth/logout");
-      localStorage.removeItem("accessToken");
-      toast.success("Logged out successfully");
-      window.location.href = "/login";
-    } catch (err) {
-      toast.error("Logout failed");
-    }
-  };
+
+
+
+
 
   const value = {
     user: isError ? null : user,
-    loading: isLoading || isFetching, // 🔥 GLOBAL AUTH LOADING
+    loading: isLoading || isFetching,
     isAuthenticated: !!user && !isError,
-    logout,
   };
 
   return (

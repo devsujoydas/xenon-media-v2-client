@@ -33,7 +33,7 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
                         onClick={() => setShowUsers(!showUsers)}
                     >
                         {showUsers && (
-                            <div onMouseLeave={()=>setShowUsers(!showUsers)} className="absolute bottom-8 -left-7 md:-left-4 z-20 bg-black/70 text-white p-3 rounded-lg flex flex-col space-y-1 shadow-lg min-w-max">
+                            <div onMouseLeave={() => setShowUsers(!showUsers)} className="absolute bottom-8 -left-7 md:-left-4 z-20 bg-black/70 text-white p-3 rounded-lg flex flex-col space-y-1 shadow-lg min-w-max">
                                 {reactorsUsers.map((user, idx) => (
                                     <Link
                                         key={idx}
@@ -57,8 +57,8 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
 
             {/* Comments & Shares */}
             <div className="flex items-center gap-1 md:gap-3 text-[11px] md:text-sm">
-                <div>{post.comments.length} Comments</div>
-                <div>{post.shares.length} Shares</div>
+                <div>{post?.comments?.length} Comments</div>
+                <div>{post?.shares?.length} Shares</div>
             </div>
         </div>
     );

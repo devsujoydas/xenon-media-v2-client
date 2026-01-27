@@ -10,7 +10,7 @@ import { MdDashboard } from "react-icons/md";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 
 const Nav = () => {
-    const { userData, postsData, usersPostsData, myFriends } = useAuth()
+    const { user, myFriends } = useAuth()
 
     return (
         <div className="md:space-y-7 space-y-4 md:px-5 px-3">
@@ -29,7 +29,7 @@ const Nav = () => {
             <NavLink to={`/profile`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
-                    <img className="w-7 h-7 object-cover rounded-full" src={!userData?.profile?.profilePhotoUrl ? `/default.jpg` : `${userData?.profile?.profilePhotoUrl}`} alt="" />
+                    <img className="w-7 h-7 object-cover rounded-full" src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile.profilePhoto}`} alt="" />
                     <span className="font-semibold ">Profile</span>
                 </div>
                 <div>
@@ -46,7 +46,7 @@ const Nav = () => {
             </NavLink> */}
 
             {
-                userData?.role == "admin" &&
+                user?.role == "admin" &&
                 <>
                     {/* <NavLink to={"/profile-page"}
                         className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
