@@ -14,7 +14,7 @@ import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 
 
 const Navbar = () => {
-  const { userData, signOutUser } = useAuth()
+  const { user, signOutUser } = useAuth()
   const [humbarger, setHumbarger] = useState(1)
   const navigate = useNavigate()
 
@@ -109,11 +109,11 @@ const Navbar = () => {
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 overflow-hidden rounded-full">
-                    <img className=" h-full w-full object-cover rounded-full" src={!userData?.profile?.profilePhotoUrl ? `/default.jpg` : `${userData?.profile?.profilePhotoUrl}`} alt="" />
+                    <img className=" h-full w-full object-cover rounded-full" src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile?.profilePhoto}`} alt="" />
                   </div>
                   <div className="">
-                    <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
-                    <p>{userData?.role == "admin" ? "Admin" : "Basic member"}</p>
+                    <h1 className="font-semibold text-xl">{user?.name ? `${user?.name}` : "Your Name"}</h1>
+                    <p>{user?.role == "admin" ? "Admin" : "Basic member"}</p>
                   </div>
                 </div>
               </Link>
@@ -150,11 +150,11 @@ const Navbar = () => {
                 <Link to={`/profile`}>
                   <div className="flex items-center gap-2">
                     <div className="w-12 h-12 overflow-hidden rounded-full">
-                      <img className=" h-full w-full object-cover rounded-full" src={!userData?.profile?.profilePhotoUrl ? `/default.jpg` : `${userData?.profile?.profilePhotoUrl}`} alt="" />
+                      <img className=" h-full w-full object-cover rounded-full" src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile?.profilePhoto}`} alt="" />
                     </div>
                     <div className="">
-                      <h1 className="font-semibold">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
-                      <p className=" text-sm">@{userData?.username ? `${userData?.username}` : "username"}</p>
+                      <h1 className="font-semibold">{user?.name ? `${user?.name}` : "Your Name"}</h1>
+                      <p className=" text-sm">@{user?.username ? `${user?.username}` : "username"}</p>
                     </div>
                   </div>
                 </Link>

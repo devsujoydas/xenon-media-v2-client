@@ -27,6 +27,9 @@ import SignupUpdated from '../Pages/Authentication/SignupUpdated.jsx';
 import ForgotPasswordUpdated from '../Pages/Authentication/ForgotPasswordUpdated.jsx';
 import ResetPasswordUpdated from '../Pages/Authentication/ResetPasswordUpdated.jsx';
 import PrivateRoute from './PrivateRoutes.jsx';
+import AnimatedLayout from '../Layout/AnimatedLayout.jsx';
+import PageNotFound from '../Pages/ErrorPage/ErrorPage.jsx';
+import api from '../services/api.js';
 // import Chats from '../Pages/ChatBox/Chats.jsx';
 // import ChatBox from '../Pages/ChatBox/ChatBox.jsx'; 
 
@@ -35,20 +38,26 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <PrivateRoute><Layout /></PrivateRoute>,
-    errorElement: <ErrorPage />,
+    errorElement: <PageNotFound />,
     children: [
       {
-        path: '/',
-        element: <Home />,
+        path: "/",
+        element: (
+          <AnimatedLayout>
+            <Home />
+          </AnimatedLayout>
+        ),
       },
       {
-        path: '/profile',
-        element: <Profile />,
+        path: "/profile",
+        element: (
+            <Profile />
+        ),
       },
       // {
       //   path: '/profile/:id',
       //   element: <FriendDetails />,
-      //   loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${params.id}`),
+      //   loader: async ({params}) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${params.id}`),
       // },
       // {
       //   path: '/profile-page',
@@ -58,16 +67,20 @@ export const router = createBrowserRouter([
       //   path: '/imgupload',
       //   element: <ImageUploader />,
       // },
-      // {
-      //   path: '/post/:id',
-      //   element: <PostDetails />,
-      //   loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/${params.id}`),
-      // },
-      // {
-      //   path: '/post/update/:id',
-      //   element: <PostDetailsUpdate />,
-      //   loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
-      // },
+      {
+        path: '/post/:id',
+        element: (
+          <AnimatedLayout>
+            <PostDetails />
+          </AnimatedLayout>
+        ),
+        loader: async ({ params }) => await api.get(`${import.meta.env.VITE_BACKEND_URL}/posts/${params.id}`),
+      },
+      {
+        path: '/post/update/:id',
+        element: <PostDetailsUpdate />,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
+      },
       // {
       //   path: '/friends',
       //   element: <FriendsPage />,
@@ -121,20 +134,44 @@ export const router = createBrowserRouter([
   //   ]
   // },
   {
-    path: '/login',
-    element: <AuthPrivateRoutes><LoginUpdated /></AuthPrivateRoutes>
+    path: "/login",
+    element: (
+      <AuthPrivateRoutes>
+        <AnimatedLayout>
+          <LoginUpdated />
+        </AnimatedLayout>
+      </AuthPrivateRoutes>
+    ),
   },
   {
-    path: '/signup',
-    element: <AuthPrivateRoutes><SignupUpdated /></AuthPrivateRoutes>
+    path: "/signup",
+    element: (
+      <AuthPrivateRoutes>
+        <AnimatedLayout>
+          <SignupUpdated />
+        </AnimatedLayout>
+      </AuthPrivateRoutes>
+    ),
   },
   {
-    path: '/forgot-password',
-    element: <AuthPrivateRoutes><ForgotPasswordUpdated /></AuthPrivateRoutes>
+    path: "/forgot-password",
+    element: (
+      <AuthPrivateRoutes>
+        <AnimatedLayout>
+          <ForgotPasswordUpdated />
+        </AnimatedLayout>
+      </AuthPrivateRoutes>
+    ),
   },
   {
-    path: '/reset-password',
-    element: <AuthPrivateRoutes><ResetPasswordUpdated /></AuthPrivateRoutes>
+    path: "/reset-password",
+    element: (
+      <AuthPrivateRoutes>
+        <AnimatedLayout>
+          <ResetPasswordUpdated />
+        </AnimatedLayout>
+      </AuthPrivateRoutes>
+    ),
   },
   // {
   //   path: '/ppupload',

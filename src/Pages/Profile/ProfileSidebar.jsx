@@ -10,61 +10,21 @@ import UpdateProfileModal from "../../Components/Modals/UpdateProfileModal.jsx";
 import { BsFillCameraFill } from "react-icons/bs";
 import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.jsx";
 import ContactInfo from "./ContactInfo.jsx";
-import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
-import api from "../../services/api.js";
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
-// import { useAuth } from "../../hooks/useAuth.js";
+import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx"; 
+import { useLogOut } from "../../hooks/useLogOut.js";
 
 const ProfileSidebar = () => {
-  const {  user, usersPostsData, deleteAccount } = useAuth()
+  const { user, usersPostsData, deleteAccount } = useAuth()
+  const logOut = useLogOut();
 
   const [showEdit, setShowEdit] = useState(false);
-  const navigate = useNavigate();
 
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const queryClient = useQueryClient();
 
 
-  const swalWithTailwind = Swal.mixin({
-    customClass: {
-      confirmButton:
-        "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-      cancelButton:
-        "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer text-white font-bold py-2 px-4 rounded",
-    },
-    buttonsStyling: false,
-  });
 
-
-const logOutHandler = () => {
-  swalWithTailwind.fire({
-    title: "Logout! Are you sure?",
-    text: "You won’t be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, Logout!",
-    cancelButtonText: "No, cancel!",
-    reverseButtons: true,
-  }).then(async (result) => {
-    if (!result.isConfirmed) return;
-
-    try {
-      await api.post("/auth/logout");
-
-      localStorage.removeItem("accessToken");
-
-      queryClient.setQueryData(["profile"], null);
-
-      toast.success("Logged out successfully");
-
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Logout failed");
-    }
-  });
-};
 
 
 
@@ -125,7 +85,7 @@ const logOutHandler = () => {
                   <FaUserEdit className="text-emerald-600" /> Edit Profile
                 </button>
                 <button
-                  onClick={logOutHandler}
+                  onClick={logOut}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
                   <FiLogOut className="text-zinc-500" /> Log Out

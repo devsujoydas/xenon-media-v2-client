@@ -1,38 +1,64 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import pagenotfoundimg from "../../../public/LottieAnimations/404 planet animation.json";
 
-const ErrorPage = () => {
-    const navigate = useNavigate()
+const PageNotFound = () => {
+  return (
+    <div className="relative flex flex-col items-center justify-center h-screen text-center px-4 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-500">
+      
+      {/* Floating background circles */}
+      <motion.div
+        className="absolute w-72 h-72 bg-white rounded-full opacity-10 top-[-50px] left-[-50px]"
+        animate={{ x: [0, 30, 0], y: [0, 20, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-96 h-96 bg-white rounded-full opacity-5 bottom-[-100px] right-[-100px]"
+        animate={{ x: [0, -30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-    return (
-        <section className="bg-white ">
-            <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
-                <div className="wf-ull lg:w-1/2">
-                    <p className="text-5xl font-medium text-blue-500 dark:text-blue-400">404 error</p>
-                    <h1 className="mt-3 text-2xl font-semibold text-gray-800  md:text-3xl">Page not found</h1>
-                    <p className="mt-4 text-gray-500 dark:text-gray-400">Sorry, the page you are looking for doesn't exist.Here are some helpful links:</p>
+      {/* Lottie Animation with fade + slide */}
+      <motion.div
+        className="w-72 md:w-96 mb-6"
+        initial={{ opacity: 0, y: 20, scale: 0.8 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <Lottie animationData={pagenotfoundimg} loop={true} />
+      </motion.div>
 
-                    <div className="flex items-center mt-6 gap-x-3">
-                        <button onClick={() => navigate(-1)} className="flex cursor-pointer items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:rotate-180">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
-                            </svg>
+      
 
-                            <span>Go back</span>
-                        </button>
+      {/* Subtext */}
+      <motion.p
+        className="text-white/80 text-lg md:text-xl mb-8"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.6 }}
+      >
+        Oops! The page you are looking for does not exist.
+      </motion.p>
 
-                        <button onClick={() => navigate("/")} className="w-1/2 cursor-pointer px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-                            Take me home
-                        </button>
-                    </div>
-                </div>
+      {/* Go Home Button with hover/tap motion */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Link
+          to="/"
+          className="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition-colors duration-300"
+        >
+          Go Back Home
+        </Link>
+      </motion.div>
 
-                <div className="relative w-full mt-8 lg:w-1/2 lg:mt-0">
-                    <img className=" w-full lg:h-[32rem] h-80 md:h-96 rounded-lg object-cover " src="https://images.unsplash.com/photo-1613310023042-ad79320c00ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="" />
-                </div>
-            </div>
-        </section>
-    )
-}
+    </div>
+  );
+};
 
-export default ErrorPage
+export default PageNotFound;

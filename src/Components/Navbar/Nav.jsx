@@ -88,7 +88,7 @@ const Nav = () => {
             
             <div className='bg-zinc-200 h-1.5'></div>
 
-            <NavLink to={"/eventsPage"}
+            <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaTicketAlt className="text-zinc-500 text-2xl" />
@@ -96,7 +96,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <NavLink to={"/memories"}
+            <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaLightbulb className="text-zinc-500 text-2xl" />
