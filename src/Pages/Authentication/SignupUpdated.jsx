@@ -22,14 +22,12 @@ const SignupUpdated = () => {
     const password = e.target.password.value
 
     api.post("/auth/signup", { name, email, password })
-      .then(res => {
-        console.log(res.data)
+      .then(res => { 
         queryClient.setQueryData(["profile"], res.data.user);
         localStorage.setItem("accessToken", res.data.accessToken);
         toast.success(res.data.message)
       })
-      .catch(err => {
-        console.log(err.response?.data?.message);
+      .catch(err => { 
         toast.error(err.response?.data?.message)
       });
   }

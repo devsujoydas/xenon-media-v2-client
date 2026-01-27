@@ -12,12 +12,8 @@ import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 
 const PostCard = ({ post, variant = "feed", onRemove }) => {
   const { user, savePostHandler, removeSavedPostHandler } = useAuth();
+ 
 
-  // const initialLiked = user
-  //   ? post?.likes.some(u => u._id === user._id)
-  //   : false;
-
-  const [liked, setLiked] = useState(0);
   const [likesCount, setLikesCount] = useState(post?.likes?.length || 0);
   const [reactorsUsers, setReactorsUsers] = useState(post?.likes || []);
   const [showMenu, setShowMenu] = useState(false);
@@ -53,10 +49,7 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
     }
   };
 
-  const sharePostHandler = () => {
-    const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
-    navigator.clipboard.writeText(url).then(() => toast.success("Post URL Copied!"));
-  };
+
 
   return (
     <div className="shadow-xl  border-t border-t-zinc-300 md:w-full   rounded-2xl md:rounded-3xl bg-white">
@@ -83,10 +76,8 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
       <hr className="text-zinc-300" />
 
       <ActionButtons
-        liked={liked}
         likesCount={likesCount}
-        likeHandler={likeHandler}
-        sharePostHandler={sharePostHandler}
+        likeHandler={likeHandler} 
         post={post}
         user={user}
         savePostHandler={savePostHandler}

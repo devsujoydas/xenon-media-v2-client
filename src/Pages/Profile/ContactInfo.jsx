@@ -5,73 +5,73 @@ import { MdOutlineEmail, MdOutlineArrowOutward } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
 import { FaFacebook, FaYoutube, FaGithub, FaLinkedin } from "react-icons/fa";
 
-const contacts = (userData) => [
+const contacts = (user) => [
   {
     id: "phone",
     label: "Phone",
-    value: userData?.contactInfo?.phone,
-    href: `tel:${userData?.contactInfo?.phone}`,
+    value: user?.contactInfo?.phone,
+    href: `tel:${user?.contactInfo?.phone}`,
     icon: <IoCallOutline />,
     bg: "from-indigo-500 to-indigo-700 text-white",
   },
   {
     id: "email",
     label: "Email",
-    value: userData?.email,
-    href: `mailto:${userData?.email}`,
+    value: user?.email,
+    href: `mailto:${user?.email}`,
     icon: <MdOutlineEmail />,
     bg: "from-purple-500 to-purple-700 text-white",
   },
   {
     id: "website",
     label: "Website",
-    value: userData?.contactInfo?.website,
-    href: userData?.contactInfo?.website,
+    value: user?.contactInfo?.website,
+    href: user?.contactInfo?.website,
     icon: <TbWorldWww />,
     bg: "from-emerald-500 to-emerald-700 text-white",
   },
   {
     id: "facebook",
     label: "Facebook",
-    value: userData?.contactInfo?.facebook,
-    href: userData?.contactInfo?.facebook,
+    value: user?.contactInfo?.facebook,
+    href: user?.contactInfo?.facebook,
     icon: <FaFacebook />,
     bg: "from-blue-500 to-blue-700 text-white",
   },
   {
     id: "youtube",
     label: "YouTube",
-    value: userData?.contactInfo?.youtube,
-    href: userData?.contactInfo?.youtube,
+    value: user?.contactInfo?.youtube,
+    href: user?.contactInfo?.youtube,
     icon: <FaYoutube />,
     bg: "from-red-500 to-red-700 text-white",
   },
   {
     id: "github",
     label: "GitHub",
-    value: userData?.contactInfo?.github,
-    href: userData?.contactInfo?.github,
+    value: user?.contactInfo?.github,
+    href: user?.contactInfo?.github,
     icon: <FaGithub />,
     bg: "from-gray-700 to-black text-white",
   },
   {
     id: "linkedin",
     label: "LinkedIn",
-    value: userData?.contactInfo?.linkedin,
-    href: userData?.contactInfo?.linkedin,
+    value: user?.contactInfo?.linkedin,
+    href: user?.contactInfo?.linkedin,
     icon: <FaLinkedin />,
     bg: "from-sky-500 to-sky-700 text-white",
   },
 ];
 
-export default function ContactInfo({ userData }) {
+export default function ContactInfo({ user }) {
   return (
     <div className="space-y-4 pb-8">
       <h1 className="font-semibold text-lg border-b pb-2">
         Contact Information
       </h1>
 
-      {contacts(userData)
+      {contacts(user)
         .filter((item) => item.value)
         .map((item) => (
           <a

@@ -1,9 +1,7 @@
 import { BsFileImage } from "react-icons/bs";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 import { BiSolidMoviePlay } from "react-icons/bi";
-import { useState } from "react";
-import UsersPosts from "../../Components/UsersPosts/UsersPosts";
-import Loading from "../../Components/Loading/Loading";
+import { useState } from "react"; 
 import UploadPostModal from "../../Components/Modals/UploadPostModal";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
@@ -66,10 +64,6 @@ const PostFromAndPost = () => {
             Reel
           </button>
         </div>
-      </div>
-
-      <div className="mt-3">
-        <UsersPosts />
       </div>
     </>
   );

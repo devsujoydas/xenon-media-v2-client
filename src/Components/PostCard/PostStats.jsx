@@ -16,6 +16,8 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
         return othersCount > 0 ? `${display} and ${othersCount} others` : display;
     };
 
+    
+
     return (
         <div className="flex justify-between items-center mt-2 text-sm px-4 pb-2">
             {/* Likes */}
@@ -57,7 +59,7 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
 
             {/* Comments & Shares */}
             <div className="flex items-center gap-1 md:gap-3 text-[11px] md:text-sm">
-                <div>{post?.comments?.length} Comments</div>
+                <div>{post?.commentCount} Comments</div>
                 <div>{post?.shares?.length} Shares</div>
             </div>
         </div>

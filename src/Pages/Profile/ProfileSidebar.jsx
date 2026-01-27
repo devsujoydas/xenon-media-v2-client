@@ -10,10 +10,10 @@ import UpdateProfileModal from "../../Components/Modals/UpdateProfileModal.jsx";
 import { BsFillCameraFill } from "react-icons/bs";
 import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.jsx";
 import ContactInfo from "./ContactInfo.jsx";
-import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx"; 
+import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 import { useLogOut } from "../../hooks/useLogOut.js";
 
-const ProfileSidebar = () => {
+const ProfileSidebar = ({ myPosts }) => {
   const { user, usersPostsData, deleteAccount } = useAuth()
   const logOut = useLogOut();
 
@@ -24,7 +24,7 @@ const ProfileSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
 
-
+  console.log(user)
 
 
 
@@ -139,13 +139,13 @@ const ProfileSidebar = () => {
           <div className="flex justify-center gap-8 mt-6">
             <div className="text-center">
               <h1 className="text-lg font-semibold">
-                {usersPostsData?.length || 0}
+                {myPosts?.length}
               </h1>
               <p className="text-sm text-zinc-500">Posts</p>
             </div>
             <Link to={"/friends"} className="text-center border-x px-6">
               <h1 className="text-lg font-semibold">
-                {user?.myFriends?.length || 0}
+                {user?.friendCount}
               </h1>
               <p className="text-sm text-zinc-500">Friends</p>
             </Link>

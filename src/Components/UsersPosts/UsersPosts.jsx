@@ -1,20 +1,13 @@
 import { useMyPosts } from "../../hooks/useMyPosts";
 import PostCard from "../PostCard/PostCard";
-// import { useAuth } from "../../hooks/useAuth";
 import PostSkeleton from "../Posts/PostSkeleton";
 
-const UsersPosts = () => {
-  const {
-    data: myPosts,
-    isLoading,
-    isFetching,
-  } = useMyPosts();
+const UsersPosts = ({ myPosts, isLoading, isFetching }) => {
 
-  console.log(myPosts)
+
 
   const skeletons = Array.from({ length: 1 });
 
-  // 1️⃣ Loading state → Skeleton
   if (isLoading || isFetching) {
     return (
       <div className="grid md:gap-5 gap-3">
@@ -25,7 +18,6 @@ const UsersPosts = () => {
     );
   }
 
-  // 2️⃣ Empty state
   if (!myPosts || myPosts.length === 0) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -34,7 +26,6 @@ const UsersPosts = () => {
     );
   }
 
-  // 3️⃣ Success state
   return (
     <div className="grid md:gap-5 gap-2">
       {myPosts.map((post) => (
