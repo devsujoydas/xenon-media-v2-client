@@ -5,15 +5,23 @@ import PeopleYouMayKnow from './FriendsCard/PeopleYouMayKnow.jsx'
 import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
-import { RiUserSharedFill } from "react-icons/ri";
-// import { useAuth } from '../../hooks/useAuth.js'
+import { RiUserSharedFill } from "react-icons/ri"; 
+import { useFriends } from '../../hooks/useFriends.js'
 
 
 const FriendsPage = () => {
-    const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useAuth()
-    const btnStyle = "border border-zinc-200 md:text-[16px] text-xs py-1 md:px-4 px-2 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300  "
+    const { data } = useFriends()
+    console.log(data)
+
+    const [myFriends, setmyFriends] = useState(data?.myFriends)
+    const [receivedRequests, setreceivedRequests] = useState(data?.receivedRequests)
+    const [sentRequests, setsentRequests] = useState(data?.sentRequests)
+    const [youMayKnowFriends, setyouMayKnowFriends] = useState()
 
     const [displayFriendBlock, setDisplayFriendBlock] = useState("youmayknow")
+
+    const btnStyle = "border border-zinc-200 md:text-[16px] text-xs py-1 md:px-4 px-2 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300  "
+
 
     return (
         <div className='md:p-7 min-h-screen p-3 lg:pt-7 md:pt-20 pt-20 relative'>
@@ -25,7 +33,7 @@ const FriendsPage = () => {
                 </button>
                 <button onClick={() => setDisplayFriendBlock("friendrequest")} className={`${btnStyle} relative flex items-center gap-2`}>
                     <span className='md:block hidden'>Friend Requests</span> <RiUserReceived2Fill className='text-xl font-bold' />
-                    <span className={`${friendsRequest?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{friendsRequest?.length}</span>
+                    <span className={`${receivedRequests?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{receivedRequests?.length}</span>
                 </button>
                 <button onClick={() => setDisplayFriendBlock("sentrequest")} className={`${btnStyle} relative flex items-center gap-2`}>
                     <span className='md:block hidden'>Sent Requests</span> < RiUserSharedFill className='text-xl font-bold' />
@@ -38,7 +46,7 @@ const FriendsPage = () => {
                 {displayFriendBlock == "friend" && (
                     <div className=''>
                         <h1 className='mb-3 text-xl font-bold'>All Friends</h1>
-                        {myFriends.length > 0 ?
+                        {myFriends?.length > 0 ?
                             <div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 md:gap-3 gap-2'>
                                 {myFriends.map((friend, idx) => <MyFriendsCard friend={friend} key={idx} />)}
                             </div>
@@ -52,10 +60,10 @@ const FriendsPage = () => {
 
                 {displayFriendBlock === "friendrequest" && (
                     <div>
-                        <h1 className='mb-3 text-xl font-bold'>Friend Requests</h1>
-                        {friendsRequest?.length >= 1 ? (
+                        <h1 className='mb-3 text-xl font-bold'>Received Requests</h1>
+                        {receivedRequests?.length >= 1 ? (
                             <div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 md:gap-3 gap-2'>
-                                {friendsRequest.map((friend, idx) => (
+                                {receivedRequests.map((friend, idx) => (
                                     <FriendsRequestCard friend={friend} key={idx} />
                                 ))}
                             </div>
@@ -66,7 +74,7 @@ const FriendsPage = () => {
                         )}
                     </div>
                 )}
-                {/* No Sent request found */}
+                
                 {displayFriendBlock === "sentrequest" && (
                     <div>
                         <h1 className='mb-3 text-xl font-bold'>Sent Requests</h1>

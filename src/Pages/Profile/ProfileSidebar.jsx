@@ -22,9 +22,7 @@ const ProfileSidebar = ({ myPosts }) => {
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-
-  console.log(user)
+ 
 
 
 

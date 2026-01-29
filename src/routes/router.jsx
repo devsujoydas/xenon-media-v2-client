@@ -76,15 +76,15 @@ export const router = createBrowserRouter([
         ),
         loader: async ({ params }) => await api.get(`${import.meta.env.VITE_BACKEND_URL}/posts/${params.id}`),
       },
-      {
-        path: '/post/update/:id',
-        element: <PostDetailsUpdate />,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
-      },
       // {
-      //   path: '/friends',
-      //   element: <FriendsPage />,
+      //   path: '/post/update/:id',
+      //   element: <PostDetailsUpdate />,
+      //   loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
       // },
+      {
+        path: '/friends',
+        element: <FriendsPage />,
+      },
 
       // {
       //   path: "/message",

@@ -34,14 +34,14 @@ const CommentBox = ({ post }) => {
 
  
 
-
+console.log(commentsData)
 
 
 
     return (
         <div className="h-full flex flex-col bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-4 overflow-hidden">
 
-            {/* ================= HEADER (FIXED TOP) ================= */}
+         
             <div className="pb-3 border-b">
                 <div className="flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center gap-2">
@@ -62,7 +62,7 @@ const CommentBox = ({ post }) => {
                 </div>
             </div>
 
-            {/* ================= SCROLLABLE COMMENTS ================= */}
+           
             <div className="flex-1 overflow-y-auto mt-3 pr-2 scrollbar-hide flex flex-col gap-3">
 
                 {loading && (
@@ -84,7 +84,7 @@ const CommentBox = ({ post }) => {
                 )}
             </div>
 
-            {/* ================= INPUT (FIXED BOTTOM) ================= */}
+           
             <CommentForm
                 post={post}
                 user={user}

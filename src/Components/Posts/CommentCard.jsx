@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { FaEllipsisH } from "react-icons/fa";
-import { BiLike, BiSolidLike } from "react-icons/bi";
-import { ThumbsDown } from "lucide-react";
+import { BiSolidDislike, BiLike, BiSolidLike, BiDislike } from "react-icons/bi"; 
 import { useTimeAgo } from "../../hooks/useTimeAgo";
 import api from "../../services/api";
 import toast from "react-hot-toast";
 
 const CommentCard = ({ comment, post, currentUser }) => {
+
+  const isAuthor = currentUser?._id === comment?.author?._id;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef();
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -19,9 +19,6 @@ const CommentCard = ({ comment, post, currentUser }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const isAuthor = currentUser?._id === comment?.author?._id;
-
   const handleUpdate = () => {
     console.log("Update comment:", comment._id);
     setMenuOpen(false);
@@ -35,42 +32,43 @@ const CommentCard = ({ comment, post, currentUser }) => {
     setMenuOpen(false);
   };
 
-  const [liked, setLiked] = useState();
-  const [disliked, setDisliked] = useState();
-  const [likeCount, setLikeCount] = useState();
-  const [dislikeCount, setDislikeCount] = useState();
-
-
-  console.log(comment)
-
-
-
  
+  const [likedByMe, setLikedByMe] = useState(comment.likedByMe);
+  const [dislikedByMe, setDisLikedByMe] = useState(comment.dislikedByMe);
+  const [likeCount, setLikeCount] = useState(comment.likesCount);
+  const [dislikeCount, setDislikeCount] = useState(comment.dislikesCount);
+ 
+
   const handleLike = async () => {
-      
     try {
       const { data } = await api.put(
-        `/posts/post/${post._id}/comments/${comment._id}/like`
+        `/posts/comments/${comment._id}/like`
       );
-      
+      setLikedByMe(data.likedByMe)
+      setLikeCount(data.likesCount)
+      setDisLikedByMe(data.dislikedByMe)
+      setDislikeCount(data.dislikedCount)
       toast.success(data.message);
-
+      
     } catch (err) {
       toast.error("Failed to like comment");
     }
   };
-
-  const handleDislike = async () => { 
   
+  const handleDislike = async () => {
     try {
       const { data } = await api.put(
-        `/posts/post/${post._id}/comments/${comment._id}/dislike`
+        `/posts/comments/${comment._id}/dislike`
       );
+      setLikedByMe(data.likedByMe)
+      setLikeCount(data.likedCount)
+      setDisLikedByMe(data.dislikedByMe)
+      setDislikeCount(data.dislikesCount)
       toast.success(data.message);
-       
+
     } catch (err) {
       toast.error("Failed to dislike comment");
-     
+
     }
   };
 
@@ -142,18 +140,18 @@ const CommentCard = ({ comment, post, currentUser }) => {
         <button
           onClick={handleLike}
           className={`flex items-center gap-1 px-2 py-1 cursor-pointer rounded-lg transition 
-            ${liked ? "text-blue-600" : "text-gray-600"}`}
+            ${likedByMe ? "text-blue-600" : "text-gray-600"}`}
         >
-          {liked ? <BiSolidLike size={18} /> : <BiLike size={18} />}
+          {likedByMe ? <BiSolidLike size={18} /> : <BiLike size={18} />}
           <span>{likeCount}</span>
         </button>
 
         <button
           onClick={handleDislike}
           className={`flex items-center gap-1 px-2 py-1 cursor-pointer rounded-lg transition 
-            ${disliked ? "text-red-500" : "text-gray-600"}`}
+            ${dislikedByMe ? "text-red-500" : "text-gray-600"}`}
         >
-          <ThumbsDown size={18} />
+          {dislikeCount ? <BiSolidDislike size={18} /> : < BiDislike size={18} />}
           <span>{dislikeCount}</span>
         </button>
       </div>
