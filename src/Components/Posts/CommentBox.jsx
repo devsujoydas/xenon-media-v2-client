@@ -73,7 +73,7 @@ const CommentBox = ({ post }) => {
 
                 {!loading && commentsData?.comments?.length > 0 ? (
                     commentsData.comments.map((cmt) => (
-                        <CommentCard key={cmt._id} comment={cmt} />
+                        <CommentCard key={cmt._id} post={post} comment={cmt} />
                     ))
                 ) : (
                     !loading && (

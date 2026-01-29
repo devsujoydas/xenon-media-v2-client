@@ -10,7 +10,7 @@ import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import NavSearch from "./NavSearch.jsx";
 import toast from "react-hot-toast";
-import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx"; 
+import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 
 
 const Navbar = () => {
@@ -64,7 +64,11 @@ const Navbar = () => {
   return (
     <div className="lg:sticky left-0 top-0 ">
       <div className="fixed z-20 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-3">
-        <Link to={"/"} className="text-2xl font-semibold text-blue-600">Xenon Media</Link>
+
+        <div className="">
+          <Link to={"/"} className="text-2xl font-bold font-family-winds text-blue-600 ">Xenon Media</Link>
+        </div>
+
         <div onClick={() => setHumbarger(!humbarger)} className="md:text-5xl text-4xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
         </div>
@@ -77,7 +81,7 @@ const Navbar = () => {
           <div className=" space-y-6 ">
             {/* nav logo  */}
             <div className="">
-              <Link to={"/"} className="text-2xl md:text-3xl font-semibold   text-blue-600">Xenon Media</Link>
+              <Link to={"/"} className="text-2xl md:text-3xl font-bold font-family-winds text-blue-600">Xenon Media</Link>
             </div>
 
             <NavSearch />

@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 import AuthorInfo from "./AuthorInfo.jsx";
 import PostContent from "./PostContent.jsx";
@@ -8,40 +7,38 @@ import PostStats from "./PostStats.jsx";
 import ActionButtons from "./ActionButtons.jsx";
 import CommentInput from "./CommentInput.jsx";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
-// import { useAuth } from "../../hooks/useAuth.js";
+import api from "../../services/api.js";
+
+
+
 
 const PostCard = ({ post, variant = "feed", onRemove }) => {
-  const { user, savePostHandler, removeSavedPostHandler } = useAuth();
- 
+  const { user, } = useAuth();
 
-  const [likesCount, setLikesCount] = useState(post?.likes?.length || 0);
+  const [liked, setLiked] = useState(post?.likedByMe);
+  const [likesCount, setLikesCount] = useState(post?.likesCount);
+
   const [reactorsUsers, setReactorsUsers] = useState(post?.likes || []);
   const [showMenu, setShowMenu] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
 
   const likeHandler = async () => {
-    if (!user?._id) return toast.error("Please login first");
-
     try {
-      const { data } = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-        { userId: user._id }
-      );
+      const { data } = await api.put(`${import.meta.env.VITE_BACKEND_URL}/posts/${post._id}/like`);
 
-      const { message, likesCount: newLikesCount } = data;
-      setLikesCount(newLikesCount);
-
-      if (message === "Liked") {
-        setLiked(true);
+      if (data.message === "Liked") {
+        setLiked(true)
+        setLikesCount(likesCount + 1)
+        toast.success(data.message);
         setReactorsUsers(prev => {
           if (!prev.some(u => u._id === user._id)) return [...prev, user];
           return prev;
         });
-        toast.success("Liked!");
       } else {
-        setLiked(false);
+        setLiked(false)
+        setLikesCount(likesCount - 1)
+        toast.success(data.message);
         setReactorsUsers(prev => prev.filter(u => u._id !== user._id));
-        toast.success("Disliked!");
       }
     } catch (err) {
       console.error(err);
@@ -77,16 +74,20 @@ const PostCard = ({ post, variant = "feed", onRemove }) => {
 
       <ActionButtons
         likesCount={likesCount}
-        likeHandler={likeHandler} 
+        likeHandler={likeHandler}
+        liked={liked}
         post={post}
         user={user}
-        savePostHandler={savePostHandler}
-        removeSavedPostHandler={removeSavedPostHandler}
+      // savePostHandler={savePostHandler}
+      // removeSavedPostHandler={removeSavedPostHandler}
       />
 
       <hr className="text-zinc-300" />
 
-      <CommentInput user={user} />
+      <CommentInput
+        post={post}
+        user={user}
+      />
     </div>
   );
 };

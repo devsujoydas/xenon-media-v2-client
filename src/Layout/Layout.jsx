@@ -7,7 +7,7 @@ const Layout = () => {
   const { loading } = useAuth()
 
   return (
-    <div className="font-family-poppins">  
+    <div className="">  
 
       {loading ? (
         <Loading />

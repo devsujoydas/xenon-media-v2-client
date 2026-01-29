@@ -7,7 +7,6 @@ const useCreateComment = (postId) => {
 
     const handleCreateComment = async (text) => {
         if (!text.trim()) return;
-      
         try {
             await api.post(`/posts/${postId}/comment`, { text });
 

@@ -25,12 +25,13 @@ createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
     <AuthProviderNew>
       <Toaster position="top-center" reverseOrder={false} />
-      <AnimatePresence mode="wait">
-        <RouterProvider router={router} />
-      </AnimatePresence>
-      {/* <BrowserRouter>
-        <AnimatedRoutes />
-      </BrowserRouter> */}
+        
+      <div className='font-family-nunito'>
+        <AnimatePresence mode="wait">
+          <RouterProvider router={router} />
+        </AnimatePresence>
+      </div>
+
     </AuthProviderNew>
   </QueryClientProvider>
 )

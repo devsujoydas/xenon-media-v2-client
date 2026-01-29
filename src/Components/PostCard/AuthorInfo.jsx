@@ -1,6 +1,7 @@
 import ThreeDotMenu from "../Posts/ThreeDotMenu";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useTimeAgo } from "../../hooks/useTimeAgo";
 
 
 const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove, }) => {
@@ -25,7 +26,7 @@ const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove, }) =
               {post?.author?.name}
             </h1>
             <p className="text-zinc-500 text-xs md:text-sm">
-              {new Date(post.createdAt).toLocaleString()}
+              {useTimeAgo(post.createdAt)}
               
             </p>
           </div>

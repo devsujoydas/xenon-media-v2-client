@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import toast from "react-hot-toast";
 
-const ActionButtons = ({ 
+const ActionButtons = ({
   likesCount,
-  likeHandler, 
+  liked,
+  likeHandler,
   post,
   savePostHandler,
   removeSavedPostHandler,
@@ -20,7 +21,6 @@ const ActionButtons = ({
     navigator.clipboard.writeText(url).then(() => toast.success("Post URL Copied!"));
   };
   const { savedPosts } = useAuth()
-
   const isSaved = savedPosts?.some((p) => p._id === post._id);
 
   return (
@@ -31,10 +31,10 @@ const ActionButtons = ({
         <button
           onClick={likeHandler}
           className={`flex items-center gap-1 md:gap-2 md:px-3 px-1.5 md:py-2 py-1 rounded-lg transition-all active:scale-95
-            ${post?.likedByMe ? "text-blue-600 bg-blue-50" : "text-gray-600 hover:bg-gray-100"}
+            ${liked ? "text-blue-600 bg-blue-50" : "text-gray-600 hover:bg-gray-100"}
            cursor-pointer`}
         >
-          {post?.likedByMe ? <BiSolidLike className="text-xl" /> : <BiLike className="text-xl" />}
+          {liked ? <BiSolidLike className="text-xl" /> : <BiLike className="text-xl" />}
           <span className="flex items-center gap-1 text-sm font-medium">
             {likesCount}
             <span className="hidden md:inline">Like</span>
