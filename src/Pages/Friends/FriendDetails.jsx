@@ -4,6 +4,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaUserAltSlash } from "react-icons/fa";
 import PostCard from '../../Components/PostCard/PostCard.jsx';
+import { useAuth } from '../../AuthProvider/AuthProviderNew.jsx';
 // import { useAuth } from '../../hooks/useAuth.js';
 
 const FriendDetails = () => {

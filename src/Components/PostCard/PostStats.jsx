@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 
 const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
-
-    console.log(post)
+ 
 
     const getDisplayNames = () => {
         const names = reactorsUsers.map(u => u.name);

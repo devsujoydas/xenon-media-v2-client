@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../AuthProvider/AuthProviderNew';
 // import { useAuth } from '../../../hooks/useAuth';
 
 
@@ -19,7 +20,7 @@ const SentRequestCard = ({ friend }) => {
 
             <div className='md:p-0 p-2 '>
                 <Link to={`/profile/${friend?._id}`}>
-                    <img className='w-32  md:w-full md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profile.profilePhotoUrl ? `/default.jpg` : `${friend?.profile.profilePhotoUrl}`} alt="" />
+                    <img className='w-32  md:w-full md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profile.profilePhoto ? `/default.jpg` : `${friend?.profile.profilePhoto}`} alt="" />
                 </Link>
             </div>
 
@@ -28,7 +29,7 @@ const SentRequestCard = ({ friend }) => {
                     <div className='flex flex-col gap-2'>
                         <Link to={`/profile/${friend._id}`}>
                             <h1 className='text-[16px] flex items-center gap-2 text-wrap font-semibold'>{friend?.name}
-                                {friend?.onlineStatus && (
+                                {friend?.activeStatus.online && (
                                     <p className='bg-green-400 h-3.5 w-3.5 rounded-full  border border-white'></p>
                                 )}
                             </h1>

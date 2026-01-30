@@ -1,22 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MyFriendsCard from './FriendsCard/MyFriendsCard.jsx'
 import FriendsRequestCard from './FriendsCard/FriendsRequestCard.jsx'
 import PeopleYouMayKnow from './FriendsCard/PeopleYouMayKnow.jsx'
 import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
-import { RiUserSharedFill } from "react-icons/ri"; 
+import { RiUserSharedFill } from "react-icons/ri";
 import { useFriends } from '../../hooks/useFriends.js'
 
 
 const FriendsPage = () => {
     const { data } = useFriends()
     console.log(data)
-
     const [myFriends, setmyFriends] = useState(data?.myFriends)
     const [receivedRequests, setreceivedRequests] = useState(data?.receivedRequests)
     const [sentRequests, setsentRequests] = useState(data?.sentRequests)
     const [youMayKnowFriends, setyouMayKnowFriends] = useState()
+
+    useEffect(() => {
+        setmyFriends(data?.myFriends)
+        setreceivedRequests(data?.receivedRequests)
+        setsentRequests(data?.sentRequests)
+        setyouMayKnowFriends()
+    }, [data])
 
     const [displayFriendBlock, setDisplayFriendBlock] = useState("youmayknow")
 
@@ -74,7 +80,7 @@ const FriendsPage = () => {
                         )}
                     </div>
                 )}
-                
+
                 {displayFriendBlock === "sentrequest" && (
                     <div>
                         <h1 className='mb-3 text-xl font-bold'>Sent Requests</h1>
