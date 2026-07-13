@@ -6,6 +6,7 @@ import SignInWithGoogle from './SignInWithGoogle'
 import api from '../../services/api'
 import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
+import NavLogo from '../../Components/Navbar/NavLogo'
 
 const LoginUpdated = () => {
   const [show, setShow] = useState(true)
@@ -31,9 +32,8 @@ const queryClient = useQueryClient();
 
   return (
     <div className=' min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0'>
-      <Link to={"/"} className='fixed top-3 left-5 text-blue-700 font-bold font-momo-poppins text-2xl'>Xenly v2</Link>
-
-      <div className='w-full max-w-md md:max-w-xl lg:max-w-4xl xl:max-w-6xl  rounded-2xl overflow-hidden xl:grid xl:grid-cols-2 lg:shadow-lg lg:border border-zinc-100 p-4'>
+      
+      <div className='w-full max-w-md md:max-w-xl lg:max-w-4xl xl:max-w-6xl  rounded-2xl overflow-hidden xl:grid xl:grid-cols-2 shadow-lg border border-zinc-100 p-4'>
 
         {/* Image Section */}
         <div className='hidden xl:block'>
@@ -47,12 +47,17 @@ const queryClient = useQueryClient();
         {/* Form Section */}
         <div className='px-4 sm:px-8 md:px-12 lg:px-14 py-8 sm:py-10 '>
           <div className='w-full'>
-            <div className='mb-10'>
-              <button onClick={() => { navigate(-1) }} className='cursor-pointer'>
-                <ArrowLeft className='active:scale-95' />
+            <div className="mb-10 flex gap-2 text-blue-600">
+              <button
+                onClick={() => {
+                  navigate(-1);
+                }}
+                className="cursor-pointer"
+              >
+                <ArrowLeft className="active:scale-95" />
               </button>
+              <NavLogo />
             </div>
-
 
             {/* Header */}
             <div>
@@ -101,22 +106,22 @@ const queryClient = useQueryClient();
               </div>
 
               {/* Terms */}
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-2 text-sm'>
+              <div className='flex items-center justify-between text-sm'>
+                <div className='flex items-center gap-2 '>
                   <input
                     type="checkbox" id='checkbox'
                     className='cursor-pointer w-4 h-4 accent-black'
                   />
                   <label htmlFor='checkbox' className='cursor-pointer'>
                     I agree to the{' '}
-                    <span className='font-semibold hover:underline tracking-tighter'>
+                    <span className='font-bold hover:underline tracking-tighter'>
                       Terms & Conditions
                     </span>
                   </label>
                 </div>
 
                 <div>
-                  <Link to={"/forgot-password"} className='font-semibold hover:underline tracking-tighter text-sm'>Forgot Password</Link>
+                  <Link to={"/forgot-password"} className='font-bold hover:underline tracking-tighter '>Forgot Password</Link>
                 </div>
               </div>
 

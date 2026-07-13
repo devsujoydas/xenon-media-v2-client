@@ -1,6 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Login from '../Pages/Login/Login.jsx';
-import Signup from '../Pages/Signup/Signup.jsx';
+import { createBrowserRouter } from 'react-router-dom'; 
 import Layout from '../Layout/Layout.jsx';
 import Home from '../Pages/Home/Home.jsx';
 import Profile from '../Pages/Profile/Profile.jsx';
@@ -10,8 +8,7 @@ import FriendsPage from '../Pages/Friends/FriendsPage.jsx';
 import FriendDetails from '../Pages/Friends/FriendDetails.jsx';
 import SavedPosts from '../Pages/SavedPosts/SavedPosts.jsx';
 import EventsPage from '../Pages/EventsPage/EventsPage.jsx';
-import Memories from '../Pages/Memories/Memories.jsx';
-import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword.jsx';
+import Memories from '../Pages/Memories/Memories.jsx'; 
 import ErrorPage from '../Pages/ErrorPage/ErrorPage.jsx';
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
 import ProfileImageUpload from '../Pages/ProfileImageUpload/ProfileImageUpload.jsx';
@@ -22,10 +19,12 @@ import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
 import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
 import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
+
 import LoginUpdated from '../Pages/Authentication/LoginUpdated.jsx';
 import SignupUpdated from '../Pages/Authentication/SignupUpdated.jsx';
 import ForgotPasswordUpdated from '../Pages/Authentication/ForgotPasswordUpdated.jsx';
 import ResetPasswordUpdated from '../Pages/Authentication/ResetPasswordUpdated.jsx';
+
 import PrivateRoute from './PrivateRoutes.jsx';
 import AnimatedLayout from '../Layout/AnimatedLayout.jsx';
 import PageNotFound from '../Pages/ErrorPage/ErrorPage.jsx';
