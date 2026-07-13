@@ -55,7 +55,7 @@ const ForgotPassword = () => {
       
       <div className="md:col-span-1 h-screen p-8   ">
         <div className="">
-          <Link to={"/"} className="text-3xl font-semibold   text-blue-600">Xenon Media</Link>
+          <Link to={"/"} className="text-3xl font-semibold   text-blue-600">Xenly</Link>
         </div>
 
         <div className="h-full  flex justify-center items-center">

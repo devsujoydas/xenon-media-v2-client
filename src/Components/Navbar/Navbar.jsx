@@ -66,7 +66,7 @@ const Navbar = () => {
       <div className="fixed z-20 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-3">
 
         <div className="">
-          <Link to={"/"} className="text-2xl font-bold font-family-winds text-blue-600 ">Xenon Media</Link>
+          <Link to={"/"} className="text-2xl font-bold font-family-winds text-blue-600 ">Xenly</Link>
         </div>
 
         <div onClick={() => setHumbarger(!humbarger)} className="md:text-5xl text-4xl cursor-pointer active:scale-95 transition-all">
@@ -81,7 +81,7 @@ const Navbar = () => {
           <div className=" space-y-6 ">
             {/* nav logo  */}
             <div className="">
-              <Link to={"/"} className="text-2xl md:text-3xl font-bold font-family-winds text-blue-600">Xenon Media</Link>
+              <Link to={"/"} className="text-2xl md:text-3xl font-bold font-family-winds text-blue-600">Xenly</Link>
             </div>
 
             <NavSearch />
@@ -139,7 +139,7 @@ const Navbar = () => {
             <div className="space-y-7 ">
               {/* nav logo  */}
               <div className=" flex justify-between px-2 items-center cursor-pointer">
-                <Link to={"/"} className="text-2xl font-semibold   text-blue-600">Xenon Media</Link>
+                <Link to={"/"} className="text-2xl font-semibold   text-blue-600">Xenly</Link>
                 <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="md:text-4xl text-3xl " />
               </div>
               <NavSearch />

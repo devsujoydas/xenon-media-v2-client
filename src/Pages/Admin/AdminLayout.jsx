@@ -6,7 +6,7 @@ const AdminLayout = () => {
         <div className="min-h-screen   bg-gray-50">
           
             <div className=" bg-white shadow-md flex md:flex-row flex-col items-baseline justify-between gap-2 p-3 md:p-6 sticky top-0 z-50">
-                <Link to={"/"} className="md:text-3xl text-xl font-semibold   text-blue-600">Xenon Media Admin Panel</Link>
+                <Link to={"/"} className="md:text-3xl text-xl font-semibold   text-blue-600">Xenly Admin Panel</Link>
                 <ul className=" flex items-baseline md:gap-2 md:flex-row flex-wrap md:text-[16px] text-xs">
                     {[
                         { to: "/admin/dashboard", label: "Dashboard" },

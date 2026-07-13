@@ -102,7 +102,7 @@ const Signup = () => {
                     to="/"
                     className="text-3xl font-semibold   text-blue-600"
                 >
-                    Xenon Media
+                    Xenly
                 </Link>
 
                 <div className="h-full flex justify-center items-center lg:w-2/4 w-full mx-auto">

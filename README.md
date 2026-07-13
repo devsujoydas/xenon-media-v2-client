@@ -1,9 +1,9 @@
 
 ---
 
-# 🧿 Xenon Media
+# 🧿 Xenly
 
-**Xenon Media** is a modern, full-featured social media platform inspired by Facebook — where users can share posts, like, comment, manage friends, and even access an admin dashboard. Built with React, Firebase, and Tailwind CSS, Xenon Media delivers a smooth and responsive social experience.
+**Xenly** is a modern, full-featured social media platform inspired by Facebook — where users can share posts, like, comment, manage friends, and even access an admin dashboard. Built with React, Firebase, and Tailwind CSS, Xenly delivers a smooth and responsive social experience.
 
 🌐 **Live Demo**: [https://xenonmedia.netlify.app](https://xenonmedia.netlify.app)
 📦 **GitHub Repo**: [github.com/devsujoydas/mini-social-app](https://github.com/devsujoydas/mini-social-app)

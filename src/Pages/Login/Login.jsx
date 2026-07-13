@@ -43,7 +43,7 @@ const Login = () => {
     return (
         <div className="  p-8 bg-white h-screen overflow-hidden ">
             <div className="">
-                <Link to="/" className="text-3xl font-semibold   text-blue-600">Xenon Media</Link>
+                <Link to="/" className="text-3xl font-semibold   text-blue-600">Xenly</Link>
             </div>
             <div className="h-full flex justify-center items-center w-full mx-auto ">
                 <div className="grid grid-cols-1 w-full xl:grid-cols-2">
