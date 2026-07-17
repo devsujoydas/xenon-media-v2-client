@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import NavLogo from "../../Components/Navbar/NavLogo";
 
-const ResetPasswordUpdated = () => {
+const ResetPassword = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
 
@@ -101,4 +101,4 @@ const ResetPasswordUpdated = () => {
   );
 };
 
-export default ResetPasswordUpdated;
+export default ResetPassword;

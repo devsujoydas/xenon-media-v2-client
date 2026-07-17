@@ -20,15 +20,14 @@ import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
 import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
 
-import LoginUpdated from '../Pages/Authentication/LoginUpdated.jsx';
-import SignupUpdated from '../Pages/Authentication/SignupUpdated.jsx';
-import ForgotPasswordUpdated from '../Pages/Authentication/ForgotPasswordUpdated.jsx';
-import ResetPasswordUpdated from '../Pages/Authentication/ResetPasswordUpdated.jsx';
 
 import PrivateRoute from './PrivateRoutes.jsx';
-import AnimatedLayout from '../Layout/AnimatedLayout.jsx';
-import PageNotFound from '../Pages/ErrorPage/ErrorPage.jsx';
+import AnimatedLayout from '../Layout/AnimatedLayout.jsx';import PageNotFound from '../Pages/ErrorPage/ErrorPage.jsx';
 import api from '../services/api.js';
+import Login from '../Pages/Authentication/Login.jsx';
+import Signup from '../Pages/Authentication/Signup.jsx';
+import ForgotPassword from '../Pages/Authentication/ForgotPassword.jsx';
+import ResetPassword from '../Pages/Authentication/ResetPassword.jsx';
 // import Chats from '../Pages/ChatBox/Chats.jsx';
 // import ChatBox from '../Pages/ChatBox/ChatBox.jsx'; 
 
@@ -137,7 +136,7 @@ export const router = createBrowserRouter([
     element: (
       <AuthPrivateRoutes>
         <AnimatedLayout>
-          <LoginUpdated />
+          <Login />
         </AnimatedLayout>
       </AuthPrivateRoutes>
     ),
@@ -147,7 +146,7 @@ export const router = createBrowserRouter([
     element: (
       <AuthPrivateRoutes>
         <AnimatedLayout>
-          <SignupUpdated />
+          <Signup />
         </AnimatedLayout>
       </AuthPrivateRoutes>
     ),
@@ -157,7 +156,7 @@ export const router = createBrowserRouter([
     element: (
       <AuthPrivateRoutes>
         <AnimatedLayout>
-          <ForgotPasswordUpdated />
+          <ForgotPassword />
         </AnimatedLayout>
       </AuthPrivateRoutes>
     ),
@@ -167,7 +166,7 @@ export const router = createBrowserRouter([
     element: (
       <AuthPrivateRoutes>
         <AnimatedLayout>
-          <ResetPasswordUpdated />
+          <ResetPassword />
         </AnimatedLayout>
       </AuthPrivateRoutes>
     ),

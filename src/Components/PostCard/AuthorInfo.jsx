@@ -17,7 +17,7 @@ const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove, }) =
       >
         <div className="flex items-center gap-3">
           <img
-            src={post.author?.profile.profilePhoto || "/default.jpg"}
+            src={post.author?.profileImage.url}
             alt={post?.author?.name}
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
           />

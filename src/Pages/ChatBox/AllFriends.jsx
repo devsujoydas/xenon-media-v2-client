@@ -16,7 +16,7 @@ const AllFriends = ({ friend }) => {
 
             <Link to={`/message/${friend?._id}`} className='flex w-full justify- items-center gap-5'>
                 <div className='w-18 h-18  rounded-full overflow-hidden'>
-                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profile?.profilePhotoUrl ? friend?.profile?.profilePhotoUrl : "/default.jpg"} alt="" />
+                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profile?.profileImage.url} alt="" />
                 </div>
 
                 <div className=''>

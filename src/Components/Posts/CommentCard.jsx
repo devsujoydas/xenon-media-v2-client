@@ -78,7 +78,7 @@ const CommentCard = ({ comment, post, currentUser }) => {
       <div className="flex items-start justify-between relative">
         <div className="flex gap-3 items-center">
           <img
-            src={comment?.author?.profile?.profilePhoto || "/default-avatar.png"}
+            src={comment?.author?.profileImage.url }
             alt="user"
             className="w-10 h-10 rounded-full object-cover border border-gray-200"
           />

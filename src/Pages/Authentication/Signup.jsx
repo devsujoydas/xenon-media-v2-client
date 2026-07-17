@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import NavLogo from "../../Components/Navbar/NavLogo";
 
-const SignupUpdated = () => {
+const Signup = () => {
   const [show, setShow] = useState(true);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -62,7 +62,7 @@ const SignupUpdated = () => {
 
             {/* Header */}
             <div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold mb-2">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2">
                 Create an Account
               </h1>
               <p className="text-sm sm:text-base">
@@ -171,4 +171,4 @@ const SignupUpdated = () => {
   );
 };
 
-export default SignupUpdated;
+export default Signup;

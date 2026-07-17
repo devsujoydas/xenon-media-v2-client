@@ -23,7 +23,7 @@ const MyFriendsCard = ({ friend }) => {
 
             <div className='md:p-0 p-2 '>
                 <Link to={`/profile/${friend._id}`}>
-                    <img className='md:w-full w-24 md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profile?.profilePhoto ? `/default.jpg` : `${friend?.profile?.profilePhoto}`} alt="" />
+                    <img className='md:w-full w-24 md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={`${friend?.profileImage.url}`} alt="" />
                 </Link>
             </div>
             <div className='md:p-3 p-2 md:w-full w-3/4 relative'>

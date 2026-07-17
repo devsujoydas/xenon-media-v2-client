@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import NavLogo from "../../Components/Navbar/NavLogo";
 
-const ForgotPasswordUpdated = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
 
   return (
@@ -54,6 +54,7 @@ const ForgotPasswordUpdated = () => {
                 <input
                   className="w-full mt-1 border rounded-full px-4 py-3 outline-none focus:border-zinc-400 border-zinc-300"
                   placeholder="Email Address"
+                  required
                 />
               </div>
 
@@ -79,4 +80,4 @@ const ForgotPasswordUpdated = () => {
   );
 };
 
-export default ForgotPasswordUpdated;
+export default ForgotPassword;

@@ -11,7 +11,7 @@ const SideNavbar = () => {
     <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
       <div className=" cursor-pointer active:scale-95 transition-all">
         <Link to={`/profile`} className="relative">
-          <img className="md:w-15.5 w-12 md:h-15.5 h-12 object-cover rounded-full" src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user.profile.profilePhoto}`} alt="" />
+          <img className="md:w-15.5 w-12 md:h-15.5 h-12 object-cover rounded-full" src={!user?.profileImage?.url ? `/default.jpg` : `${user?.profileImage?.url}`} alt="" />
           <h1 className="absolute bottom-0 right-1 md:w-4 w-3 md:h-4 h-3 bg-green-400 border-2 border-white rounded-full"></h1>
         </Link>
       </div>

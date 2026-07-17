@@ -25,7 +25,7 @@ const AllFriends = ({ friend }) => {
 
             <div className=' p-2 '>
                 <Link to={`/profile/${friend._id}`}>
-                    <img className=' w-20 h-20 object-cover rounded-full' src={!friend?.profile?.profilePhotoUrl ? `/default.jpg` : `${friend?.profile?.profilePhotoUrl}`} alt="" />
+                    <img className=' w-20 h-20 object-cover rounded-full' src={!friend?.profileImage.url} alt="" />
                 </Link>
             </div>
             <div className=' p-2  w-3/4'>

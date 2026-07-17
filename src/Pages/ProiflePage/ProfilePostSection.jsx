@@ -14,7 +14,7 @@ const ProfilePostSection = () => {
             <div className="border p-3 bg-white border-zinc-300 rounded-lg grid gap-3">
                 <div className="flex items-center gap-2 text-zinc-500">
                     <div className="w-11 h-10 cursor-pointer overflow-hidden">
-                        <img className="h-full w-full object-cover rounded-full" src={userData?.profile.profilePhotoUrl ? `${userData?.profile.profilePhotoUrl}` : `/default.jpg`} alt="" />
+                        <img className="h-full w-full object-cover rounded-full" src={userData?.profileImage.url} alt="" />
                     </div>
                     <div className="border bg-zinc-100 text-sm hover:bg-zinc-200 active:bg-zinc-300 cursor-pointer border-zinc-200 px-4 py-2.5 w-full transition-all rounded-full">
                         <h1>Whats on your mind</h1>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api/v2", 
+  baseURL: "http://localhost:5000/api/v2",
   withCredentials: true,
 });
 
@@ -27,8 +27,8 @@ api.interceptors.response.use(
     if (
       (err.response?.status === 401 || err.response?.status === 403) &&
       !originalRequest._retry &&
-      originalRequest.headers["Authorization"] && 
-      !originalRequest.url.includes("/auth/refresh") 
+      originalRequest.headers["Authorization"] &&
+      !originalRequest.url.includes("/auth/refresh")
     ) {
       originalRequest._retry = true;
 
@@ -45,7 +45,7 @@ api.interceptors.response.use(
       try {
         const { data } = await axios.get(
           "http://localhost:5000/api/v2/auth/refresh",
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         const newToken = data.accessToken;
@@ -54,7 +54,7 @@ api.interceptors.response.use(
         onRefreshed(newToken);
 
         return api(originalRequest);
-      } catch (refreshError) { 
+      } catch (refreshError) {
         localStorage.removeItem("accessToken");
         delete api.defaults.headers.common["Authorization"];
         window.location.href = "/login";
@@ -65,7 +65,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(err);
-  }
+  },
 );
 
 export default api;

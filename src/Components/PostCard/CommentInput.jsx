@@ -29,7 +29,7 @@ const CommentInput = ({ user, post }) => {
         <div className=" w-10 h-10 md:w-12 md:h-12 box-border">
           <Link to="/profile" className="box-border">
             <img
-              src={user?.profile?.profilePhoto}
+              src={user?.profileImage?.url}
               alt={user?.name}
               className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer box-border"
             />

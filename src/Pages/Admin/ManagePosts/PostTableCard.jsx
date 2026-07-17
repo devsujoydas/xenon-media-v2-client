@@ -30,7 +30,7 @@ const PostTableCard = ({ post }) => {
                         <div>
                             <img
                                 className="md:w-10 w-8 md:h-10 h-8 rounded-full border-2 border-zinc-300 object-cover "
-                                src={`${post?.author?.profilePhotoUrl ? post?.author?.profilePhotoUrl : "/default.jpg"}`}
+                                src={`${post?.author?.profileImage.profileImage.url}`}
                                 alt="authorPhoto" />
                         </div>
                         <div className="space-y-1">

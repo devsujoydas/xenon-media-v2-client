@@ -185,7 +185,7 @@ const SavedPostCard = ({ post }) => {
           <Link to={`/profile`}>
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden">
               <img
-                src={userData?.profile.profilePhotoUrl || "/default.jpg"}
+                src={userData?.profileImage.url}
                 alt="profile"
                 className="w-full h-full object-cover"
               />

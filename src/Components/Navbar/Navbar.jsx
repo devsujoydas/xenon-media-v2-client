@@ -11,57 +11,15 @@ import NavSearch from "./NavSearch.jsx";
 import toast from "react-hot-toast";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 import NavLogo from "./NavLogo.jsx";
+import { useLogOut } from "../../hooks/useLogOut.js";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
   const [humbarger, setHumbarger] = useState(1);
   const navigate = useNavigate();
 
-  const signOutHander = () => {
-    const swalWithTailwind = Swal.mixin({
-      customClass: {
-        confirmButton:
-          "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-        cancelButton:
-          "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded",
-      },
-      buttonsStyling: false,
-    });
-    swalWithTailwind
-      .fire({
-        title: "Logout! Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, Logout!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          signOutUser()
-            .then(() => {
-              toast.success("Sign Out Successfull");
-            })
-            .catch((error) => {
-              toast.success(error.message);
-            });
-          navigate("/login");
+const logOut = useLogOut();
 
-          swalWithTailwind.fire({
-            title: "Logout!",
-            text: "Logout Successfully.",
-            icon: "success",
-          });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithTailwind.fire({
-            title: "Cancelled",
-            text: "Your imaginary file is safe :)",
-            icon: "error",
-          });
-        }
-      });
-  };
 
   return (
     <div className="lg:sticky left-0 top-0 ">
@@ -122,9 +80,9 @@ const Navbar = () => {
                     <img
                       className=" h-full w-full object-cover rounded-full"
                       src={
-                        !user?.profile?.profilePhoto
+                        !user?.profileImage?.url
                           ? `/default.jpg`
-                          : `${user?.profile?.profilePhoto}`
+                          : `${user?.profileImage?.url}`
                       }
                       alt=""
                     />
@@ -137,7 +95,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </Link>
-              <button onClick={() => signOutHander()}>
+              <button onClick={() => logOut()}>
                 <RxExit className="text-3xl cursor-pointer m-3" />
               </button>
             </div>
@@ -187,9 +145,9 @@ const Navbar = () => {
                       <img
                         className=" h-full w-full object-cover rounded-full"
                         src={
-                          !user?.profile?.profilePhoto
+                          !user?.profileImage?.url
                             ? `/default.jpg`
-                            : `${user?.profile?.profilePhoto}`
+                            : `${user?.profileImage?.url}`
                         }
                         alt=""
                       />
@@ -204,7 +162,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 </Link>
-                <button onClick={() => signOutHander()}>
+                <button onClick={() => logOut()}>
                   <RxExit className="text-2xl cursor-pointer m-3" />
                 </button>
               </div>

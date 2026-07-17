@@ -23,7 +23,7 @@ const PostFromAndPost = () => {
             <Link to={"/profile"}>
               <img
                 className="h-full w-full object-cover rounded-full"
-                src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile.profilePhoto}`
+                src={!user?.profileImage?.url ? `/default.jpg` : `${user?.profileImage?.url}`
                 }
                 alt=""
               />

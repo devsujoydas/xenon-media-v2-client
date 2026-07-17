@@ -54,7 +54,7 @@ const FriendDetails = () => {
                         <div
                             className="md:h-96 h-40 rounded-lg border border-zinc-300 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center"
                             style={{
-                                backgroundImage: `url(${friend?.profile?.coverPhotoUrl ||
+                                backgroundImage: `url(${friend?.coverImage?.url ||
                                     "/default-cover.jpg"
                                     })`,
                             }}

@@ -13,7 +13,7 @@ const ProfileTopSection = () => {
 
             <div className='w-full h-[150px] md:h-[250px] lg:h-[380px] relative overflow-hidden'>
                 <div className=' h-full rounded-lg overflow-hidden'>
-                    <img className='w-full h-full object-cover' src={userData?.profile.coverPhotoUrl != "" ? userData?.profile.coverPhotoUrl : "/default-cover.jpg"} alt="" />
+                    <img className='w-full h-full object-cover' src={userData?.coverImage?.url != "" ? userData?.coverImage?.url : "/default-cover.jpg"} alt="" />
                 </div>
                 <div className="absolute md:bottom-4 bottom-2 md:right-3 right-2 text-xs md:text-[16px]  flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 px-2 md:px-3 py-2 rounded-full md:rounded-md items-center cursor-pointer  transition-all duration-300 border-2 border-white gap-1">
                     <BsFillCameraFill className="text-xl" /> <span className="md:block hidden">Edit Cover Photo</span>
@@ -27,7 +27,7 @@ const ProfileTopSection = () => {
 
                     <div className="relative w-fit ">
                         <div className='lg:w-46 md:w-40 w-30 lg:h-46 md:h-40 h-30 object-cover border-4 border-white md:-mt-14 -mt-20 rounded-full overflow-hidden '>
-                            <img className='w-full h-full' src={userData?.profile?.profilePhotoUrl ? `${userData?.profile?.profilePhotoUrl}` : `/default.jpg`} alt="" />
+                            <img className='w-full h-full' src={userData?.profileImage.url} alt="" />
                         </div>
 
                         <div className="absolute  md:bottom-4 bottom-1 md:right-3 right-1 bg-zinc-200 hover:bg-zinc-100 active:bg-zinc-400 active:scale-95 rounded-full border-2 border-white p-2 md:text-xl text-lg  cursor-pointer ">

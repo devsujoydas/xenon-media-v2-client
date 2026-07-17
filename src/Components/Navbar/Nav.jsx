@@ -29,7 +29,7 @@ const Nav = () => {
             <NavLink to={`/profile`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
-                    <img className="w-7 h-7 object-cover rounded-full" src={!user?.profile?.profilePhoto ? `/default.jpg` : `${user?.profile.profilePhoto}`} alt="" />
+                    <img className="w-7 h-7 object-cover rounded-full" src={!user?.profileImage?.url ? `/default.jpg` : `${user?.profileImage?.url}`} alt="" />
                     <span className="font-semibold ">Profile</span>
                 </div>
                 <div>
@@ -66,7 +66,7 @@ const Nav = () => {
                 </>
             }
 
-            <NavLink to={"/friends"}
+            {/* <NavLink to={"/friends"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />
@@ -75,17 +75,17 @@ const Nav = () => {
                 <div>
                     <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{myFriends?.length}</p>
                 </div>
-            </NavLink>
+            </NavLink> */}
 
 
-            <NavLink to={"/savedposts"}
+            {/* <NavLink to={"/savedposts"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <MdWebStories className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Saved Posts</span>
                 </div>
             </NavLink>
-            
+             */}
             <div className='bg-zinc-200 h-1.5'></div>
 
             <NavLink to={"/"}

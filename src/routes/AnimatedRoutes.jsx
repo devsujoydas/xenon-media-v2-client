@@ -4,10 +4,10 @@ import AnimatedLayout from "../Layout/AnimatedLayout.jsx";
 import Home from "../Pages/Home/Home.jsx";
 import Profile from "../Pages/Profile/Profile.jsx";
 import AuthPrivateRoutes from "./AuthPrivateRoutes.jsx";
-import LoginUpdated from "../Pages/Authentication/LoginUpdated.jsx";
-import SignupUpdated from "../Pages/Authentication/SignupUpdated.jsx";
-import ForgotPasswordUpdated from "../Pages/Authentication/ForgotPasswordUpdated.jsx";
-import ResetPasswordUpdated from "../Pages/Authentication/ResetPasswordUpdated.jsx";
+import Login from "../Pages/Authentication/Login.jsx";
+import Signup from "../Pages/Authentication/Signup.jsx";
+import ForgotPassword from "../Pages/Authentication/ForgotPassword.jsx";
+import ResetPassword from "../Pages/Authentication/ResetPassword.jsx";
 
 const AnimatedRoutes = () => {
     const location = useLocation();
@@ -39,7 +39,7 @@ const AnimatedRoutes = () => {
                     element={
                         <AuthPrivateRoutes>
                             <AnimatedLayout>
-                                <LoginUpdated />
+                                <Login />
                             </AnimatedLayout>
                         </AuthPrivateRoutes>
                     }
@@ -49,7 +49,7 @@ const AnimatedRoutes = () => {
                     element={
                         <AuthPrivateRoutes>
                             <AnimatedLayout>
-                                <SignupUpdated />
+                                <Signup />
                             </AnimatedLayout>
                         </AuthPrivateRoutes>
                     }
@@ -59,7 +59,7 @@ const AnimatedRoutes = () => {
                     element={
                         <AuthPrivateRoutes>
                             <AnimatedLayout>
-                                <ForgotPasswordUpdated />
+                                <ForgotPassword />
                             </AnimatedLayout>
                         </AuthPrivateRoutes>
                     }
@@ -69,7 +69,7 @@ const AnimatedRoutes = () => {
                     element={
                         <AuthPrivateRoutes>
                             <AnimatedLayout>
-                                <ResetPasswordUpdated />
+                                <ResetPassword />
                             </AnimatedLayout>
                         </AuthPrivateRoutes>
                     }

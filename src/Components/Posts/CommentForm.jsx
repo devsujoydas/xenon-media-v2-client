@@ -22,7 +22,7 @@ const CommentForm = ({ post, user }) => {
             <div className="flex gap-3 items-start">
                 <Link to="/profile">
                     <img
-                        src={user?.profile?.profilePhoto}
+                        src={user?.profileImage?.url}
                         alt="profile"
                         className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
                     />

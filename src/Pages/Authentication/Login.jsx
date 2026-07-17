@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
 import NavLogo from '../../Components/Navbar/NavLogo'
 
-const LoginUpdated = () => {
+const Login = () => {
   const [show, setShow] = useState(true)
   const navigate = useNavigate()
 const queryClient = useQueryClient();
@@ -82,6 +82,7 @@ const queryClient = useQueryClient();
                   name='email'
                   className='w-full mt-1 border rounded-full px-4 py-3 outline-none focus:border-zinc-400 border-zinc-300'
                   placeholder='Email Address'
+                  required
                 />
               </div>
 
@@ -93,6 +94,7 @@ const queryClient = useQueryClient();
                     name='password'
                     type={show ? 'password' : 'text'}
                     className='w-full outline-none'
+                    required
                     placeholder='Password'
                   />
                   <button
@@ -109,7 +111,7 @@ const queryClient = useQueryClient();
               <div className='flex items-center justify-between text-sm'>
                 <div className='flex items-center gap-2 '>
                   <input
-                    type="checkbox" id='checkbox'
+                    type="checkbox" id='checkbox' required
                     className='cursor-pointer w-4 h-4 accent-black'
                   />
                   <label htmlFor='checkbox' className='cursor-pointer'>
@@ -149,4 +151,4 @@ const queryClient = useQueryClient();
   )
 }
 
-export default LoginUpdated
+export default Login

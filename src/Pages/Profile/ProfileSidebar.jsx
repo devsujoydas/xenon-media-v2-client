@@ -45,7 +45,7 @@ const ProfileSidebar = ({ myPosts }) => {
         {/* Cover */}
         <div
           style={{
-            backgroundImage: `url(${user?.profile?.coverPhoto ||
+            backgroundImage: `url(${user?.coverImage?.url ||
               "/default-cover.jpg"
               })`,
           }}
@@ -105,7 +105,7 @@ const ProfileSidebar = ({ myPosts }) => {
           <div className="relative">
             <img
               className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-              src={user?.profile?.profilePhoto || "/default.jpg"}
+              src={user?.profileImage?.url || "/default.jpg"}
               alt="Profile"
             />
             <div
