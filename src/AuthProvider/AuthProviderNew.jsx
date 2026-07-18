@@ -9,7 +9,6 @@ export const AuthProviderNew = ({ children }) => {
 
   const fetchProfile = async () => {
     const { data } = await api.get("/users/profile");
-    console.log(data)
     return data;
   };
 

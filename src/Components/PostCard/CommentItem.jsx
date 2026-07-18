@@ -1,48 +1,40 @@
-// PostDetails/CommentCard.jsx
+// CommentItem.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { useTimeAgo } from "../../hooks/useTimeAgo";
-import { useCommentReaction, useDeleteComment, useUpdateComment } from "../../hooks/postHooks/useComments";
+import { useUpdateComment, useDeleteComment, useCommentReaction } from "../../hooks/postHooks/useComments";
 
-
-const DEFAULT_AVATAR = "/default-avatar.png";
-
-const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
+const CommentItem = ({ comment, postId, currentUser }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(comment.text);
 
-  const timeAgo = useTimeAgo(comment.createdAt);
-  const isOwner = comment.author?._id === currentUser?._id;
+  const { handleUpdateComment } = useUpdateComment(postId);
+  const { handleDeleteComment } = useDeleteComment(postId);
+  const { likeComment, dislikeComment } = useCommentReaction(postId);
 
-  const { updateComment } = useUpdateComment(onUpdated);
-  const { deleteComment } = useDeleteComment(onDeleted);
-  const { likeComment, dislikeComment } = useCommentReaction(onUpdated);
+  const isOwner = comment.author?._id === currentUser?._id;
+  const timeAgo = useTimeAgo(comment.createdAt);
 
   const saveEdit = async () => {
     if (!text.trim()) return;
-    await updateComment(comment._id, text);
-    setIsEditing(false);
-  };
-
-  const cancelEdit = () => {
-    setText(comment.text);
+    await handleUpdateComment(comment._id, text);
     setIsEditing(false);
   };
 
   return (
-    <div className="flex gap-3">
-      <Link to={isOwner ? "/profile" : `/profile/${comment.author?._id}`} className="shrink-0">
+    <div className="flex gap-3 py-3">
+      <Link to={isOwner ? "/profile" : `/profile/${comment.author?._id}`}>
         <img
-          src={comment.author?.profileImage?.url || DEFAULT_AVATAR}
+          src={comment.author?.profileImage?.url || "/default-avatar.png"}
           alt={comment.author?.name}
           className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover"
         />
       </Link>
 
-      <div className="flex-1 min-w-0">
+      <div className="flex-1">
         <div className="bg-zinc-100 rounded-2xl px-3 py-2">
           <p className="text-sm font-semibold">{comment.author?.name}</p>
           {isEditing ? (
@@ -53,26 +45,26 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
               autoFocus
             />
           ) : (
-            <p className="text-sm break-words">{comment.text}</p>
+            <p className="text-sm">{comment.text}</p>
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 mt-1 text-xs text-zinc-500 px-2">
+        <div className="flex items-center gap-3 mt-1 text-xs text-zinc-500 px-2">
           <span>{timeAgo}</span>
 
           <button
             onClick={() => likeComment(comment._id)}
-            className={`flex items-center gap-1 ${comment.likedByMe ? "text-blue-600" : ""}`}
+            className={`flex items-center gap-1 ${comment.liked ? "text-blue-600" : ""}`}
           >
-            {comment.likedByMe ? <BiSolidLike /> : <BiLike />}
+            {comment.liked ? <BiSolidLike /> : <BiLike />}
             {comment.likesCount > 0 && comment.likesCount}
           </button>
 
           <button
             onClick={() => dislikeComment(comment._id)}
-            className={`flex items-center gap-1 ${comment.dislikedByMe ? "text-red-600" : ""}`}
+            className={`flex items-center gap-1 ${comment.disliked ? "text-red-600" : ""}`}
           >
-            {comment.dislikedByMe ? <BiSolidDislike /> : <BiDislike />}
+            {comment.disliked ? <BiSolidDislike /> : <BiDislike />}
             {comment.dislikesCount > 0 && comment.dislikesCount}
           </button>
 
@@ -82,7 +74,7 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
                 <MdEdit /> Edit
               </button>
               <button
-                onClick={() => deleteComment(comment._id)}
+                onClick={() => handleDeleteComment(comment._id)}
                 className="flex items-center gap-1 text-red-600"
               >
                 <FaRegTrashCan /> Delete
@@ -92,10 +84,8 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
 
           {isEditing && (
             <>
-              <button onClick={saveEdit} className="text-blue-600 font-medium">
-                Save
-              </button>
-              <button onClick={cancelEdit}>Cancel</button>
+              <button onClick={saveEdit} className="text-blue-600 font-medium">Save</button>
+              <button onClick={() => { setIsEditing(false); setText(comment.text); }}>Cancel</button>
             </>
           )}
         </div>
@@ -104,4 +94,4 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
   );
 };
 
-export default CommentCard;
+export default CommentItem;

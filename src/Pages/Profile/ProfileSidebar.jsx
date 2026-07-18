@@ -12,20 +12,18 @@ import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.j
 import ContactInfo from "./ContactInfo.jsx";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 import { useLogOut } from "../../hooks/useLogOut.js";
+import { useDeleteAccount } from "../../hooks/useDeleteAccount.js";
 
 const ProfileSidebar = ({ myPosts }) => {
-  const { user, usersPostsData, deleteAccount } = useAuth()
+  const { user } = useAuth();
   const logOut = useLogOut();
+  const deleteAccount = useDeleteAccount();
 
   const [showEdit, setShowEdit] = useState(false);
 
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
- 
-
-
-
 
   return (
     <div className="w-full">
@@ -45,9 +43,9 @@ const ProfileSidebar = ({ myPosts }) => {
         {/* Cover */}
         <div
           style={{
-            backgroundImage: `url(${user?.coverImage?.url ||
-              "/default-cover.jpg"
-              })`,
+            backgroundImage: `url(${
+              user?.coverImage?.url || "/default-cover.jpg"
+            })`,
           }}
           className="relative h-48 w-full bg-center bg-cover"
         >
@@ -69,30 +67,37 @@ const ProfileSidebar = ({ myPosts }) => {
             </div>
 
             {/* Dropdown */}
-            <div onClick={() => setShowEdit(!showEdit)}
-              className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${showEdit
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-2 pointer-events-none"
-                }`}
+            <div
+              onClick={() => setShowEdit(!showEdit)}
+              className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
+                showEdit
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-2 pointer-events-none"
+              }`}
             >
               <div className="p-2">
                 <button
                   onClick={() => setShowUpdateInfoModal(true)}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
-                  <FaUserEdit className="text-emerald-600" /> Edit Profile
+                  <FaUserEdit className="text-emerald-600" />
+                  Edit Profile
                 </button>
+
                 <button
                   onClick={logOut}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
-                  <FiLogOut className="text-zinc-500" /> Log Out
+                  <FiLogOut className="text-zinc-500" />
+                  Log Out
                 </button>
+
                 <button
-                  onClick={() => deleteAccount()}
-                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition text-red-600 hover:bg-red-50 cursor-pointer"
+                  onClick={deleteAccount}
+                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
                 >
-                  <FaUserSlash /> Delete Account
+                  <FaUserSlash />
+                  Delete Account
                 </button>
               </div>
             </div>
@@ -136,15 +141,11 @@ const ProfileSidebar = ({ myPosts }) => {
           {/* Stats */}
           <div className="flex justify-center gap-8 mt-6">
             <div className="text-center">
-              <h1 className="text-lg font-semibold">
-                {myPosts?.length}
-              </h1>
+              <h1 className="text-lg font-semibold">{myPosts?.length}</h1>
               <p className="text-sm text-zinc-500">Posts</p>
             </div>
             <Link to={"/friends"} className="text-center border-x px-6">
-              <h1 className="text-lg font-semibold">
-                {user?.friendCount}
-              </h1>
+              <h1 className="text-lg font-semibold">{user?.friendCount}</h1>
               <p className="text-sm text-zinc-500">Friends</p>
             </Link>
             <div className="text-center">

@@ -52,6 +52,15 @@ export const router = createBrowserRouter([
             <Profile />
         ),
       },
+      {
+        path: '/post/:id',
+        element: (
+          <AnimatedLayout>
+            <PostDetails />
+          </AnimatedLayout>
+        ),
+        loader: async ({ params }) => await api.get(`${import.meta.env.VITE_BACKEND_URL}/posts/post/${params.id}`),
+      },
       // {
       //   path: '/profile/:id',
       //   element: <FriendDetails />,
@@ -65,24 +74,15 @@ export const router = createBrowserRouter([
       //   path: '/imgupload',
       //   element: <ImageUploader />,
       // },
-      {
-        path: '/post/:id',
-        element: (
-          <AnimatedLayout>
-            <PostDetails />
-          </AnimatedLayout>
-        ),
-        loader: async ({ params }) => await api.get(`${import.meta.env.VITE_BACKEND_URL}/posts/${params.id}`),
-      },
       // {
       //   path: '/post/update/:id',
       //   element: <PostDetailsUpdate />,
       //   loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
       // },
-      {
-        path: '/friends',
-        element: <FriendsPage />,
-      },
+      // {
+      //   path: '/friends',
+      //   element: <FriendsPage />,
+      // },
 
       // {
       //   path: "/message",

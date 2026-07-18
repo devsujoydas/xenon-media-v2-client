@@ -1,66 +1,48 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ImAttachment } from "react-icons/im";
-import { VscSend } from "react-icons/vsc";
-import { FaRegSmile } from "react-icons/fa";
-import useCreateComment from '../../hooks/useCreateComment';
+// PostDetails/CommentForm.jsx
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { VscSend } from "react-icons/vsc"; 
+import { useCreateComment } from "../../hooks/postHooks/useComments";
 
-const CommentForm = ({ post, user }) => {
+const CommentForm = ({ post, user, onCreated }) => {
+  const [text, setText] = useState("");
+  const { createComment, submitting } = useCreateComment(post._id, (newComment) => {
+    onCreated?.(newComment);
+    setText("");
+  });
 
-    const [text, setText] = useState("");
-    const { handleCreateComment } = useCreateComment(post._id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!text.trim() || submitting) return;
+    await createComment(text);
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await handleCreateComment(text);
-        setText("");
-    };
+  return (
+    <form onSubmit={handleSubmit} className="pt-3 border-t mt-3 flex items-center gap-2">
+      <Link to="/profile" className="shrink-0">
+        <img
+          src={user?.profileImage?.url || "/default-avatar.png"}
+          alt={user?.name}
+          className="w-8 h-8 rounded-full object-cover"
+        />
+      </Link>
 
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Write a comment..."
+        className="flex-1 border border-zinc-300 rounded-full text-sm px-3 py-2 outline-none"
+      />
 
-    return (
-        <div className="pt-4 border-t mt-3">
-            <div className="flex gap-3 items-start">
-                <Link to="/profile">
-                    <img
-                        src={user?.profileImage?.url}
-                        alt="profile"
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
-                    />
-                </Link>
+      <button
+        type="submit"
+        disabled={!text.trim() || submitting}
+        className="p-2 border border-blue-700 text-blue-700 rounded-full hover:bg-blue-600 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        <VscSend />
+      </button>
+    </form>
+  );
+};
 
-                <form onSubmit={(e) => handleSubmit(e)} className="flex-1">
-                    <textarea
-                        name='text'
-                        rows="2"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="Write your comment here...."
-                        className="w-full resize-none rounded-xl border border-zinc-400 px-4 py-2 text-sm outline-none "
-                    />
-
-                    <div className="flex items-center justify-end mt-2">
-                        <div className="flex items-center gap-2 md:gap-3">
-                            <div className="p-2 md:p-3 border border-zinc-400 rounded-full cursor-pointer hover:bg-zinc-200">
-                                <ImAttachment />
-                            </div>
-                            <div className="p-2 md:p-3 border border-zinc-400 rounded-full cursor-pointer hover:bg-zinc-200">
-                                <FaRegSmile />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={!text.trim()}
-                                className="p-2 md:p-3 border border-blue-700 text-blue-700 rounded-full cursor-pointer hover:bg-blue-600 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <VscSend />
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    )
-}
-
-export default CommentForm
+export default CommentForm;

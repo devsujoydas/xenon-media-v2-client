@@ -13,6 +13,9 @@ const swalWithTailwind = Swal.mixin({
   buttonsStyling: false,
 });
 
+// khaite parbo boite parbo jigaitee problem
+
+
 export const useLogOut = () => {
   const queryClient = useQueryClient(); 
  
@@ -30,8 +33,8 @@ export const useLogOut = () => {
     if (!result.isConfirmed) return;
 
     try {
-      await api.post("/auth/logout");
       localStorage.removeItem("accessToken");
+      await api.post("/auth/logout");
       queryClient.setQueryData(["profile"], null); 
       toast.success("Logged out successfully");
     } catch (err) {
