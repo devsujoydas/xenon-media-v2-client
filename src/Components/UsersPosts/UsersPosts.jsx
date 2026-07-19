@@ -1,4 +1,4 @@
-import { useMyPosts } from "../../hooks/useMyPosts";
+import { useMyPosts } from "../../hooks/postHooks/useMyPosts";
 import PostCard from "../PostCard/PostCard";
 import PostSkeleton from "../Posts/PostSkeleton";
 

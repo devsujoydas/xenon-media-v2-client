@@ -1,11 +1,14 @@
 // hooks/useComments.js
 import { useState, useEffect, useCallback } from "react";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import api from "../../services/api";
 
 // ---------- Fetch + list state for a post's comments ----------
 export const useComments = (postId, sort = "recent") => {
-  const [commentsData, setCommentsData] = useState({ totalComments: 0, comments: [] });
+  const [commentsData, setCommentsData] = useState({
+    totalComments: 0,
+    comments: [],
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,6 +20,8 @@ export const useComments = (postId, sort = "recent") => {
       const { data } = await api.get(`/posts/post/${postId}/comments`, {
         params: { sort },
       });
+
+      console.log(data);
       setCommentsData(data);
     } catch (err) {
       console.error(err);
@@ -30,7 +35,13 @@ export const useComments = (postId, sort = "recent") => {
     fetchComments();
   }, [fetchComments]);
 
-  return { commentsData, setCommentsData, loading, error, refetch: fetchComments };
+  return {
+    commentsData,
+    setCommentsData,
+    loading,
+    error,
+    refetch: fetchComments,
+  };
 };
 
 // ---------- Create ----------
@@ -38,15 +49,19 @@ export const useCreateComment = (postId, onSuccess) => {
   const [submitting, setSubmitting] = useState(false);
 
   const createComment = async (text) => {
-    if (!text.trim()) return;
+    if (!text.trim()) return false;
     setSubmitting(true);
     try {
-      const { data } = await api.post(`/posts/post/${postId}/comment`, { text });
+      const { data } = await api.post(`/posts/post/${postId}/comment`, {
+        text,
+      });
       toast.success("Comment added");
       onSuccess?.(data.comment);
+      return true;
     } catch (err) {
       console.error(err);
       toast.error("Failed to add comment");
+      return false;
     } finally {
       setSubmitting(false);
     }

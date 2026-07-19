@@ -1,67 +1,77 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
-import axios from "axios";
-
 import {
-  FaUserAlt, FaPhoneAlt, FaGlobe, FaFacebook, FaGithub,
-  FaLinkedin, FaYoutube, FaMapMarkerAlt, FaCity
+  FaUserAlt,
+  FaPhoneAlt,
+  FaGlobe,
+  FaFacebook,
+  FaGithub,
+  FaLinkedin,
+  FaYoutube,
+  FaTwitter,
+  FaInstagram,
+  FaMapMarkerAlt,
+  FaCity,
 } from "react-icons/fa";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
-// import { useAuth } from "../../hooks/useAuth"; 
+import api from "../../services/api";
+import { useQueryClient } from "@tanstack/react-query";
 
-const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => {
-  const { userData, setUserData } = useAuth();
+const UpdateProfileModal = ({
+  showUpdateInfoModal,
+  setShowUpdateInfoModal,
+}) => {
+  // NOTE: assumes useAuth exposes `user` + `setUser`.
+  // If your AuthProvider actually exposes `userData` / `setUserData`,
+  // rename below (or better, rename the provider to `user` everywhere for consistency).
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const updateProfileHandler = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+    e.preventDefault();
+    setIsLoading(true);
 
-  const formData = {
-    email: userData?.email,
-    name: e.target.name.value,
-    profile: { bio: e.target.bio.value },
-    contactInfo: {
-      phone: e.target.phone.value,
-      website: e.target.website.value,
-      facebook: e.target.facebook.value,
-      github: e.target.github.value,
-      linkedin: e.target.linkedin.value,
-      youtube: e.target.youtube.value,
-    },
-    location: {
-      from: e.target.from.value,
-      livesIn: e.target.livesIn.value,
-    },
+    const payload = {
+      name: e.target.name.value,
+      bio: e.target.bio.value,
+      contactInfo: {
+        phone: e.target.phone.value,
+        website: e.target.website.value,
+        facebook: e.target.facebook.value,
+        github: e.target.github.value,
+        linkedin: e.target.linkedin.value,
+        twitter: e.target.twitter.value,
+        instagram: e.target.instagram.value,
+        youtube: e.target.youtube.value,
+      },
+      location: {
+        from: e.target.from.value,
+        livesIn: e.target.livesIn.value,
+      },
+    };
+
+    try {
+      const res = await api.put("/users/profile", payload);
+      queryClient.setQueryData(["profile"], res.data.user);
+      Swal.fire("Profile updated successfully!", "", "success");
+      setShowUpdateInfoModal(false);
+    } catch (error) {
+      const message = error.response?.data?.message || "Something went wrong";
+      Swal.fire("Update Failed!", message, "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  try {
-    const res = await api.put("/update", formData);
-    setIsLoading(false);
-
-    if (res.data?.modifiedCount > 0) {
-      Swal.fire("Profile updated successfully!", "", "success");
-
-      const refreshed = await api.get(`/profile?email=${userData?.email}`);
-      setUserData(refreshed.data);
-
-      setShowUpdateInfoModal(false);
-    } else {
-      Swal.fire("You didn’t change anything!", "", "question");
-    }
-  } catch (error) {
-    setIsLoading(false);
-    Swal.fire("Update Failed!", "Something went wrong", "error");
-  }
-};
-
-
   const InputField = ({ icon, name, defaultValue, placeholder }) => (
-    <div className="flex items-center gap-3 rounded-xl px-4 py-3 
+    <div
+      className="flex items-center gap-3 rounded-xl px-4 py-3 
                     bg-white border border-gray-200 shadow-sm
                     focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100
-                    transition">
+                    transition"
+    >
       <span className="text-gray-400">{icon}</span>
       <input
         name={name}
@@ -102,60 +112,76 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
         </h1>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 mb-3">Profile Info</h2>
+          <h2 className="text-sm font-medium text-gray-500 mb-3">
+            Profile Info
+          </h2>
           <div className="space-y-4">
             <InputField
               icon={<FaUserAlt className="text-blue-500" />}
               name="name"
-              defaultValue={userData?.name}
+              defaultValue={user?.name}
               placeholder="Your full name"
             />
             <InputField
               icon={<FaUserAlt />}
               name="bio"
-              defaultValue={userData?.profile?.bio}
+              defaultValue={user?.bio}
               placeholder="Enter bio"
             />
           </div>
         </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 mb-3">Contact Info</h2>
+          <h2 className="text-sm font-medium text-gray-500 mb-3">
+            Contact Info
+          </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <InputField
               icon={<FaPhoneAlt className="text-blue-500" />}
               name="phone"
-              defaultValue={userData?.contactInfo?.phone}
+              defaultValue={user?.contactInfo?.phone}
               placeholder="Phone number"
             />
             <InputField
               icon={<FaGlobe className="text-green-500" />}
               name="website"
-              defaultValue={userData?.contactInfo?.website}
+              defaultValue={user?.contactInfo?.website}
               placeholder="Website URL"
             />
             <InputField
               icon={<FaFacebook className="text-blue-600" />}
               name="facebook"
-              defaultValue={userData?.contactInfo?.facebook}
+              defaultValue={user?.contactInfo?.facebook}
               placeholder="Facebook URL"
             />
             <InputField
               icon={<FaGithub className="text-gray-800" />}
               name="github"
-              defaultValue={userData?.contactInfo?.github}
+              defaultValue={user?.contactInfo?.github}
               placeholder="Github URL"
             />
             <InputField
               icon={<FaLinkedin className="text-blue-700" />}
               name="linkedin"
-              defaultValue={userData?.contactInfo?.linkedin}
+              defaultValue={user?.contactInfo?.linkedin}
               placeholder="LinkedIn URL"
+            />
+            <InputField
+              icon={<FaTwitter className="text-sky-500" />}
+              name="twitter"
+              defaultValue={user?.contactInfo?.twitter}
+              placeholder="Twitter / X URL"
+            />
+            <InputField
+              icon={<FaInstagram className="text-pink-600" />}
+              name="instagram"
+              defaultValue={user?.contactInfo?.instagram}
+              placeholder="Instagram URL"
             />
             <InputField
               icon={<FaYoutube className="text-red-600" />}
               name="youtube"
-              defaultValue={userData?.contactInfo?.youtube}
+              defaultValue={user?.contactInfo?.youtube}
               placeholder="YouTube URL"
             />
           </div>
@@ -167,13 +193,13 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
             <InputField
               icon={<FaMapMarkerAlt className="text-orange-500" />}
               name="from"
-              defaultValue={userData?.location?.from}
+              defaultValue={user?.location?.from}
               placeholder="Your hometown"
             />
             <InputField
               icon={<FaCity className="text-purple-600" />}
               name="livesIn"
-              defaultValue={userData?.location?.livesIn}
+              defaultValue={user?.location?.livesIn}
               placeholder="Current city"
             />
           </div>

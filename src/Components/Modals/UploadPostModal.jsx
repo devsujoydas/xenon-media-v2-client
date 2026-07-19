@@ -1,26 +1,22 @@
 import { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import api from "../../services/api";
-// import { useAuth } from "../../hooks/useAuth"; 
-
-const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function UploadPostModal({ isOpen, setIsOpen }) {
-  const { user, postsData, setPostsData, usersPostsData, setUsersPostsData } = useAuth();
-
+  const { user } = useAuth();
 
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
+  const queryClient = useQueryClient();
 
-  
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) setIsOpen(false);
+      if (modalRef.current && !modalRef.current.contains(e.target))
+        setIsOpen(false);
     };
     if (isOpen) document.addEventListener("mousedown", handleClickOutside);
     else document.removeEventListener("mousedown", handleClickOutside);
@@ -45,94 +41,53 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
   };
 
   const handleDragOver = (e) => e.preventDefault();
- 
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
-    const { data } = await axios.post(`https://api.imgbb.com/1/upload?key=${API_KEY}`, formData);
-    if (!data.success) throw new Error("Image upload failed");
-    return data.data.url;
-  };
- 
+
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      let finalImageUrl = "";
- 
-      if (file) {
-        finalImageUrl = await uploadImage(file);
-      } else if (url) {
-        finalImageUrl = url;
-      }
-
-      const text = e.target.postContent.value.trim();
-      if (!text && !finalImageUrl) {
-        Swal.fire({
-          title: "Nothing to post 😅",
-          text: "Please write something or upload an image.",
-          icon: "warning",
-        });
-        setLoading(false);
-        return;
-      }
- 
-      const postData = {
-        authorId: user._id,
-        content: {
-          text,
-          postImageUrl: finalImageUrl || null,
-        },
-        createdAt: new Date(),
-        updatedAt: null,
-        likes: [],
-        comments: [],
-        shares: [],
-      };
-
-      // Send to backend
-      const res = await api.post(`/post`, postData);
- 
-      if (res.status === 409) {
-        Swal.fire({
-          title: "Duplicate Image ❌",
-          text: "This Image URL was already taken. Try another one.",
-          icon: "error",
-        });
-        return;
-      }
- 
-      if (res.data?.result?.insertedId) {
-
-        api.get(`/posts?authorId=${user._id}`)
-        .then(res=>{setUsersPostsData(res.data)})
-
-        api.get(`/posts`)
-        .then(res=>{setPostsData(res.data)})
-
-
-        Swal.fire({
-          title: "Post Successful 🎉",
-          icon: "success",
-          timer: 1500,
-          showConfirmButton: false,
-        });
-        
-        setIsOpen(false);
-        e.target.reset();
-        setFile(null);
-        setPreview(null);
-        setUrl("");
-      }
-    } catch (error) {
-      console.error("Error creating post:", error);
-      const errMsg = error.response?.data || "Failed to create post";
+    const text = e.target.postContent.value.trim();
+    if (!text && !file) {
       Swal.fire({
-        title: "Error!",
-        text: errMsg,
-        icon: "error",
+        title: "Nothing to post 😅",
+        text: "Please write something or upload an image.",
+        icon: "warning",
       });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("content", text);
+      if (file) formData.append("image", file);
+
+      const res = await api.post("/posts", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log(res);
+
+      if (res.data.post) {
+        queryClient.setQueryData(["my-posts"], (old) => [
+          res.data.post,
+          ...(old || []),
+        ]);
+      }
+
+      Swal.fire({
+        title: "Post Successful 🎉",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      setIsOpen(false);
+      e.target.reset();
+      setFile(null);
+      setPreview(null);
+    } catch (error) {
+      const message = error.response?.data?.message || "Failed to create post";
+      Swal.fire({ title: "Error!", text: message, icon: "error" });
     } finally {
       setLoading(false);
     }
@@ -146,10 +101,9 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         ref={modalRef}
         className="bg-white rounded-2xl shadow-xl w-[500px] max-w-[95%] relative flex flex-col overflow-hidden"
       >
-        {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-zinc-200">
           <img
-            src={!user?.profileImage?.url ? `/default.jpg` : `${user?.profileImage?.url}`}
+            src={user?.profileImage?.url || "/default_profile.webp"}
             alt="profile"
             className="w-10 h-10 rounded-full"
           />
@@ -164,16 +118,13 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handlePostSubmit} className="flex flex-col flex-grow">
-          {/* Caption */}
           <textarea
             name="postContent"
             placeholder={`What's on your mind, ${user?.name || "friend"}?`}
             className="w-full p-4 text-gray-700 resize-none min-h-[100px] focus:outline-none"
           ></textarea>
 
-          {/* Drop Zone */}
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -182,10 +133,15 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           >
             {preview ? (
               <div className="relative inline-block">
-                <img src={preview} alt="preview" className="mx-auto max-h-52 rounded-lg" />
+                <img
+                  src={preview}
+                  alt="preview"
+                  className="mx-auto max-h-52 rounded-lg"
+                />
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setFile(null);
                     setPreview(null);
                   }}
@@ -225,27 +181,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
             />
           </div>
 
-          {/* Import from URL */}
-          <div className="flex items-center gap-2 mx-4 mb-4">
-            <input
-              type="text"
-              placeholder="Or paste image URL"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              className="flex-grow border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            {url && (
-              <button
-                type="button"
-                onClick={() => setUrl("")}
-                className="text-red-500 text-lg"
-              >
-                ×
-              </button>
-            )}
-          </div>
-
-          {/* Footer */}
           <div className="flex justify-end gap-3 p-4 border-t border-zinc-200">
             <button
               type="button"
@@ -260,7 +195,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
               className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm flex items-center gap-2 cursor-pointer"
             >
               {loading && (
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin "></span>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               )}
               {loading ? "Posting..." : "Post"}
             </button>

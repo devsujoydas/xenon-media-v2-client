@@ -1,5 +1,5 @@
 import UsersPosts from "../../Components/UsersPosts/UsersPosts";
-import { useMyPosts } from "../../hooks/useMyPosts";
+import { useMyPosts } from "../../hooks/postHooks/useMyPosts";
 import PostFromAndPost from "./PostFromAndPost";
 import ProfileSidebar from "./ProfileSidebar";
 

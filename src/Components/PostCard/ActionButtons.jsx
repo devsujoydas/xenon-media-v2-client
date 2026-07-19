@@ -38,7 +38,7 @@ const ActionButtons = ({ reacted, reactCount, toggleReact, post }) => {
         <Link to={`/post/${post._id}`}>
           <button className="flex items-center gap-1 md:gap-2 md:px-3 px-1.5 md:py-2 py-1 rounded-lg text-gray-600 hover:bg-gray-100 transition-all active:scale-95 cursor-pointer">
             <BiCommentDots className="text-xl" />
-            <span className="hidden md:inline text-sm font-medium">Comments</span>
+            <span className="hidden md:inline text-sm font-medium"> {post?.commentCount || 0} Comments</span>
           </button>
         </Link>
 

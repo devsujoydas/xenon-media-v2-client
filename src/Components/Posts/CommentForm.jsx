@@ -1,15 +1,18 @@
 // PostDetails/CommentForm.jsx
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { VscSend } from "react-icons/vsc"; 
+import { VscSend } from "react-icons/vsc";
 import { useCreateComment } from "../../hooks/postHooks/useComments";
 
 const CommentForm = ({ post, user, onCreated }) => {
   const [text, setText] = useState("");
-  const { createComment, submitting } = useCreateComment(post._id, (newComment) => {
-    onCreated?.(newComment);
-    setText("");
-  });
+  const { createComment, submitting } = useCreateComment(
+    post._id,
+    (newComment) => {
+      onCreated?.(newComment);
+      setText("");
+    },
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +21,10 @@ const CommentForm = ({ post, user, onCreated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="pt-3 border-t mt-3 flex items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="pt-3 border-t mt-3 flex items-center gap-2"
+    >
       <Link to="/profile" className="shrink-0">
         <img
           src={user?.profileImage?.url || "/default-avatar.png"}
@@ -37,7 +43,7 @@ const CommentForm = ({ post, user, onCreated }) => {
       <button
         type="submit"
         disabled={!text.trim() || submitting}
-        className="p-2 border border-blue-700 text-blue-700 rounded-full hover:bg-blue-600 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed"
+        className="p-2 border border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
       >
         <VscSend />
       </button>

@@ -5,8 +5,11 @@ import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { useTimeAgo } from "../../hooks/useTimeAgo";
-import { useCommentReaction, useDeleteComment, useUpdateComment } from "../../hooks/postHooks/useComments";
-
+import {
+  useCommentReaction,
+  useDeleteComment,
+  useUpdateComment,
+} from "../../hooks/postHooks/useComments";
 
 const DEFAULT_AVATAR = "/default-avatar.png";
 
@@ -16,6 +19,7 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
 
   const timeAgo = useTimeAgo(comment.createdAt);
   const isOwner = comment.author?._id === currentUser?._id;
+  const canManage = isOwner || currentUser?.role === "admin";
 
   const { updateComment } = useUpdateComment(onUpdated);
   const { deleteComment } = useDeleteComment(onDeleted);
@@ -34,7 +38,10 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
 
   return (
     <div className="flex gap-3">
-      <Link to={isOwner ? "/profile" : `/profile/${comment.author?._id}`} className="shrink-0">
+      <Link
+        to={isOwner ? "/profile" : `/profile/${comment.author?._id}`}
+        className="shrink-0"
+      >
         <img
           src={comment.author?.profileImage?.url || DEFAULT_AVATAR}
           alt={comment.author?.name}
@@ -44,7 +51,14 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
 
       <div className="flex-1 min-w-0">
         <div className="bg-zinc-100 rounded-2xl px-3 py-2">
-          <p className="text-sm font-semibold">{comment.author?.name}</p>
+          <p className="text-sm font-semibold flex items-center gap-1">
+            {comment.author?.name}
+            {isOwner && (
+              <span className="text-[10px] font-normal bg-indigo-100 text-indigo-600 px-1.5 py-0.5 rounded-full">
+                You
+              </span>
+            )}
+          </p>
           {isEditing ? (
             <input
               value={text}
@@ -62,7 +76,7 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
 
           <button
             onClick={() => likeComment(comment._id)}
-            className={`flex items-center gap-1 ${comment.likedByMe ? "text-blue-600" : ""}`}
+            className={`flex items-center gap-1 ${comment.likedByMe ? "text-indigo-600" : "hover:text-zinc-700"}`}
           >
             {comment.likedByMe ? <BiSolidLike /> : <BiLike />}
             {comment.likesCount > 0 && comment.likesCount}
@@ -76,9 +90,12 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
             {comment.dislikesCount > 0 && comment.dislikesCount}
           </button>
 
-          {isOwner && !isEditing && (
+          {canManage && !isEditing && (
             <>
-              <button onClick={() => setIsEditing(true)} className="flex items-center gap-1">
+              <button
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-1"
+              >
                 <MdEdit /> Edit
               </button>
               <button

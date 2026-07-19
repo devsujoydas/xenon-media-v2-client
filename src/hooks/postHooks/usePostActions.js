@@ -1,12 +1,16 @@
 // hooks/usePostActions.js
 import { useState } from "react";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import api from "../../services/api";
 
 // ---------- React / Unreact ----------
 export const useReactPost = (post) => {
-  const [reacted, setReacted] = useState(post.isReacted ?? post.reacted ?? false);
-  const [reactCount, setReactCount] = useState(post.reactCount ?? post.reacts?.length ?? 0);
+  const [reacted, setReacted] = useState(
+    post.isReacted ?? post.reacted ?? false,
+  );
+  const [reactCount, setReactCount] = useState(
+    post.reactCount ?? post.reacts?.length ?? 0,
+  );
 
   const toggleReact = async () => {
     const prevReacted = reacted;
@@ -36,8 +40,10 @@ export const useDeletePost = () => {
 
   const deletePost = async (postId) => {
     setDeleting(true);
+    console.log(postId)
     try {
-      await api.delete(`/posts/post/${postId}`);
+      const res = await api.delete(`/posts/post/${postId}`);
+      
       return true;
     } catch (err) {
       console.error(err);

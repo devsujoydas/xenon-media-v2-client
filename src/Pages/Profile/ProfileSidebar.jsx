@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserEdit, FaUserSlash } from "react-icons/fa";
-import Swal from "sweetalert2";
+import { BsFillCameraFill } from "react-icons/bs";
 import UpdateUsernameModal from "../../Components/Modals/UpdateUsernameModal.jsx";
 import UpdateProfileModal from "../../Components/Modals/UpdateProfileModal.jsx";
-import { BsFillCameraFill } from "react-icons/bs";
 import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.jsx";
 import ContactInfo from "./ContactInfo.jsx";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
@@ -20,10 +19,17 @@ const ProfileSidebar = ({ myPosts }) => {
   const deleteAccount = useDeleteAccount();
 
   const [showEdit, setShowEdit] = useState(false);
-
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+
+  // one modal, two targets — "profile" or "cover"
+  const [photoModalOpen, setPhotoModalOpen] = useState(false);
+  const [photoType, setPhotoType] = useState("profile");
+
+  const openPhotoModal = (type) => {
+    setPhotoType(type);
+    setPhotoModalOpen(true);
+  };
 
   return (
     <div className="w-full">
@@ -36,7 +42,11 @@ const ProfileSidebar = ({ myPosts }) => {
         showUsernameModal={showUsernameModal}
         setShowUsernameModal={setShowUsernameModal}
       />
-      <UploadProfilePicture isOpen={isOpen} setIsOpen={setIsOpen} />
+      <UploadProfilePicture
+        isOpen={photoModalOpen}
+        setIsOpen={setPhotoModalOpen}
+        type={photoType}
+      />
 
       {/* Sidebar Card */}
       <div className="flex flex-col bg-white/70 backdrop-blur-md shadow-xl rounded-2xl overflow-hidden border border-zinc-200">
@@ -44,14 +54,14 @@ const ProfileSidebar = ({ myPosts }) => {
         <div
           style={{
             backgroundImage: `url(${
-              user?.coverImage?.url || "/default-cover.jpg"
+              user?.coverImage?.url || "/default_cover.webp"
             })`,
           }}
           className="relative h-48 w-full bg-center bg-cover"
         >
           {/* Cover Camera */}
           <div
-            onClick={() => setIsOpen(true)}
+            onClick={() => openPhotoModal("cover")}
             className="absolute bottom-3 right-3 p-3 bg-white rounded-full shadow-md cursor-pointer hover:bg-zinc-100 transition"
           >
             <BsFillCameraFill className="text-xl text-zinc-700" />
@@ -68,7 +78,6 @@ const ProfileSidebar = ({ myPosts }) => {
 
             {/* Dropdown */}
             <div
-              onClick={() => setShowEdit(!showEdit)}
               className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
                 showEdit
                   ? "opacity-100 translate-y-0"
@@ -77,7 +86,10 @@ const ProfileSidebar = ({ myPosts }) => {
             >
               <div className="p-2">
                 <button
-                  onClick={() => setShowUpdateInfoModal(true)}
+                  onClick={() => {
+                    setShowUpdateInfoModal(true);
+                    setShowEdit(false);
+                  }}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
                   <FaUserEdit className="text-emerald-600" />
@@ -110,11 +122,11 @@ const ProfileSidebar = ({ myPosts }) => {
           <div className="relative">
             <img
               className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-              src={user?.profileImage?.url || "/default.jpg"}
+              src={user?.profileImage?.url || "/default_profile.webp"}
               alt="Profile"
             />
             <div
-              onClick={() => setIsOpen(true)}
+              onClick={() => openPhotoModal("profile")}
               className="absolute bottom-2 right-2 p-2 bg-white rounded-full shadow-md cursor-pointer hover:bg-zinc-100 transition"
             >
               <BsFillCameraFill className="text-lg text-zinc-700" />
@@ -141,15 +153,19 @@ const ProfileSidebar = ({ myPosts }) => {
           {/* Stats */}
           <div className="flex justify-center gap-8 mt-6">
             <div className="text-center">
-              <h1 className="text-lg font-semibold">{myPosts?.length}</h1>
+              <h1 className="text-lg font-semibold">{myPosts?.length || 0}</h1>
               <p className="text-sm text-zinc-500">Posts</p>
             </div>
             <Link to={"/friends"} className="text-center border-x px-6">
-              <h1 className="text-lg font-semibold">{user?.friendCount}</h1>
+              <h1 className="text-lg font-semibold">
+                {user?.followers?.length || 0}
+              </h1>
               <p className="text-sm text-zinc-500">Friends</p>
             </Link>
             <div className="text-center">
-              <h1 className="text-lg font-semibold">0</h1>
+              <h1 className="text-lg font-semibold">
+                {user?.following?.length || 0}
+              </h1>
               <p className="text-sm text-zinc-500">Following</p>
             </div>
           </div>
@@ -159,7 +175,7 @@ const ProfileSidebar = ({ myPosts }) => {
             <div>
               <h1 className="font-semibold text-lg mb-1">About Me</h1>
               <p className="text-sm text-zinc-600">
-                {user?.profile?.bio || "No bio added."}
+                {user?.bio || "No bio added."}
               </p>
             </div>
 

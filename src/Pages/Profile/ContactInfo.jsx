@@ -1,9 +1,14 @@
-import {
-  IoCallOutline,
-} from "react-icons/io5";
+import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineEmail, MdOutlineArrowOutward } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
-import { FaFacebook, FaYoutube, FaGithub, FaLinkedin } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaYoutube,
+  FaGithub,
+  FaLinkedin,
+  FaTwitter,
+  FaInstagram,
+} from "react-icons/fa";
 
 const contacts = (user) => [
   {
@@ -37,6 +42,22 @@ const contacts = (user) => [
     href: user?.contactInfo?.facebook,
     icon: <FaFacebook />,
     bg: "from-blue-500 to-blue-700 text-white",
+  },
+  {
+    id: "twitter",
+    label: "Twitter",
+    value: user?.contactInfo?.twitter,
+    href: user?.contactInfo?.twitter,
+    icon: <FaTwitter />,
+    bg: "from-sky-400 to-sky-600 text-white",
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    value: user?.contactInfo?.instagram,
+    href: user?.contactInfo?.instagram,
+    icon: <FaInstagram />,
+    bg: "from-pink-500 to-purple-600 text-white",
   },
   {
     id: "youtube",
@@ -81,7 +102,6 @@ export default function ContactInfo({ user }) {
             rel="noopener noreferrer"
             className="flex items-center justify-between p-4 rounded-xl bg-white border border-zinc-100 shadow-sm hover:shadow-md hover:scale-[1.01] transition-transform group"
           >
-            {/* Left Part */}
             <div className="flex items-center gap-3">
               <div
                 className={`p-3 rounded-xl bg-gradient-to-br ${item.bg} shadow-md`}
@@ -96,7 +116,6 @@ export default function ContactInfo({ user }) {
               </div>
             </div>
 
-            {/* Right Arrow */}
             <MdOutlineArrowOutward className="text-zinc-400 group-hover:text-zinc-600 transition" />
           </a>
         ))}

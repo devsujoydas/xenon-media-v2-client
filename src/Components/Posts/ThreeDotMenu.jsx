@@ -1,12 +1,10 @@
-// PostCard/ThreeDotMenu.jsx
 import { useState } from "react";
-import { MdEdit } from "react-icons/md";
-import { FaCopy, FaBookmark } from "react-icons/fa";
-import { FaRegTrashCan, FaCircleMinus,  } from "react-icons/fa6";
-import { IoSettings } from "react-icons/io5";
+import { MdEdit, MdVisibilityOff } from "react-icons/md";
+import { FaCopy, FaBookmark, FaFlag } from "react-icons/fa";
+import { FaRegTrashCan, FaCircleMinus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth } from "../../AuthProvider/AuthProviderNew"; 
+import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import { useIsPostSaved, useToggleSavePost } from "../../hooks/postHooks/useSavedPosts";
 import { useDeletePost } from "../../hooks/postHooks/usePostActions";
 
@@ -27,8 +25,8 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
     navigator.clipboard
       .writeText(url)
-      .then(() => toast.success("Post URL Copied!"))
-      .catch((err) => console.error("Copy failed:", err));
+      .then(() => toast.success("Post URL copied!"))
+      .catch(() => toast.error("Couldn't copy the link"));
     setShowMenu(false);
   };
 
@@ -41,14 +39,16 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
     const success = await deletePost(post._id);
     if (success) {
       onRemove?.(post._id);
-      toast.success("Post deleted");
+      toast.success("Post deleted successfully");
+    } else {
+      toast.error("Failed to delete post");
     }
     setShowMenu(false);
   };
 
   return (
     <div
-      className="absolute top-10 right-0 w-40 md:w-56 bg-white border border-zinc-200 shadow-xl rounded-xl p-2 z-20"
+      className="absolute top-10 right-0 w-40 md:w-56 bg-white border border-zinc-200 shadow-xl rounded-xl p-2 z-20 animate-in fade-in zoom-in-95 duration-150"
       onMouseLeave={() => setShowMenu(false)}
     >
       <button onClick={sharePostHandler} className={menuItemStyle}>
@@ -57,34 +57,29 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
 
       {isAuthor ? (
         <>
-          <Link
-            to={`/post/update/${post._id}`}
-            className={menuItemStyle}
-            onClick={() => setShowMenu(false)}
-          >
+          <Link to={`/post/update/${post._id}`} className={menuItemStyle} onClick={() => setShowMenu(false)}>
             <MdEdit className="text-zinc-600" /> Edit Post
           </Link>
 
           <button onClick={handleSaveToggle} className={menuItemStyle}>
-            <FaBookmark className={saved ? "text-blue-600" : "text-zinc-600"} />
+            <FaBookmark className={saved ? "text-indigo-600" : "text-zinc-600"} />
             {saved ? "Remove Saved" : "Save Post"}
           </button>
 
+          <hr className="my-2 border-zinc-200" />
+
           {!confirmingDelete ? (
-            <button
-              onClick={() => setConfirmingDelete(true)}
-              className={`${menuItemStyle} ${destructiveStyle}`}
-            >
+            <button onClick={() => setConfirmingDelete(true)} className={`${menuItemStyle} ${destructiveStyle}`}>
               <FaRegTrashCan /> Delete Post
             </button>
           ) : (
-            <div className="px-3 py-2 space-y-1">
-              <p className="text-xs text-zinc-500">Delete this post?</p>
-              <div className="flex gap-2">
+            <div className="px-3 py-2 space-y-2 bg-red-50 rounded-lg">
+              <p className="text-xs text-zinc-600">Delete this post permanently?</p>
+              <div className="flex gap-3">
                 <button
                   disabled={deleting}
                   onClick={handleDeleteConfirmed}
-                  className="text-xs text-red-600 font-medium disabled:opacity-50"
+                  className="text-xs text-red-600 font-semibold disabled:opacity-50"
                 >
                   {deleting ? "Deleting..." : "Yes, delete"}
                 </button>
@@ -98,7 +93,7 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
       ) : (
         <>
           <button onClick={handleSaveToggle} className={menuItemStyle}>
-            <FaBookmark className={saved ? "text-blue-600" : "text-zinc-600"} />
+            <FaBookmark className={saved ? "text-indigo-600" : "text-zinc-600"} />
             {saved ? "Remove Saved" : "Save Post"}
           </button>
 
@@ -108,11 +103,10 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
             <FaCircleMinus className="text-zinc-600" /> Not Interested
           </button>
           <button className={menuItemStyle} onClick={() => setShowMenu(false)}>
-            <IoSettings className="text-zinc-600" /> Hide Post
+            <MdVisibilityOff className="text-zinc-600" /> Hide Post
           </button>
           <button className={`${menuItemStyle} ${destructiveStyle}`} onClick={() => setShowMenu(false)}>
-            {/* <FaArchive />  */}
-            Report Post
+            <FaFlag /> Report Post
           </button>
         </>
       )}
