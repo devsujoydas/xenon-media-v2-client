@@ -1,6 +1,6 @@
+import { usePosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../PostCard/PostCard";
-import PostSkeleton from "./PostSkeleton";
-import { usePosts } from "../../hooks/usePosts";
+import PostSkeleton from "./PostSkeleton"; 
 
 const Posts = () => {
   const {

@@ -5,42 +5,18 @@ import { FaUserPlus } from "react-icons/fa6";
 import { FaUserAltSlash } from "react-icons/fa";
 import PostCard from '../../Components/PostCard/PostCard.jsx';
 import { useAuth } from '../../AuthProvider/AuthProviderNew.jsx';
-// import { useAuth } from '../../hooks/useAuth.js';
+
 
 const FriendDetails = () => {
-    const {
-        addFriendBtnHanlder,
-        unFriendBtnHanlder,
-        confrimFriendBtnHanlder,
-        cancelFriendRequestBtnHanlder,
-        myFriends,
-        friendsRequest,
-        sentRequests,
-        youMayKnowFriends,
-    } = useAuth()
+  
 
     const data = useLoaderData();
-    const { friend, friendPost } = data;
+  
 
     const btnStyle =
         "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all";
 
-    const myFriendsIds = myFriends?.map((f) => f._id) || [];
-    const friendsRequestIds = friendsRequest?.map((f) => f._id) || [];
-    const sentRequestsIds = sentRequests?.map((f) => f._id) || [];
-    const youMayKnowFriendsIds = youMayKnowFriends?.map((f) => f._id) || [];
-
-    const friendId = friend?._id;
-
-    const isFriend = myFriendsIds.includes(friendId);
-    const hasReceivedRequest = friendsRequestIds.includes(friendId);
-    const hasSentRequest = sentRequestsIds.includes(friendId);
-    const isInYouMayKnow = youMayKnowFriendsIds.includes(friendId);
-
-    const addFriendHandler = () => addFriendBtnHanlder(friend);
-    const cancelRequestHandler = () => cancelFriendRequestBtnHanlder(friend);
-    const confirmFriendHandler = () => confrimFriendBtnHanlder(friend);
-    const unfriendHandler = () => unFriendBtnHanlder(friend);
+   
 
     return (
         <div className="md:pt-0 pt-3 min-h-screen">

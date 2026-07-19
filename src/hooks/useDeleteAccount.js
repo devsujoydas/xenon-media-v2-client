@@ -38,16 +38,13 @@ export const useDeleteAccount = () => {
 
     try {
       await api.delete("/users/profile");
-
       localStorage.removeItem("accessToken");
 
       queryClient.clear();
 
       toast.success("Account deleted successfully");
     } catch (err) {
-      toast.error(
-        err.response?.data?.message || "Failed to delete account"
-      );
+      toast.error(err.response?.data?.message || "Failed to delete account");
     }
   };
 
