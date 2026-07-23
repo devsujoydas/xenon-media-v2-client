@@ -27,6 +27,8 @@ import Signup from '../Pages/Authentication/Signup.jsx';
 import Login from '../Pages/Authentication/Login.jsx';
 import ForgotPassword from '../Pages/Authentication/ForgotPassword.jsx';
 import ResetPassword from '../Pages/Authentication/ResetPassword.jsx';
+import AllUsersPage from '../Pages/AllUsersPage/AllUsersPage.jsx';
+import UserDetailsPage from '../Pages/AllUsersPage/Userdetailspage.jsx';
 
 
 
@@ -57,48 +59,48 @@ export const router = createBrowserRouter([
             <PostDetails />
           </AnimatedLayout>
         ),
-        loader: async ({ params }) => await api.get(`${import.meta.env.VITE_BACKEND_URL}/posts/post/${params.id}`),
+        loader: async ({ params }) => await api.get(`/posts/post/${params.id}`),
       },
       {
-        path: '/friends',
-        element: <FriendsPage />,
+        path: '/users',
+        element: <AllUsersPage />,
       },
       {
-        path: '/profile/:id',
-        element: <FriendDetails />,
-        loader: async ({params}) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${params.id}`),
+        path: '/users/:userId',
+        element: <UserDetailsPage />,
+        loader: async ({params}) => await api.get(`/users/profile/${params.userId}`),
       },
    
 
-      // {
-      //   path: '/savedposts',
-      //   element: <SavedPosts />,
-      // },
+      {
+        path: '/savedposts',
+        element: <SavedPosts />,
+      },
 
-    ],
+    ], 
   },
-  {
-    path: '/admin',
-    element: <PrivateRoutes requiredRole="admin"><AdminLayout /></PrivateRoutes>,
-    children: [
-      {
-        path: "/admin/dashboard",
-        element: <AdminDashboard />
-      },
-      {
-        path: "/admin/settings",
-        element: <Settings />
-      },
-      {
-        path: "/admin/posts",
-        element: <ManagePosts />
-      },
-      {
-        path: "/admin/users",
-        element: <ManageUsers />
-      },
-    ]
-  },
+  // {
+  //   path: '/admin',
+  //   element: <PrivateRoute requiredRole="admin"><AdminLayout /></PrivateRoute>,
+  //   children: [
+  //     {
+  //       path: "/admin/dashboard",
+  //       element: <AdminDashboard />
+  //     },
+  //     {
+  //       path: "/admin/settings",
+  //       element: <Settings />
+  //     },
+  //     {
+  //       path: "/admin/posts",
+  //       element: <ManagePosts />
+  //     },
+  //     {
+  //       path: "/admin/users",
+  //       element: <ManageUsers />
+  //     },
+  //   ]
+  // },
   {
     path: "/login",
     element: (
