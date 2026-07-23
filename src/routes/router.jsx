@@ -68,11 +68,7 @@ export const router = createBrowserRouter([
         element: <FriendDetails />,
         loader: async ({params}) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${params.id}`),
       },
-      // {
-      //   path: '/profile-page',
-      //   element: <ProiflePage />,
-      // },
-      
+   
 
       // {
       //   path: '/savedposts',
@@ -81,28 +77,28 @@ export const router = createBrowserRouter([
 
     ],
   },
-  // {
-  //   path: '/admin',
-  //   element: <PrivateRoutes requiredRole="admin"><AdminLayout /></PrivateRoutes>,
-  //   children: [
-  //     {
-  //       path: "/admin/dashboard",
-  //       element: <AdminDashboard />
-  //     },
-  //     {
-  //       path: "/admin/settings",
-  //       element: <Settings />
-  //     },
-  //     {
-  //       path: "/admin/posts",
-  //       element: <ManagePosts />
-  //     },
-  //     {
-  //       path: "/admin/users",
-  //       element: <ManageUsers />
-  //     },
-  //   ]
-  // },
+  {
+    path: '/admin',
+    element: <PrivateRoutes requiredRole="admin"><AdminLayout /></PrivateRoutes>,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />
+      },
+      {
+        path: "/admin/settings",
+        element: <Settings />
+      },
+      {
+        path: "/admin/posts",
+        element: <ManagePosts />
+      },
+      {
+        path: "/admin/users",
+        element: <ManageUsers />
+      },
+    ]
+  },
   {
     path: "/login",
     element: (
