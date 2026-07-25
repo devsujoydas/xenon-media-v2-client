@@ -10,7 +10,7 @@ const UserCard = ({ user, isFollowing, onFollowChange }) => {
       className="bg-white border border-[#E1E5E1] rounded-2xl p-5 flex flex-col items-center text-center gap-3 cursor-pointer hover:shadow-[0_4px_20px_rgba(20,35,31,0.06)] hover:-translate-y-0.5 transition-all"
     >
       <img
-        src={user.profileImage?.url || "/default_profile.webp"}
+        src={user.profileImage?.url}
         alt={user.name}
         className="w-20 h-20 rounded-full object-cover border-2 border-[#F0EFE9]"
       />

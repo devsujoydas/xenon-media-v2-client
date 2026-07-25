@@ -23,7 +23,7 @@ const UserProfileTop = ({ user, posts }) => {
         <div className="relative border flex items-center">
           <img
             className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover"
-            src={user?.profileImage?.url || "/default_profile.webp"}
+            src={user?.profileImage?.url}
             alt="Profile"
           />
           <div className="mt-4 text-center ">

@@ -103,7 +103,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
       >
         <div className="flex items-center gap-3 p-4 border-b border-zinc-200">
           <img
-            src={user?.profileImage?.url || "/default_profile.webp"}
+            src={user?.profileImage?.url}
             alt="profile"
             className="w-10 h-10 rounded-full"
           />
