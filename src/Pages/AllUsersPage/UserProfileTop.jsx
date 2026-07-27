@@ -10,9 +10,7 @@ const UserProfileTop = ({ user, posts }) => {
       {/* Cover */}
       <div
         style={{
-          backgroundImage: `url(${
-            user?.coverImage?.url || "/default_cover.webp"
-          })`,
+          backgroundImage: `url(${user?.coverImage?.url})`,
         }}
         className="relative h-90 w-full bg-center bg-cover"
       ></div>

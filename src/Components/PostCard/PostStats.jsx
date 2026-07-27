@@ -30,7 +30,7 @@ const PostStats = ({ post, reactCount }) => {
                 {reactors.map((u) => (
                   <Link
                     key={u._id}
-                    to={post?.author?._id === u._id ? "/profile" : `/profile/${u._id}`}
+                    to={post?.author?._id === u._id ? "/profile" : `/users/${u._id}`}
                     className="hover:underline w-full truncate md:text-[14px] text-xs"
                   >
                     {u.name}
