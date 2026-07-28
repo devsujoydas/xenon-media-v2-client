@@ -37,7 +37,7 @@ const FollowButton = ({ userId, isFollowing, onChange, size = "md" }) => {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         disabled={loading}
-        className={`${sizeClasses} rounded-full font-medium transition-colors border disabled:opacity-60 ${
+        className={`${sizeClasses} w-full cursor-pointer rounded-full font-medium transition-colors border disabled:opacity-60  ${
           hovering
             ? "bg-[#FDEDE6] border-[#C1502E] text-[#C1502E]"
             : "bg-white border-[#D8DEDA] text-[#14231F]"
@@ -52,7 +52,7 @@ const FollowButton = ({ userId, isFollowing, onChange, size = "md" }) => {
     <button
       onClick={handleClick}
       disabled={loading}
-      className={`${sizeClasses} rounded-full font-medium bg-[#1F6F5C] text-white hover:bg-[#175646] transition-colors disabled:opacity-60`}
+      className={`${sizeClasses} cursor-pointer w-full rounded-full font-medium bg-[#3835fd] text-white hover:bg-[#6f6dfd] transition-colors disabled:opacity-60`}
     >
       {loading ? "..." : "Follow"}
     </button>

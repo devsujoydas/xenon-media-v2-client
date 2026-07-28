@@ -8,6 +8,7 @@ import { useUserPosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../../Components/PostCard/PostCard";
 import ProfileSidebar from "../Profile/ProfileSidebar";
 import UserProfileTop from "./UserProfileTop";
+import ContactInfo from "../Profile/ContactInfo";
 
 const CONTACT_LINKS = [
   { key: "website", label: "Website" },
@@ -43,9 +44,9 @@ const UserDetailsPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#F6F7F5] pb-16">
+    <div className="min-h-screen  bg-[#f1f5fa] pb-16 flex md:flex-row flex-col-reverse">
       {/* Cover */}
-      <div className="max-w-4xl mx-auto">
+      <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-3 lg:px-5 px-3 ">
 
 
         <UserProfileTop user={AnotherUser} posts={userPosts}/>
@@ -158,6 +159,11 @@ const UserDetailsPage = () => {
           )}
         </div>
       </div>
+
+
+     <div className="md:w-2/5 border-l border-zinc-300 bg-white h-screen md:sticky md:top-0 overflow-y-auto p-5">
+          <ContactInfo user={user} />
+        </div>
     </div>
   );
 };
