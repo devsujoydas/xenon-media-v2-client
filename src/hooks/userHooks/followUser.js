@@ -2,16 +2,11 @@ import api from "../../services/api";
 
  
 // POST /follow/users/:userId/follow
-export const followUser = async (userId) => {
-  const { data } = await api.post(`/follow/users/${userId}/follow`);
+export const followTogglerUser = async (userId) => {
+  const { data } = await api.patch(`/follow/users/${userId}/follow`);
   return data;
 };
 
-// DELETE /follow/users/:userId/follow
-export const unfollowUser = async (userId) => {
-  const { data } = await api.delete(`/follow/users/${userId}/follow`);
-  return data;
-};
 
 // GET /follow/users/:userId/follow-status
 export const fetchFollowStatus = async (userId) => {

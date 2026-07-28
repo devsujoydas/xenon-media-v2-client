@@ -1,9 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import FollowButton from "./FollowButton";
 
-const UserCard = ({ user, isFollowing, onFollowChange }) => {
-
-
+const UserCard = ({ user }) => {
   return (
     <div className="border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex ">
       <div className="md:p-0 p-2 ">
@@ -47,16 +45,10 @@ const UserCard = ({ user, isFollowing, onFollowChange }) => {
               Following
             </span>
           </div>
-          
+
           <div className="mt-2 w-full">
-
-
-          <FollowButton
-            userId={user._id}
-            isFollowing={isFollowing}
-            onChange={onFollowChange}
-            />
-            </div>
+            <FollowButton user={user} />
+          </div>
         </div>
       </div>
     </div>

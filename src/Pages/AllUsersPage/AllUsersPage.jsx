@@ -41,25 +41,13 @@ const AllUsersPage = () => {
     loadUsers(debouncedSearch);
   }, [debouncedSearch, loadUsers]);
 
-  const handleFollowChange = (userId, nextIsFollowing) => {
-    setUsers((prev) =>
-      prev.map((u) =>
-        u._id === userId
-          ? {
-              ...u,
-              isFollowing: nextIsFollowing,
-              followersCount: (u.followersCount || 0) + (nextIsFollowing ? 1 : -1),
-            }
-          : u,
-      ),
-    );
-  };
+ 
 
   return (
     <div className="min-h-screen bg-[#F6F7F5]">
       <div className="max-w-5xl mx-auto px-6 py-10">
         <header className="mb-8">
-          <h1 className="font-serif text-3xl font-semibold text-[#14231F]">
+          <h1 className=" text-3xl font-semibold text-[#14231F]">
             All Users
           </h1>
           <p className="text-[#5B6B65] mt-1">
@@ -104,8 +92,6 @@ const AllUsersPage = () => {
               <UserCard
                 key={user._id}
                 user={user}
-                isFollowing={user.isFollowing}
-                onFollowChange={(next) => handleFollowChange(user._id, next)}
               />
             ))}
           </div>

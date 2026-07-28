@@ -3,7 +3,7 @@ import ProfileIntroSection from "./ProfileIntroSection";
 import ProfilePostSection from "./ProfilePostSection";
 import PhotoSection from "./PhotoSection";
 import ProfileFriendSection from "./ProfileFriendSection"; 
-import PostFromAndPost from "../Profile/PostFromAndPost";
+import PostFrom from "../Profile/PostFrom";
 
 const ProiflePage = () => {
     
@@ -25,7 +25,7 @@ const ProiflePage = () => {
 
                 <div className="lg:w-3/5 space-y-5">
                     {/* <ProfilePostSection /> */}
-                    <PostFromAndPost/>
+                    <PostFrom/>
                 </div>
             </div>
         </div>

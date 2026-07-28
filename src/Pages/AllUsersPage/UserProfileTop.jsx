@@ -15,14 +15,10 @@ const UserProfileTop = ({ user, posts }) => {
   const currentUserId = getCurrentUserId();
   const isOwnProfile = String(currentUserId) === String(user._id);
 
-  console.log(user)
-  const [followState, setFollowState] = useState({
-    isFollowing: !!user?.isFollowing,
-    followersCount: user?.followers?.length || 0,
-  });
+ 
 
   return (
-    <div className="bg-white/70 backdrop-blur-md shadow-xl rounded-2xl overflow-hidden border border-zinc-200">
+    <div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden border border-zinc-200">
       {/* Cover */}
       <div
         style={{ backgroundImage: `url(${user?.coverImage?.url})` }}
@@ -52,16 +48,7 @@ const UserProfileTop = ({ user, posts }) => {
                 Edit profile
               </Link>
             ) : (
-              <FollowButton
-                userId={user._id}
-                isFollowing={followState.isFollowing}
-                onChange={(next) =>
-                  setFollowState((prev) => ({
-                    isFollowing: next,
-                    followersCount: prev.followersCount + (next ? 1 : -1),
-                  }))
-                }
-              />
+              <FollowButton user={user} />
             )}
           </div>
         </div>
@@ -72,7 +59,10 @@ const UserProfileTop = ({ user, posts }) => {
             {user?.name}
           </h1>
           {user?.isVerified && (
-            <MdVerified className="text-blue-500 text-xl shrink-0" title="Verified" />
+            <MdVerified
+              className="text-blue-500 text-xl shrink-0"
+              title="Verified"
+            />
           )}
         </div>
 
@@ -106,7 +96,7 @@ const UserProfileTop = ({ user, posts }) => {
 
         {/* Stats */}
         <div className="flex mt-5 divide-x divide-zinc-200 border-t border-zinc-100 pt-4">
-          <StatItem count={followState.followersCount} label="Followers" />
+          <StatItem count={user?.followers?.length || 0} label="Followers" />
           <StatItem count={user?.following?.length || 0} label="Following" />
           <StatItem count={posts?.length || 0} label="Posts" />
         </div>

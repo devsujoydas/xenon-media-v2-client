@@ -1,6 +1,7 @@
 import UsersPosts from "../../Components/UsersPosts/UsersPosts";
 import { useMyPosts } from "../../hooks/postHooks/useMyPosts";
-import PostFromAndPost from "./PostFromAndPost";
+import PostFrom from "./PostFrom";
+ 
 import ProfileSidebar from "./ProfileSidebar";
 
 const Profile = () => {
@@ -12,7 +13,8 @@ const Profile = () => {
     <div className="relative min-h-screen flex md:flex-row flex-col-reverse bg-[#f1f5fa] lg:mt-0 mt-12">
       {/* Main content */}
       <div className="md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-3 lg:px-5 px-3 ">
-        <PostFromAndPost />
+        <PostFrom />
+
         <div className="mt-3">
           <UsersPosts
             myPosts={myPosts}

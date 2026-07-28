@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
-import { getCurrentUserId } from "../../hooks/userHooks/Currentuser";
+ 
+import { useLoaderData, useParams } from "react-router-dom"; 
 
-import FollowButton from "./FollowButton";
-import { useAuth } from "../../AuthProvider/AuthProviderNew";
+import FollowButton from "./FollowButton"; 
 import { useUserPosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../../Components/PostCard/PostCard";
 import ProfileSidebar from "../Profile/ProfileSidebar";
 import UserProfileTop from "./UserProfileTop";
 import ContactInfo from "../Profile/ContactInfo";
+import PostFrom from "../Profile/PostFrom";
 
 const CONTACT_LINKS = [
   { key: "website", label: "Website" },
@@ -24,30 +23,21 @@ const UserDetailsPage = () => {
   const { userId } = useParams();
 
   const { data } = useLoaderData();
-  const [AnotherUser, setAnotherUser] = useState(data.user);
+  const AnotherUser = data.user;
 
   const { data: userPosts, isLoading } = useUserPosts(userId);
-
- 
 
   return (
     <div className="min-h-screen  bg-[#f1f5fa] pb-16 flex md:flex-row flex-col">
       {/* Cover */}
-      <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-3 lg:px-5 px-3 ">
+      <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-3 lg:px-5 px-3 space-y-5">
+        <UserProfileTop user={AnotherUser} posts={userPosts} />
 
-
-        <UserProfileTop user={AnotherUser} posts={userPosts}/>
-
-      
+        <PostFrom />
 
         {/* Posts */}
         <div className=" mt-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className=" text-xl font-semibold text-[#14231F]">
-              Posts
-            </h2>
-            
-          </div>
+         
 
           {isLoading && (
             <p className="text-[#5B6B65] text-sm">Loading posts...</p>
@@ -67,10 +57,9 @@ const UserDetailsPage = () => {
         </div>
       </div>
 
-
-     <div className="md:w-2/5 border-l border-zinc-300 bg-white h-screen md:sticky md:top-0 overflow-y-auto p-5">
-          <ContactInfo user={AnotherUser} />
-        </div>
+      <div className="md:w-2/5 border-l border-zinc-300 bg-white h-screen md:sticky md:top-0 overflow-y-auto p-5">
+        <ContactInfo user={AnotherUser} />
+      </div>
     </div>
   );
 };
