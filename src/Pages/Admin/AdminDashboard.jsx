@@ -7,7 +7,7 @@ import PostsPerMonthChart from "./Charts/PostsPerMonthChart";
 
 const AdminDashboard = () => {
   const { userData, postsData,  friendsData } = useAuth()
-  console.log(friendsData,)
+
 
   if (!userData) return <p>Loading admin info...</p>;
 

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FollowButton from "./FollowButton";
 
 const UserCard = ({ user, isFollowing, onFollowChange }) => {
-  console.log(user);
+
 
   return (
     <div className="border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex ">

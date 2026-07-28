@@ -65,7 +65,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log(res);
 
       if (res.data.post) {
         queryClient.setQueryData(["my-posts"], (old) => [

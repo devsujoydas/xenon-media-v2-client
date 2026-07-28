@@ -40,7 +40,7 @@ export const useDeletePost = () => {
 
   const deletePost = async (postId) => {
     setDeleting(true);
-    console.log(postId)
+  
     try {
       const res = await api.delete(`/posts/post/${postId}`);
       

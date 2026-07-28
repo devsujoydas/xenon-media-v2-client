@@ -5,8 +5,6 @@ import Layout from '../Layout/Layout.jsx';
 import Home from '../Pages/Home/Home.jsx';
 import Profile from '../Pages/Profile/Profile.jsx';
 import PostDetails from '../Components/Posts/PostDetails.jsx';
-import FriendsPage from '../Pages/Friends/FriendsPage.jsx';
-import FriendDetails from '../Pages/Friends/FriendDetails.jsx';
 
 import SavedPosts from '../Pages/SavedPosts/SavedPosts.jsx';  
 

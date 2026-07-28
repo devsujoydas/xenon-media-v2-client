@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PostCard from "../../Components/PostCard/PostCard";
-// import { useAuth } from "../../hooks/useAuth";
+import { useSavedPosts } from "../../hooks/postHooks/useSavedPosts";
 
 const SavedPostItem = ({ post }) => (
   <Link
@@ -8,19 +8,27 @@ const SavedPostItem = ({ post }) => (
     className="flex gap-3 items-center p-2 border border-zinc-200 rounded-lg hover:shadow-md hover:border-blue-400 transition-all duration-300"
   >
     <img
-      src={post?.content?.postImageUrl || post?.postImageUrl}
-      alt={post?.content?.text || "Post"}
+      src={post?.postImg?.url}
+      alt={post.content}
       className="w-20 h-16 object-cover rounded-md flex-shrink-0"
     />
     <h1 className="text-sm font-medium line-clamp-2 text-zinc-700">
-      {post?.content?.text || "No Content"}
+      {post.content}
     </h1>
   </Link>
 );
 
+const EmptyState = ({ message }) => (
+  <div className="flex-1 flex justify-center items-center h-full text-zinc-400">
+    <h1>{message}</h1>
+  </div>
+);
+
 const SavedPosts = () => {
-  const { savedPosts, removeSavedPostHandler } = useAuth()
-  const hasSavedPosts = savedPosts && savedPosts.length > 0;
+  const { data: savedPosts, isLoading } = useSavedPosts();
+
+  const posts = savedPosts?.posts ?? [];
+  const hasPosts = posts.length > 0;
 
   return (
     <div className="bg-[#f1f5fa] min-h-screen grid grid-cols-1 lg:grid-cols-9">
@@ -33,21 +41,16 @@ const SavedPosts = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-5 py-3 scroll-smooth">
-          {!hasSavedPosts ? (
-            <div className="flex justify-center items-center h-full text-zinc-400">
-              <h1>No saved posts found...</h1>
-            </div>
-          ) : (
+          {isLoading ? (
+            <EmptyState message="Loading saved posts..." />
+          ) : hasPosts ? (
             <div className="grid md:gap-5 gap-3">
-              {savedPosts.map((post) => (
-                <PostCard
-                  key={post._id}
-                  post={post}
-                  variant="saved"
-                  onRemove={removeSavedPostHandler}
-                />
+              {posts.map((post) => (
+                <PostCard key={post._id} post={post} variant="saved" />
               ))}
             </div>
+          ) : (
+            <EmptyState message="No saved posts found..." />
           )}
         </div>
       </div>
@@ -58,16 +61,16 @@ const SavedPosts = () => {
           Saved Posts List
         </h1>
 
-        {!hasSavedPosts ? (
-          <div className="flex-1 flex justify-center items-center text-zinc-400">
-            <h1>No saved posts yet</h1>
-          </div>
-        ) : (
+        {isLoading ? (
+          <EmptyState message="Loading..." />
+        ) : hasPosts ? (
           <div className="flex-1 overflow-y-auto pr-1 space-y-2">
-            {savedPosts.map((post) => (
+            {posts.map((post) => (
               <SavedPostItem key={post._id} post={post} />
             ))}
           </div>
+        ) : (
+          <EmptyState message="No saved posts yet" />
         )}
       </aside>
     </div>

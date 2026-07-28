@@ -13,7 +13,7 @@ export const useSavedPosts = () => {
     queryKey: ["savedPosts"],
     queryFn: async () => {
       const { data } = await api.get("/posts/me/saved");
-      return data; // { totalPosts, posts }
+      return data; 
     },
     enabled: isAuthenticated,
     staleTime: 60 * 1000,

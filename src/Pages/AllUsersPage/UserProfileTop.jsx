@@ -1,22 +1,39 @@
-import React from "react";
-import { MdEdit, MdVerified } from "react-icons/md";
+import React, { useState } from "react";
+import { MdEdit, MdVerified, MdLocationOn, MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
- 
+import { getCurrentUserId } from "../../hooks/userHooks/Currentuser";
+import FollowButton from "./FollowButton";
+
+const StatItem = ({ count, label }) => (
+  <div className="flex flex-col items-center px-4 sm:px-5">
+    <strong className="text-lg text-[#14231F]">{count}</strong>
+    <span className="text-sm text-[#5B6B65]">{label}</span>
+  </div>
+);
 
 const UserProfileTop = ({ user, posts }) => {
+  const currentUserId = getCurrentUserId();
+  const isOwnProfile = String(currentUserId) === String(user._id);
+
+  console.log(user)
+  const [followState, setFollowState] = useState({
+    isFollowing: !!user?.isFollowing,
+    followersCount: user?.followers?.length || 0,
+  });
+
   return (
-    <div className="flex flex-col bg-white/70 backdrop-blur-md shadow-xl rounded-2xl overflow-hidden border border-zinc-200">
+    <div className="bg-white/70 backdrop-blur-md shadow-xl rounded-2xl overflow-hidden border border-zinc-200">
       {/* Cover */}
       <div
         style={{ backgroundImage: `url(${user?.coverImage?.url})` }}
-        className="h-56 sm:h-72 w-full bg-center bg-cover bg-zinc-200"
+        className="h-44 sm:h-64 w-full bg-center bg-cover bg-zinc-200"
       />
 
       {/* Profile Info */}
-      <div className="flex flex-col px-6 pb-6">
-        {/* Avatar + Name */}
-        <div className="flex flex-col sm:flex-row sm:items-end gap-4 -mt-16">
-          <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white shadow-lg shrink-0 bg-zinc-100">
+      <div className="px-5 sm:px-8 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between -mt-14 sm:-mt-16">
+          {/* Avatar overlapping cover */}
+          <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-white shadow-lg shrink-0 bg-zinc-100">
             <img
               className="w-full h-full object-cover"
               src={user?.profileImage?.url}
@@ -24,60 +41,75 @@ const UserProfileTop = ({ user, posts }) => {
             />
           </div>
 
-          <div className="pb-2">
-            <div className="flex items-center gap-2">
-              <h1 className="font-semibold text-2xl text-zinc-900">
-                {user?.name}
-              </h1>
-              {user?.isVerified && (
-                <MdVerified className="text-blue-500 text-xl" title="Verified" />
-              )}
-            </div>
-
-            <div className="flex items-center gap-2 text-zinc-500">
-              <span>@{user?.username}</span>
-              <button
-                type="button"
-                aria-label="Edit profile"
-                className="p-1 text-lg rounded-full hover:bg-zinc-200 cursor-pointer transition"
+          {/* Action button */}
+          <div className="mt-3 sm:mt-0 sm:mb-2">
+            {isOwnProfile ? (
+              <Link
+                to="/profile"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-300 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
               >
-                <MdEdit />
-              </button>
-            </div>
-
-            <p className="text-sm text-zinc-400 mt-1">
-              {user?.location?.livesIn || "Address not added"}
-            </p>
+                <MdEdit className="text-base" />
+                Edit profile
+              </Link>
+            ) : (
+              <FollowButton
+                userId={user._id}
+                isFollowing={followState.isFollowing}
+                onChange={(next) =>
+                  setFollowState((prev) => ({
+                    isFollowing: next,
+                    followersCount: prev.followersCount + (next ? 1 : -1),
+                  }))
+                }
+              />
+            )}
           </div>
         </div>
+
+        {/* Name */}
+        <div className="mt-3 flex items-center gap-2">
+          <h1 className="font-bold text-2xl sm:text-3xl text-zinc-900">
+            {user?.name}
+          </h1>
+          {user?.isVerified && (
+            <MdVerified className="text-blue-500 text-xl shrink-0" title="Verified" />
+          )}
+        </div>
+
+        {/* Username */}
+        {user?.username && (
+          <p className="text-sm text-zinc-500 mt-0.5">@{user.username}</p>
+        )}
 
         {/* Bio */}
         {user?.bio && (
-          <p className="text-zinc-600 mt-4 whitespace-pre-line">{user.bio}</p>
+          <p className="text-zinc-600 mt-3 whitespace-pre-line">{user.bio}</p>
+        )}
+
+        {/* Location */}
+        {(user?.location?.livesIn || user?.location?.from) && (
+          <div className="flex flex-col sm:flex-row sm:gap-4 mt-2 text-sm text-zinc-500">
+            {user.location?.livesIn && (
+              <span className="flex items-center gap-1">
+                <MdLocationOn className="text-base" />
+                Lives in {user.location.livesIn}
+              </span>
+            )}
+            {user.location?.from && (
+              <span className="flex items-center gap-1">
+                <MdHome className="text-base" />
+                From {user.location.from}
+              </span>
+            )}
+          </div>
         )}
 
         {/* Stats */}
-        <div className="flex justify-center gap-8 mt-6 py-4 border-y border-zinc-100">
-          <div className="text-center">
-            <h1 className="text-lg font-semibold">{posts?.length || 0}</h1>
-            <p className="text-sm text-zinc-500">Posts</p>
-          </div>
-          <Link to="/friends" className="text-center border-x px-6 border-zinc-200">
-            <h1 className="text-lg font-semibold">
-              {user?.followers?.length || 0}
-            </h1>
-            <p className="text-sm text-zinc-500">Friends</p>
-          </Link>
-          <div className="text-center">
-            <h1 className="text-lg font-semibold">
-              {user?.following?.length || 0}
-            </h1>
-            <p className="text-sm text-zinc-500">Following</p>
-          </div>
+        <div className="flex mt-5 divide-x divide-zinc-200 border-t border-zinc-100 pt-4">
+          <StatItem count={followState.followersCount} label="Followers" />
+          <StatItem count={user?.following?.length || 0} label="Following" />
+          <StatItem count={posts?.length || 0} label="Posts" />
         </div>
-
-        {/* About */}
-        
       </div>
     </div>
   );

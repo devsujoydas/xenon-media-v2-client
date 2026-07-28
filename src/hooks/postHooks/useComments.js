@@ -21,7 +21,7 @@ export const useComments = (postId, sort = "recent") => {
         params: { sort },
       });
 
-      console.log(data);
+   
       setCommentsData(data);
     } catch (err) {
       console.error(err);
