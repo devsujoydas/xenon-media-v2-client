@@ -10,9 +10,6 @@ const FriendCard = ({ user }) => {
   const [followersCount, setfollowersCount] = useState(
     user?.followers?.length || 0,
   );
-  const [followingCount, setfollowingCount] = useState(
-    user?.following?.length || 0,
-  );
 
   return (
     <div>
@@ -42,7 +39,7 @@ const FriendCard = ({ user }) => {
           <FollowButton
             followersCount={followersCount}
             setfollowersCount={setfollowersCount}
-            user={user}
+            anotherUser={user}
             sm={true}
           />
         </div>
@@ -68,8 +65,6 @@ const FriendSuggested = () => {
 
     getUsersData();
   }, []);
-
-  console.log(users);
 
   return (
     <div>

@@ -54,7 +54,7 @@ const UserProfileTop = ({ user, posts }) => {
                 Edit profile
               </Link>
             ) : (
-             <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} user={user} />
+             <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} anotherUser={user} />
             )}
           </div>
         </div>

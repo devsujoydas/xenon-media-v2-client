@@ -53,7 +53,7 @@ const UserCard = ({ user }) => {
           </div>
 
           <div className="mt-2 w-full">
-            <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} user={user} />
+            <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} anotherUser={user} />
           </div>
         </div>
       </div>

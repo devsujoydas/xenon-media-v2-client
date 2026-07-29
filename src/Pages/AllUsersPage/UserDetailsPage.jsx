@@ -1,7 +1,6 @@
  
 import { useLoaderData, useParams } from "react-router-dom"; 
 
-import FollowButton from "./FollowButton"; 
 import { useUserPosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../../Components/PostCard/PostCard";
 import ProfileSidebar from "../Profile/ProfileSidebar";

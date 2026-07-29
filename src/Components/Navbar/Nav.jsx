@@ -39,11 +39,7 @@ const Nav = () => {
         <div className="flex items-center gap-2 md:text-xl ">
           <img
             className="w-7 h-7 object-cover rounded-full"
-            src={
-              !user?.profileImage?.url
-                ? `/default.jpg`
-                : `${user?.profileImage?.url}`
-            }
+            src={user?.profileImage?.url}
             alt=""
           />
           <span className="font-semibold ">Profile</span>
