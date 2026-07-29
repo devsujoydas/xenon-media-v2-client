@@ -31,7 +31,7 @@ const AllUsersPage = () => {
       setUserCounts(userCounts);
     } catch (err) {
       console.error(err);
-      setError("Users load korte problem hocche. Abar try koro.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }

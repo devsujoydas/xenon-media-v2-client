@@ -1,7 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import FollowButton from "./FollowButton";
+import { useState } from "react";
 
 const UserCard = ({ user }) => {
+  const [followersCount, setfollowersCount] = useState(
+    user?.followers?.length || 0,
+  );
+  const [followingCount, setfollowingCount] = useState(
+    user?.following?.length || 0,
+  );
+
+ 
+
   return (
     <div className="border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex ">
       <div className="md:p-0 p-2 ">
@@ -33,21 +43,17 @@ const UserCard = ({ user }) => {
 
           <div className="flex gap-4 mt-2 text-sm text-[#5B6B65]">
             <span>
-              <strong className="text-[#14231F]">
-                {user.followersCount ?? 0}
-              </strong>{" "}
+              <strong className="text-[#14231F]">{followersCount}</strong>{" "}
               Followers
             </span>
             <span>
-              <strong className="text-[#14231F]">
-                {user.followingCount ?? 0}
-              </strong>{" "}
+              <strong className="text-[#14231F]">{followingCount}</strong>{" "}
               Following
             </span>
           </div>
 
           <div className="mt-2 w-full">
-            <FollowButton user={user} />
+            <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} user={user} />
           </div>
         </div>
       </div>

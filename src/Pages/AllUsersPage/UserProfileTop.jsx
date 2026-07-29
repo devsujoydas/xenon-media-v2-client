@@ -5,6 +5,7 @@ import { getCurrentUserId } from "../../hooks/userHooks/Currentuser";
 import FollowButton from "./FollowButton";
 
 const StatItem = ({ count, label }) => (
+
   <div className="flex flex-col items-center px-4 sm:px-5">
     <strong className="text-lg text-[#14231F]">{count}</strong>
     <span className="text-sm text-[#5B6B65]">{label}</span>
@@ -15,7 +16,12 @@ const UserProfileTop = ({ user, posts }) => {
   const currentUserId = getCurrentUserId();
   const isOwnProfile = String(currentUserId) === String(user._id);
 
- 
+  const [followersCount, setfollowersCount] = useState(
+    user?.followers?.length || 0,
+  );
+  const [followingCount, setfollowingCount] = useState(
+    user?.following?.length || 0,
+  );
 
   return (
     <div className="bg-white/70 backdrop-blur-md shadow-lg rounded-2xl overflow-hidden border border-zinc-200">
@@ -48,7 +54,7 @@ const UserProfileTop = ({ user, posts }) => {
                 Edit profile
               </Link>
             ) : (
-              <FollowButton user={user} />
+             <FollowButton followersCount={followersCount} setfollowersCount={setfollowersCount} user={user} />
             )}
           </div>
         </div>
@@ -96,7 +102,7 @@ const UserProfileTop = ({ user, posts }) => {
 
         {/* Stats */}
         <div className="flex mt-5 divide-x divide-zinc-200 border-t border-zinc-100 pt-4">
-          <StatItem count={user?.followers?.length || 0} label="Followers" />
+          <StatItem count={followersCount || 0} label="Followers" />
           <StatItem count={user?.following?.length || 0} label="Following" />
           <StatItem count={posts?.length || 0} label="Posts" />
         </div>

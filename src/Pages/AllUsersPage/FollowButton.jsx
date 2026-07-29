@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import toast from "react-hot-toast";
 
-const FollowButton = ({ user,  }) => {
+const FollowButton = ({ user, followersCount, setfollowersCount, sm }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [statusLoading, setStatusLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [hovering, setHovering] = useState(false);
- 
- 
+
+  const size = sm ? "py-1.5 px-6 text-sm" : "py-2 px-8 ";
+
   useEffect(() => {
     let ignore = false;
 
@@ -39,12 +40,19 @@ const FollowButton = ({ user,  }) => {
 
     setActionLoading(true);
     const previous = isFollowing;
-    setIsFollowing(!previous); // optimistic update
+    setIsFollowing(!previous);
 
     try {
       const { data: body } = await api.patch(
         `/follow/users/${user._id}/follow`,
       );
+
+      if (body.data.isFollowing) {
+        setfollowersCount(followersCount + 1);
+      } else {
+        setfollowersCount(followersCount - 1);
+      }
+
       setIsFollowing(!!body?.data?.isFollowing);
       toast.success(body?.message);
     } catch (err) {
@@ -60,7 +68,7 @@ const FollowButton = ({ user,  }) => {
     return (
       <button
         disabled
-        className={`py-2 px-8 w-full rounded-full font-medium border border-[#D8DEDA] bg-white text-[#14231F] opacity-60`}
+        className={`${size} w-full rounded-full font-medium border border-[#D8DEDA] bg-white text-[#14231F] opacity-60`}
       >
         ...
       </button>
@@ -74,7 +82,7 @@ const FollowButton = ({ user,  }) => {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         disabled={actionLoading}
-        className={`py-2 px-8 w-full cursor-pointer rounded-full font-medium transition-colors border disabled:opacity-60 ${
+        className={`${size} w-full cursor-pointer rounded-full font-medium transition-colors border disabled:opacity-60 ${
           hovering
             ? "bg-[#FDEDE6] border-[#C1502E] text-[#C1502E]"
             : "bg-white border-[#D8DEDA] text-[#14231F]"
@@ -89,7 +97,7 @@ const FollowButton = ({ user,  }) => {
     <button
       onClick={handleClick}
       disabled={actionLoading}
-      className={`py-2 px-8 cursor-pointer w-full rounded-full font-medium bg-[#3835fd] text-white hover:bg-[#6f6dfd] transition-colors disabled:opacity-60`}
+      className={`${size}cursor-pointer w-full rounded-full font-medium bg-[#3835fd] text-white hover:bg-[#6f6dfd] transition-colors disabled:opacity-60`}
     >
       {actionLoading ? "..." : "Follow"}
     </button>
