@@ -1,5 +1,4 @@
- 
-import { useLoaderData, useParams } from "react-router-dom"; 
+import { useLoaderData } from "react-router-dom";
 
 import { useUserPosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../../Components/PostCard/PostCard";
@@ -19,12 +18,10 @@ const CONTACT_LINKS = [
 ];
 
 const UserDetailsPage = () => {
-  const { userId } = useParams();
-
   const { data } = useLoaderData();
   const AnotherUser = data.user;
 
-  const { data: userPosts, isLoading } = useUserPosts(userId);
+  const { data: userPosts, isLoading } = useUserPosts(AnotherUser._id);
 
   return (
     <div className="min-h-screen  bg-[#f1f5fa] pb-16 flex md:flex-row flex-col">
@@ -36,17 +33,15 @@ const UserDetailsPage = () => {
 
         {/* Posts */}
         <div className=" mt-5">
-         
-
           {isLoading && (
             <p className="text-[#5B6B65] text-sm">Loading posts...</p>
           )}
 
-          {!isLoading && userPosts.length === 0 && (
+          {!isLoading && userPosts?.length === 0 && (
             <p className="text-[#5B6B65] text-sm">no post found</p>
           )}
 
-          {!isLoading && userPosts.length > 0 && (
+          {!isLoading && userPosts?.length > 0 && (
             <div className="flex flex-col gap-4">
               {userPosts.map((post) => (
                 <PostCard key={post._id} post={post} />

@@ -1,4 +1,4 @@
-import forgotPassImg from "../../../public/forgotpassword.jpg";
+import forgotPassImg from "/forgotpassword.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import NavLogo from "../../Components/Navbar/NavLogo";

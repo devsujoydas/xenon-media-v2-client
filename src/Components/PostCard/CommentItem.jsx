@@ -26,7 +26,7 @@ const CommentItem = ({ comment, postId, currentUser }) => {
 
   return (
     <div className="flex gap-3 py-3">
-      <Link to={isOwner ? "/profile" : `/profile/${comment.author?._id}`}>
+      <Link to={isOwner ? "/profile" : `/profile/${comment.author?.username}`}>
         <img
           src={comment.author?.profileImage?.url || "/default-avatar.png"}
           alt={comment.author?.name}

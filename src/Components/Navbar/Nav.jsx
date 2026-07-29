@@ -9,10 +9,13 @@ import { MdDashboard } from "react-icons/md";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import { usePosts } from "../../hooks/postHooks/usePosts";
 import { useMyPosts } from "../../hooks/postHooks/useMyPosts";
+import { useUsers } from "../../hooks/userHooks/useUsers";
 
 const Nav = () => {
   const { user } = useAuth();
   const { data: posts } = usePosts();
+  const { data: users } = useUsers();
+ 
   const { data: myPosts } = useMyPosts();
 
   return (
@@ -85,7 +88,7 @@ const Nav = () => {
         </div>
         <div>
           <p className="px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full">
-            {}
+            {users?.userCounts}
           </p>
         </div>
       </NavLink>

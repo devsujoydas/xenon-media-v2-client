@@ -62,7 +62,7 @@ const SavedPostCard = ({ post }) => {
     <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl bg-white">
       {/* Header */}
       <div className="flex justify-between items-center p-3 md:px-5 md:py-3">
-        <Link to={`/profile/${post.author?._id}`}>
+        <Link to={`/profile/${post.author?.username}`}>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden">
               <img

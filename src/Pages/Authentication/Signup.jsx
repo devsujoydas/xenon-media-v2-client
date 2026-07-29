@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import signupPhoto from "../../../public/signupbg.png";
+import signupPhoto from "/signupbg.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import SignInWithGoogle from "./SignInWithGoogle";

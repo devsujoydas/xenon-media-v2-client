@@ -1,4 +1,4 @@
-import googlePhoto from '../../../public/google.png'
+import googlePhoto from '/google.png'
 
 const SignInWithGoogle = () => {
     return (

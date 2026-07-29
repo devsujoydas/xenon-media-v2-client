@@ -2,9 +2,10 @@ import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { Link } from "react-router-dom";
 import FriendSuggestedSkeleton from "./FriendSuggestedSkeleton";
-import { fetchAllUsers } from "../../hooks/userHooks/useUser";
+import { useUsers } from "../../hooks/userHooks/useUsers";
 import { useEffect, useState } from "react";
 import FollowButton from "../../Pages/AllUsersPage/FollowButton";
+import { CloudLightning } from "lucide-react";
 
 const FriendCard = ({ user }) => {
   const [followersCount, setfollowersCount] = useState(
@@ -16,7 +17,7 @@ const FriendCard = ({ user }) => {
       <hr className="text-zinc-300 my-3 md:my-5" />
       <div className="flex justify-between items-center">
         <Link
-          to={`/users/${user?._id}`}
+          to={`/profile/${user?.username}`}
           className="flex w-full justify-between items-center"
         >
           <div className="flex items-center gap-3">
@@ -51,20 +52,7 @@ const FriendCard = ({ user }) => {
 const FriendSuggested = () => {
   const skeletons = Array.from({ length: 3 });
 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const getUsersData = async () => {
-      try {
-        const { users } = await fetchAllUsers();
-        setUsers(users);
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-      }
-    };
-
-    getUsersData();
-  }, []);
+  const { data, isLoading } = useUsers();
 
   return (
     <div>
@@ -78,7 +66,7 @@ const FriendSuggested = () => {
         </Link>
       </div>
 
-      {users?.length == 0 ? (
+      {data?.users?.length == 0 ? (
         <div className="grid md:gap-5 gap-3 my-5">
           {skeletons.map((_, idx) => (
             <FriendSuggestedSkeleton key={idx} />
@@ -87,7 +75,7 @@ const FriendSuggested = () => {
         </div>
       ) : (
         <div>
-          {users.map((user, idx) => (
+          {data?.users.map((user, idx) => (
             <FriendCard user={user} key={idx} />
           ))}
           <hr className="text-zinc-300 my-3 md:my-5" />

@@ -14,7 +14,7 @@ const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove }) =>
   return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
       <Link
-        to={isOwnProfile ? "/profile" : `/users/${post?.author?._id}`}
+        to={isOwnProfile ? "/profile" : `/profile/${post?.author?.username}`}
         className="flex items-center gap-3"
       >
         <img

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import api from "../services/api";
@@ -6,7 +6,6 @@ import api from "../services/api";
 const AuthContext = createContext(null);
 
 export const AuthProviderNew = ({ children }) => {
-
   const fetchProfile = async () => {
     const { data } = await api.get("/users/profile");
     return data;
@@ -32,11 +31,7 @@ export const AuthProviderNew = ({ children }) => {
     isAuthenticated: !!user && !isError,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

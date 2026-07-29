@@ -39,7 +39,7 @@ const CommentCard = ({ comment, currentUser, onUpdated, onDeleted }) => {
   return (
     <div className="flex gap-3">
       <Link
-        to={isOwner ? "/profile" : `/profile/${comment.author?._id}`}
+        to={isOwner ? "/profile" : `/profile/${comment.author?.username}`}
         className="shrink-0"
       >
         <img

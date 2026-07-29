@@ -64,9 +64,9 @@ export const router = createBrowserRouter([
         element: <AllUsersPage />,
       },
       {
-        path: '/users/:userId',
+        path: '/profile/:username',
         element: <UserDetailsPage />,
-        loader: async ({params}) => await api.get(`/users/profile/${params.userId}`),
+        loader: async ({params}) => await api.get(`/users/profile/${params.username}`),
       },
    
 

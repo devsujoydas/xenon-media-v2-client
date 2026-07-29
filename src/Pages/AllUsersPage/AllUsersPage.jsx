@@ -1,57 +1,23 @@
 import { useEffect, useState, useCallback } from "react";
-import { fetchAllUsers } from "../../hooks/userHooks/useUser";
 import UserCard from "./UserCard";
- 
+import { useUsers } from "../../hooks/userHooks/useUsers";
 
-// Simple debounce so we don't hit the search API on every keystroke
-const useDebouncedValue = (value, delay = 400) => {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-  return debounced;
-};
+
 
 const AllUsersPage = () => {
-  const [users, setUsers] = useState([]);
-  const [userCounts, setUserCounts] = useState(0);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);   
-  const [error, setError] = useState(null);
 
-  const debouncedSearch = useDebouncedValue(search);
-
-  const loadUsers = useCallback(async (query) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { users, userCounts } = await fetchAllUsers(query);
-      setUsers(users);
-      setUserCounts(userCounts);
-    } catch (err) {
-      console.error(err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadUsers(debouncedSearch);
-  }, [debouncedSearch, loadUsers]);
-
+  const { data, isLoading } = useUsers();
  
 
   return (
-    <div className="min-h-screen bg-[#F6F7F5]">
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="min-h-screen md:mt-0 mt-10 bg-[#f1f5fa]">
+      <div className="mx-auto px-6 py-10">
         <header className="mb-8">
-          <h1 className=" text-3xl font-semibold text-[#14231F]">
-            All Users
-          </h1>
+          <h1 className="text-xl md:text-3xl font-semibold text-[#14231F]">All Users</h1>
           <p className="text-[#5B6B65] mt-1">
-            {userCounts} {userCounts === 1 ? "person" : "people"} on the platform
+            {data?.userCounts} {data?.userCounts === 1 ? "person" : "people"}{" "}
+            on the platform
           </p>
         </header>
 
@@ -65,7 +31,7 @@ const AllUsersPage = () => {
           />
         </div>
 
-        {loading && (
+        {isLoading && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <div
@@ -76,23 +42,15 @@ const AllUsersPage = () => {
           </div>
         )}
 
-        {!loading && error && (
-          <p className="text-center text-[#C1502E] py-16">{error}</p>
+
+        {isLoading && data?.users.length === 0 && (
+          <p className="text-center text-[#5B6B65] py-16">No users found</p>
         )}
 
-        {!loading && !error && users.length === 0 && (
-          <p className="text-center text-[#5B6B65] py-16">
-            Kono user paoa jayni.
-          </p>
-        )}
-
-        {!loading && !error && users.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {users.map((user) => (
-              <UserCard
-                key={user._id}
-                user={user}
-              />
+        {!isLoading && data?.users.length > 0 && (
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+            {data?.users.map((user) => (
+              <UserCard key={user._id} user={user} />
             ))}
           </div>
         )}

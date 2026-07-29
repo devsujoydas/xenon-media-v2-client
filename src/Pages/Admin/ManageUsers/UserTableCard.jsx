@@ -73,7 +73,7 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
     return (
         <tr className="bg-white border-b border-gray-200">
             <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <Link to={`/profile/${friend._id}`}>
+                <Link to={`/profile/${friend.username}`}>
                     <div className="flex items-center gap-3">
                         <img
                             className="w-14 h-14 rounded-full border-3 border-zinc-300 object-cover"

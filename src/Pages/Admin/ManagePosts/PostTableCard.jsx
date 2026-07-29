@@ -26,7 +26,7 @@ const PostTableCard = ({ post }) => {
 
 
                 <td className="md:py-3 px-6 ">
-                    <Link to={post?.author?._id === userData?._id ? "/profile" : `/profile/${post?.author?._id}`} className="flex items-center gap-3">
+                    <Link to={post?.author?._id === userData?._id ? "/profile" : `/profile/${post?.author?.username}`} className="flex items-center gap-3">
                         <div>
                             <img
                                 className="md:w-10 w-8 md:h-10 h-8 rounded-full border-2 border-zinc-300 object-cover "

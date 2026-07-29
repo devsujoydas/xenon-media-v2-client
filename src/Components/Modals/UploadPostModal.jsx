@@ -65,7 +65,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-
       if (res.data.post) {
         queryClient.setQueryData(["my-posts"], (old) => [
           res.data.post,
@@ -98,7 +97,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
     <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center animate-fadeIn">
       <div
         ref={modalRef}
-        className="bg-white rounded-2xl shadow-xl w-[500px] max-w-[95%] relative flex flex-col overflow-hidden"
+        className="bg-white rounded-2xl shadow-xl w-[450px] max-w-[95%] relative flex flex-col overflow-hidden"
       >
         <div className="flex items-center gap-3 p-4 border-b border-zinc-200">
           <img
@@ -106,8 +105,8 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
             alt="profile"
             className="w-10 h-10 rounded-full"
           />
-          <h2 className="font-medium text-gray-800">
-            Create Post as {user?.name || "User"}
+          <h2 className=" text-gray-800">
+            Create Post as <span className="font-bold"> {user?.name || "User"}</span>
           </h2>
           <button
             onClick={() => setIsOpen(false)}
