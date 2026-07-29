@@ -1,17 +1,9 @@
-import { usePosts } from "../../hooks/postHooks/usePosts";
 import PostCard from "../PostCard/PostCard";
-import PostSkeleton from "./PostSkeleton"; 
+import PostSkeleton from "./PostSkeleton";
 
-const Posts = () => {
-  const {
-    data: posts,
-    isLoading,
-    isFetching,
-  } = usePosts();
-
+const Posts = ({ posts, isLoading, isFetching }) => {
   const skeletons = Array.from({ length: 1 });
 
-  // 1️⃣ Loading state → Skeleton
   if (isLoading || isFetching) {
     return (
       <div className="grid md:gap-5 gap-3">
@@ -22,7 +14,6 @@ const Posts = () => {
     );
   }
 
-  // 2️⃣ Empty state
   if (!posts || posts.length === 0) {
     return (
       <div className="flex justify-center items-center py-10">

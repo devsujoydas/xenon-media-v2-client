@@ -9,14 +9,16 @@ const PostContent = ({ post }) => (
       </p>
     )}
     {post?.postImg?.url && (
-      <Link to={`/post/${post._id}`}>
-        <img
-          src={post.postImg.url}
-          alt="Post"
-          loading="lazy"
-          className="w-full object-cover rounded-lg md:h-[550px] h-56"
-        />
-      </Link>
+      <div className="border border-gray-200 rounded-lg">
+        <Link to={`/post/${post._id}`} className="">
+          <img
+            src={post.postImg.url}
+            alt="Post"
+            loading="lazy"
+            className="w-full object-cover rounded-lg md:h-[550px] h-56"
+          />
+        </Link>
+      </div>
     )}
   </div>
 );

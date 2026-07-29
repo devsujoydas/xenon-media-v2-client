@@ -1,27 +1,17 @@
 import { useLoaderData } from "react-router-dom";
 
 import { useUserPosts } from "../../hooks/postHooks/usePosts";
-import PostCard from "../../Components/PostCard/PostCard";
-import ProfileSidebar from "../Profile/ProfileSidebar";
+import PostCard from "../../Components/PostCard/PostCard"; 
 import UserProfileTop from "./UserProfileTop";
 import ContactInfo from "../Profile/ContactInfo";
 import PostFrom from "../Profile/PostFrom";
 
-const CONTACT_LINKS = [
-  { key: "website", label: "Website" },
-  { key: "facebook", label: "Facebook" },
-  { key: "github", label: "GitHub" },
-  { key: "linkedin", label: "LinkedIn" },
-  { key: "twitter", label: "Twitter" },
-  { key: "instagram", label: "Instagram" },
-  { key: "youtube", label: "YouTube" },
-];
 
 const UserDetailsPage = () => {
   const { data } = useLoaderData();
   const AnotherUser = data.user;
-
   const { data: userPosts, isLoading } = useUserPosts(AnotherUser._id);
+
 
   return (
     <div className="min-h-screen  bg-[#f1f5fa] pb-16 flex md:flex-row flex-col">

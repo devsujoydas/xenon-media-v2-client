@@ -1,23 +1,22 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, } from "react";
 import UserCard from "./UserCard";
 import { useUsers } from "../../hooks/userHooks/useUsers";
-
-
 
 const AllUsersPage = () => {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useUsers();
- 
 
   return (
     <div className="min-h-screen md:mt-0 mt-10 bg-[#f1f5fa]">
       <div className="mx-auto px-6 py-10">
         <header className="mb-8">
-          <h1 className="text-xl md:text-3xl font-semibold text-[#14231F]">All Users</h1>
+          <h1 className="text-xl md:text-3xl font-semibold text-[#14231F]">
+            All Users
+          </h1>
           <p className="text-[#5B6B65] mt-1">
-            {data?.userCounts} {data?.userCounts === 1 ? "person" : "people"}{" "}
-            on the platform
+            {data?.userCounts} {data?.userCounts === 1 ? "person" : "people"} on
+            the platform
           </p>
         </header>
 
@@ -41,7 +40,6 @@ const AllUsersPage = () => {
             ))}
           </div>
         )}
-
 
         {isLoading && data?.users.length === 0 && (
           <p className="text-center text-[#5B6B65] py-16">No users found</p>
