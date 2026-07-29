@@ -13,7 +13,6 @@ import Settings from '../Pages/Admin/Settings.jsx';
 import AdminLayout from '../Pages/Admin/AdminLayout.jsx';
 import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
 import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
-import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
 
 
 import PrivateRoute from './PrivateRoutes.jsx';
@@ -50,6 +49,7 @@ export const router = createBrowserRouter([
             <Profile />
         ),
       },
+      
       {
         path: '/post/:id',
         element: (
@@ -77,28 +77,28 @@ export const router = createBrowserRouter([
 
     ], 
   },
-  // {
-  //   path: '/admin',
-  //   element: <PrivateRoute requiredRole="admin"><AdminLayout /></PrivateRoute>,
-  //   children: [
-  //     {
-  //       path: "/admin/dashboard",
-  //       element: <AdminDashboard />
-  //     },
-  //     {
-  //       path: "/admin/settings",
-  //       element: <Settings />
-  //     },
-  //     {
-  //       path: "/admin/posts",
-  //       element: <ManagePosts />
-  //     },
-  //     {
-  //       path: "/admin/users",
-  //       element: <ManageUsers />
-  //     },
-  //   ]
-  // },
+  {
+    path: '/admin',
+    element: <PrivateRoute requiredRole="admin"><AdminLayout /></PrivateRoute>,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />
+      },
+      {
+        path: "/admin/settings",
+        element: <Settings />
+      },
+      {
+        path: "/admin/posts",
+        element: <ManagePosts />
+      },
+      {
+        path: "/admin/users",
+        element: <ManageUsers />
+      },
+    ]
+  },
   {
     path: "/login",
     element: (

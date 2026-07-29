@@ -1,72 +1,145 @@
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.js';
-ChartJS.register(CategoryScale, LinearScale, BarElement);
-// import { useAuth } from "../../hooks/useAuth";
+// AdminDashboard.jsx
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Users, FileText, Heart, Clock } from "lucide-react";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+
 import NewUsersPerMonthChart from "./Charts/NewUsersPerMonthChart";
 import PostsPerMonthChart from "./Charts/PostsPerMonthChart";
-
+import { useAuth } from "../../AuthProvider/AuthProviderNew";
+import { useUsers } from "../../hooks/userHooks/useUsers";
+import { usePosts } from "../../hooks/postHooks/usePosts";
 
 const AdminDashboard = () => {
-  const { userData, postsData,  friendsData } = useAuth()
+  const { user } = useAuth();
+  const { data, isLoading: usersLoading } = useUsers();
+  const { data: posts, isLoading: postsLoading } = usePosts();
 
+  const users = data?.users || [];
+  const postList = posts || [];
 
-  if (!userData) return <p>Loading admin info...</p>;
-
-  const totalUsers = friendsData?.length || 0;
-  const totalPosts = postsData?.length || 0;
-  const totalLikes = postsData.reduce((sum, p) => sum + p.likes.length, 0);
-  return (
-    <div>
-      <header className="mb-3 md:mb-8 flex justify-between items-center">
-        <h1 className="md:text-3xl text-xl font-bold">Dashboard</h1>
-        <p className="text-gray-600 md:text-[16px] text-xs">Welcome, {userData?.name || "Admin"}</p>
-      </header>
-
-      <div className="bg-white p-3 md:p-6 rounded-lg shadow mb-3 md:mb-8">
-        <h1 className="font-semibold text-zinc-500 mb-3 md:text-[16px] text-sm">Administrator Information</h1>
-        <div className="flex items-start gap-3">
-          <div>
-            <img
-              className="md:w-20 w-14 md:h-20 h-14 rounded-full border-3 border-zinc-300"
-              src={userData?.profileImage.url}
-              alt="Admin Profile"
-            />
-          </div>
-          <div className="space-y-1">
-            <h1 className="font-bold flex items-center gap-1 md:text-xl">
-              {userData.name}
-              <span className="md:text-xs text-[10px] border border-zinc-300 rounded-md px-1 md:py-0.5 bg-zinc-300 font-medium text-blue-500">
-                admin
-              </span>
-            </h1>
-            <p className="text-zinc-500 md:text-xs text-[10px]">{userData.email}</p>
-            <p className="text-zinc-500 md:text-xs text-[10px]">
-              Joined on{" "}
-              {new Date(userData.createdDate).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p>
-          </div>
+  if (!user || usersLoading || postsLoading) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-500 text-sm">Loading dashboard...</p>
         </div>
       </div>
+    );
+  }
 
-      <section className="grid  grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-10">
-        {[
-          { title: "Total Users", value: totalUsers, bgColor: "#1F6EFF" },
-          { title: "Total Posts", value: totalPosts, bgColor: "#00AB72" },
-          { title: "Total Likes", value: totalLikes, bgColor: "#8740FF" },
-        ].map((card) => (
-          <div key={card.title} className={`bg-white p-3 md:p-6 rounded-lg shadow`}>
-            <p className="md:text-sm text-xs  text-gray-500">{card.title}</p>
-            <p className="md:text-3xl text-2xl font-bold text-blue-600">{card.value}</p>
+  const totalUsers = users.length;
+  const totalPosts = postList.length;
+  const totalReacts = postList.reduce(
+    (sum, p) => sum + (p.reacts?.length || 0),
+    0
+  );
+  const pendingPosts = postList.filter((p) => p.status === "pending").length;
+
+  const stats = [
+    {
+      title: "Total Users",
+      value: totalUsers,
+      icon: Users,
+      color: "from-blue-500 to-blue-600",
+      bg: "bg-blue-50",
+      text: "text-blue-600",
+    },
+    {
+      title: "Total Posts",
+      value: totalPosts,
+      icon: FileText,
+      color: "from-emerald-500 to-emerald-600",
+      bg: "bg-emerald-50",
+      text: "text-emerald-600",
+    },
+    {
+      title: "Total Reactions",
+      value: totalReacts,
+      icon: Heart,
+      color: "from-violet-500 to-violet-600",
+      bg: "bg-violet-50",
+      text: "text-violet-600",
+    },
+    {
+      title: "Pending Posts",
+      value: pendingPosts,
+      icon: Clock,
+      color: "from-amber-500 to-amber-600",
+      bg: "bg-amber-50",
+      text: "text-amber-600",
+    },
+  ];
+
+  return (
+    <div className="max-w-7xl mx-auto">
+      {/* Header */}
+      <header className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+            Dashboard
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Overview of your platform's activity
+          </p>
+        </div>
+        <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100">
+          <img
+            className="w-9 h-9 rounded-full object-cover border-2 border-blue-100"
+            src={user?.profileImage?.url}
+            alt="Admin"
+          />
+          <div>
+            <p className="text-sm font-semibold text-gray-800 leading-tight">
+              {user?.name || "Admin"}
+            </p>
+            <span className="text-[10px] uppercase tracking-wide text-blue-500 font-medium">
+              Administrator
+            </span>
           </div>
-        ))}
+        </div>
+      </header>
+
+      {/* Stat cards */}
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 mb-6 md:mb-10">
+        {stats.map((card) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={card.title}
+              className="relative bg-white rounded-2xl p-4 md:p-5 shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-shadow duration-300"
+            >
+              <div
+                className={`absolute -top-6 -right-6 w-20 h-20 rounded-full bg-gradient-to-br ${card.color} opacity-10 group-hover:opacity-20 transition-opacity`}
+              />
+              <div
+                className={`w-10 h-10 rounded-xl ${card.bg} flex items-center justify-center mb-3`}
+              >
+                <Icon className={`w-5 h-5 ${card.text}`} strokeWidth={2.2} />
+              </div>
+              <p className="text-xs md:text-sm text-gray-500 font-medium">
+                {card.title}
+              </p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 mt-1">
+                {card.value.toLocaleString()}
+              </p>
+            </div>
+          );
+        })}
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <NewUsersPerMonthChart users={friendsData} />
-        <PostsPerMonthChart posts={postsData} />
+      {/* Charts */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <NewUsersPerMonthChart users={users} />
+        <PostsPerMonthChart posts={postList} />
       </section>
     </div>
   );

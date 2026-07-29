@@ -21,7 +21,7 @@ const SideNavbar = () => {
       <div className=" cursor-pointer active:scale-95 transition-all">
         <Link to={`/profile`} className="relative">
           <img
-            className="md:w-15.5 w-12 md:h-15.5 h-12 object-cover rounded-full"
+            className="md:w-15.5 w-12 md:h-15.5 h-12 object-cover border border-zinc-200 rounded-full"
             src={
               !user?.profileImage?.url
                 ? `/default.jpg`

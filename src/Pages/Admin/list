@@ -1,0 +1,94 @@
+users = [
+    {
+        "profileImage": {
+            "url": "/default_profile.webp",
+            "publicId": ""
+        },
+        "activeStatus": {
+            "online": false,
+            "lastActiveAt": "2026-07-19T07:57:46.566Z"
+        },
+        "_id": "6a5c837a278d1671a0dc23a5",
+        "name": "Kawsar Kabir",
+        "username": "kawsar",
+        "email": "kawsar@gmail.com",
+        "role": "user",
+        "isVerified": false,
+        "followers": [],
+        "following": []
+    },
+    {
+        "profileImage": {
+            "url": "/default_profile.webp",
+            "publicId": ""
+        },
+        "activeStatus": {
+            "online": false,
+            "lastActiveAt": "2026-07-19T07:55:13.330Z"
+        },
+        "_id": "6a5c82e1278d1671a0dc2387",
+        "name": "Atikur Rahman",
+        "username": "atikur",
+        "email": "atikur@gmail.com",
+        "role": "user",
+        "isVerified": false,
+        "followers": [],
+        "following": []
+    },
+    
+]
+
+
+
+posts = [
+    {
+        "postImg": {
+            "url": "https://res.cloudinary.com/mvswts7q/image/upload/v1785059191/posts/b4vlmdtnvqseudwjk57b.gif",
+            "publicId": "posts/b4vlmdtnvqseudwjk57b"
+        },
+        "_id": "6a65d77849e4d9f8ddbdc46c",
+        "author": {
+            "profileImage": {
+                "url": "https://res.cloudinary.com/mvswts7q/image/upload/v1785345117/profile_photos/ucgw3ajfxotkeqtllfd5.png",
+                "publicId": "profile_photos/ucgw3ajfxotkeqtllfd5"
+            },
+            "_id": "6a5c8289278d1671a0dc235f",
+            "name": "Sujoy Das",
+            "username": "devsujoydas"
+        },
+        "content": "Why Spider-Man Is Missing From Avengers: Doomsday Official Art!",
+        "reacts": [],
+        "shares": [],
+        "status": "pending",
+        "createdAt": "2026-07-26T09:46:32.465Z",
+        "updatedAt": "2026-07-29T18:37:12.330Z",
+        "commentCount": 0,
+        "isReacted": false,
+        "reactCount": 0
+    },
+    {
+        "postImg": {
+            "url": "https://res.cloudinary.com/mvswts7q/image/upload/v1785259403/cover_photos/oqcy8oz1od1217wpdsvg.jpg",
+            "publicId": "cover_photos/oqcy8oz1od1217wpdsvg"
+        },
+        "_id": "6a68e58eaf4673140a71e39d",
+        "author": {
+            "profileImage": {
+                "url": "https://res.cloudinary.com/mvswts7q/image/upload/v1785345117/profile_photos/ucgw3ajfxotkeqtllfd5.png",
+                "publicId": "profile_photos/ucgw3ajfxotkeqtllfd5"
+            },
+            "_id": "6a5c8289278d1671a0dc235f",
+            "name": "Sujoy Das",
+            "username": "devsujoydas"
+        },
+        "content": "Updated their cover photo.",
+        "reacts": [],
+        "shares": [],
+        "status": "pending",
+        "createdAt": "2026-07-28T17:23:26.118Z",
+        "updatedAt": "2026-07-29T18:37:12.330Z",
+        "commentCount": 0,
+        "isReacted": false,
+        "reactCount": 0
+    },
+]

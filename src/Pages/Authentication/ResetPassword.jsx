@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import resetpassimg from "../../../public/resetpassimg.png";
+import resetpassimg from "/resetpassimg.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import NavLogo from "../../Components/Navbar/NavLogo";
