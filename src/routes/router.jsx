@@ -25,7 +25,7 @@ import Login from '../Pages/Authentication/Login.jsx';
 import ForgotPassword from '../Pages/Authentication/ForgotPassword.jsx';
 import ResetPassword from '../Pages/Authentication/ResetPassword.jsx';
 import AllUsersPage from '../Pages/AllUsersPage/AllUsersPage.jsx'; 
-import UserDetailsPage from '../Pages/AllUsersPage/Userdetailspage.jsx';
+import UserDetailsPage from '../Pages/AllUsersPage/UserDetailsPage.jsx';
 
 
 
