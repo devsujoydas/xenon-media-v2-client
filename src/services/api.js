@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api/v2",
+  // baseURL: "http://localhost:5000/api/v2",
+  baseURL: "https://xenly-backend.vercel.app/api/v2",
   withCredentials: true,
 });
 
@@ -45,7 +46,8 @@ api.interceptors.response.use(
       isRefreshing = true;
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v2/auth/refresh",
+          // "http://localhost:5000/api/v2/auth/refresh",
+          "https://xenly-backend.vercel.app/api/v2/auth/refresh",
           { withCredentials: true },
         );
 
