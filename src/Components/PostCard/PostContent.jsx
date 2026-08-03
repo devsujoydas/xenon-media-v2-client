@@ -9,13 +9,13 @@ const PostContent = ({ post }) => (
       </p>
     )}
     {post?.postImg?.url && (
-      <div className="border border-gray-200 rounded-lg">
+      <div className="border border-gray-200 rounded-lg px-2">
         <Link to={`/post/${post._id}`} className="">
           <img
             src={post.postImg.url}
             alt="Post"
             loading="lazy"
-            className="w-full object-cover rounded-lg md:h-[550px] h-56"
+            className="w-full object-cover rounded-lg md:h-[550px] h-90"
           />
         </Link>
       </div>

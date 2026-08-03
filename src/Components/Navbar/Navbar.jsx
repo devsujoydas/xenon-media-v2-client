@@ -18,8 +18,7 @@ const Navbar = () => {
   const [humbarger, setHumbarger] = useState(1);
   const navigate = useNavigate();
 
-const logOut = useLogOut();
-
+  const logOut = useLogOut();
 
   return (
     <div className="lg:sticky left-0 top-0 ">
@@ -116,12 +115,7 @@ const logOut = useLogOut();
             <div className="space-y-7 ">
               {/* nav logo  */}
               <div className=" flex justify-between px-2 items-center cursor-pointer">
-                <Link
-                  to={"/"}
-                  className="text-2xl font-semibold   text-blue-600"
-                >
-                  Xenly
-                </Link>
+                <NavLogo />
                 <IoCloseSharp
                   onClick={() => setHumbarger(!humbarger)}
                   className="md:text-4xl text-3xl "

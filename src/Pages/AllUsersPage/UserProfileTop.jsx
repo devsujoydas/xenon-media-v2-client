@@ -59,7 +59,7 @@ const UserProfileTop = ({ user, posts }) => {
         {isOwnProfile && (
           <div
             onClick={() => openPhotoModal("cover")}
-            className="absolute top-50 right-3 p-3 bg-white rounded-full shadow-md cursor-pointer hover:bg-zinc-100 transition"
+            className="absolute md:top-50 top-32 right-3 p-2 md:p-3 bg-white rounded-full shadow-md cursor-pointer hover:bg-zinc-100 transition"
           >
             <BsFillCameraFill className="text-xl text-zinc-700" />
           </div>
@@ -90,7 +90,7 @@ const UserProfileTop = ({ user, posts }) => {
                   onClick={() => {
                     setShowUpdateInfoModal(true);
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-300 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer bg-white"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-300 text-xs md:text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer bg-white"
                 >
                   <MdEdit className="text-base" />
                   Edit profile
@@ -107,7 +107,7 @@ const UserProfileTop = ({ user, posts }) => {
 
           {/* Name */}
           <div className="mt-3 flex items-center gap-2">
-            <h1 className="font-bold text-2xl sm:text-3xl text-zinc-900 flex  items-center gap-2">
+            <h1 className="font-bold text-xl sm:text-3xl text-zinc-900 flex  items-center gap-2">
               {user?.name}
               {isOwnProfile ? (
                 <div className="bg-green-400 h-4 w-4 rounded-full  border border-white "></div>

@@ -16,9 +16,9 @@ const UserDetailsPage = () => {
   const isOwnProfile = String(currentUserId) === String(AnotherUser._id);
 
   return (
-    <div className="mrelative min-h-screen flex md:flex-row flex-col-reverse bg-[#f1f5fa] lg:mt-0 mt-12">
+    <div className="mrelative min-h-screen flex md:flex-row flex-col bg-[#f1f5fa] lg:mt-0 mt-12">
       {/* Cover */}
-      <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-3 lg:px-5 px-3 space-y-5">
+      <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-6 lg:px-5 px-3 space-y-5">
         <UserProfileTop user={AnotherUser} posts={userPosts} />
 
         {isOwnProfile && <PostFrom />}
