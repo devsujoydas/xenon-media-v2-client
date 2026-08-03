@@ -52,23 +52,7 @@ const Navbar = () => {
           </div>
 
           <div className="space-y-5">
-            {/* <div className={gopro ? "block" : "hidden"}>
-              <div className="text-lg p-4 rounded-2xl bg-[#f4f6f8] space-y-5">
-                <div className="flex justify-between items-start  text-2xl">
-                  <div className="font-semibold bg-[#d7dfeb]  rounded-full p-4">
-                    <FiAlertTriangle />
-                  </div>
-                  <button onClick={() => setGopro(0)}>
-                    <IoCloseSharp className="cursor-pointer active:scale-95 transition-all" />
-                  </button>
-                </div>
-                <h1 className="text-sm">Enjoy unlimited access to our app with only a small price monthly.</h1>
-                <div className="font-semibold space-x-5">
-                  <button onClick={() => setGopro(0)} className="cursor-pointer active:scale-95 transition-all">Dismiss</button>
-                  <button className="text-[#2b1fff] cursor-pointer active:scale-95 transition-all">Go Pro</button>
-                </div>
-              </div>
-            </div> */}
+      
 
             <hr className="text-zinc-300" />
 

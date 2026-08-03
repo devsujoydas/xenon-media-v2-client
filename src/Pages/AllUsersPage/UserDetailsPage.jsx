@@ -26,11 +26,15 @@ const UserDetailsPage = () => {
         {/* Posts */}
         <div className=" mt-5">
           {isLoading && (
-            <p className="text-[#5B6B65] text-sm">Loading posts...</p>
+            <div className="py-20 text-center">
+              <p className="text-[#5B6B65] text-sm">Loading posts...</p>
+            </div>
           )}
 
           {!isLoading && userPosts?.length === 0 && (
-            <p className="text-[#5B6B65] text-sm">no post found</p>
+            <div className="py-20 text-center">
+              <p className="text-[#5B6B65] text-sm">no post found</p>
+            </div>
           )}
 
           {!isLoading && userPosts?.length > 0 && (
