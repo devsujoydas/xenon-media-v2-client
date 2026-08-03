@@ -26,6 +26,7 @@ import ForgotPassword from '../Pages/Authentication/ForgotPassword.jsx';
 import ResetPassword from '../Pages/Authentication/ResetPassword.jsx';
 import AllUsersPage from '../Pages/AllUsersPage/AllUsersPage.jsx'; 
 import UserDetailsPage from '../Pages/AllUsersPage/UserDetailsPage.jsx';
+import AdminPrivateRoutes from './AdminPrivateRoutes.jsx';
 
 
 
@@ -79,7 +80,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <PrivateRoute requiredRole="admin"><AdminLayout /></PrivateRoute>,
+    element: <AdminPrivateRoutes requiredRole="admin"><AdminLayout /></AdminPrivateRoutes>,
     children: [
       {
         path: "/admin/dashboard",
