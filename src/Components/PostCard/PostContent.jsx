@@ -15,7 +15,7 @@ const PostContent = ({ post }) => (
             src={post.postImg.url}
             alt="Post"
             loading="lazy"
-            className="w-full object-cover rounded-lg md:h-[550px] h-90"
+            className="w-full object-cover rounded-lg md:max-h-[550px] max-h-90"
           />
         </Link>
       </div>
