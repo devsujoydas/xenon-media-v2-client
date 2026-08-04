@@ -2,8 +2,8 @@
 import { useState, useCallback } from "react";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
-import { useAuth } from "../../AuthProvider/AuthProviderNew"; 
-import { useComments } from "../../hooks/postHooks/useComments";
+import { useAuth } from "../../../AuthProvider/AuthProviderNew"; 
+import { useComments } from "../../../hooks/postHooks/useComments";
 
 const CommentBox = ({ post }) => {
   const [sortType, setSortType] = useState("recent");

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { useTimeAgo } from "../../hooks/useTimeAgo";
+import { useTimeAgo } from "../../../hooks/useTimeAgo";
 import {
   useCommentReaction,
   useDeleteComment,
   useUpdateComment,
-} from "../../hooks/postHooks/useComments";
+} from "../../../hooks/postHooks/useComments";
 
 const DEFAULT_AVATAR = "/default-avatar.png";
 

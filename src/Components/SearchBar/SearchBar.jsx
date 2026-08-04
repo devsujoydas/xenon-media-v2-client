@@ -103,10 +103,40 @@ const SearchBar = () => {
 
               {error && <p className="p-3 text-center text-red-500">{error}</p>}
 
-              {!loading && !error && posts.length === 0 && users.length === 0 && (
-                <p className="p-3 text-center text-gray-500">No results found</p>
+              {!loading &&
+                !error &&
+                posts.length === 0 &&
+                users.length === 0 && (
+                  <p className="p-3 text-center text-gray-500">
+                    No results found
+                  </p>
+                )}
+                
+              {users.length > 0 && (
+                <div>
+                  <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">
+                    Users
+                  </h3>
+                  <ul>
+                    {users.map((user) => (
+                      <li
+                        key={user._id}
+                        className="px-3 py-2 cursor-pointer hover:bg-gray-100 truncate"
+                        title={user.name}
+                        onClick={() => handleSelectUser(user)}
+                      >
+                        {user.name}
+                        {user.username && (
+                          <span className="text-zinc-400">
+                            {" "}
+                            @{user.username}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
-
               {posts.length > 0 && (
                 <div className="border-b border-zinc-200">
                   <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">
@@ -123,29 +153,6 @@ const SearchBar = () => {
                         {post.content?.length > 50
                           ? post.content.slice(0, 50) + "..."
                           : post.content}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {users.length > 0 && (
-                <div>
-                  <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">
-                    Users
-                  </h3>
-                  <ul>
-                    {users.map((user) => (
-                      <li
-                        key={user._id}
-                        className="px-3 py-2 cursor-pointer hover:bg-gray-100 truncate"
-                        title={user.name}
-                        onClick={() => handleSelectUser(user)}
-                      >
-                        {user.name}
-                        {user.username && (
-                          <span className="text-zinc-400"> @{user.username}</span>
-                        )}
                       </li>
                     ))}
                   </ul>

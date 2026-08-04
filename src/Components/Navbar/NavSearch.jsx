@@ -103,29 +103,6 @@ const NavSearch = () => {
               <p className="p-3 text-center text-gray-500">No results found</p>
             )}
 
-            {/* Posts Section */}
-            {posts.length > 0 && (
-              <div className="border-b border-zinc-200">
-                <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">
-                  Posts
-                </h3>
-                <ul>
-                  {posts.map((post) => (
-                    <li
-                      key={post._id}
-                      className="px-3 py-2 cursor-pointer hover:bg-gray-100 truncate"
-                      title={post.content}
-                      onClick={() => handleSelectPost(post)}
-                    >
-                      {post.content?.length > 50
-                        ? post.content.slice(0, 50) + "..."
-                        : post.content}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
             {/* Users Section */}
             {users.length > 0 && (
               <div>
@@ -144,6 +121,29 @@ const NavSearch = () => {
                       {user.username && (
                         <span className="text-zinc-400"> @{user.username}</span>
                       )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Posts Section */}
+            {posts.length > 0 && (
+              <div className="border-b border-zinc-200">
+                <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">
+                  Posts
+                </h3>
+                <ul>
+                  {posts.map((post) => (
+                    <li
+                      key={post._id}
+                      className="px-3 py-2 cursor-pointer hover:bg-gray-100 truncate"
+                      title={post.content}
+                      onClick={() => handleSelectPost(post)}
+                    >
+                      {post.content?.length > 50
+                        ? post.content.slice(0, 50) + "..."
+                        : post.content}
                     </li>
                   ))}
                 </ul>

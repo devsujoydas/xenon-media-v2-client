@@ -1,4 +1,5 @@
-import PostCard from "../PostCard/PostCard";
+
+import PostCard from "./PostCard/PostCard";
 import PostSkeleton from "./PostSkeleton";
 
 const Posts = ({ posts, isLoading, isFetching }) => {

@@ -1,7 +1,8 @@
 import { VscSend } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useCreateComment } from "../../hooks/postHooks/useComments";
+import { useCreateComment } from "../../../hooks/postHooks/useComments";
+ 
 
 const CommentInput = ({ user, post }) => {
   const [text, setText] = useState("");

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { useTimeAgo } from "../../hooks/useTimeAgo";
-import { useUpdateComment, useDeleteComment, useCommentReaction } from "../../hooks/postHooks/useComments";
+import { useTimeAgo } from "../../../hooks/useTimeAgo";
+import { useUpdateComment, useDeleteComment, useCommentReaction } from "../../../hooks/postHooks/useComments";
 
 const CommentItem = ({ comment, postId, currentUser }) => {
   const [isEditing, setIsEditing] = useState(false);

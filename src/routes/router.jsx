@@ -4,7 +4,7 @@ import api from '../services/api.js';
 import Layout from '../Layout/Layout.jsx';
 import Home from '../Pages/Home/Home.jsx';
 import Profile from '../Pages/Profile/Profile.jsx';
-import PostDetails from '../Components/Posts/PostDetails.jsx';
+
 
 import SavedPosts from '../Pages/SavedPosts/SavedPosts.jsx';  
 
@@ -27,6 +27,7 @@ import ResetPassword from '../Pages/Authentication/ResetPassword.jsx';
 import AllUsersPage from '../Pages/AllUsersPage/AllUsersPage.jsx'; 
 import UserDetailsPage from '../Pages/AllUsersPage/UserDetailsPage.jsx';
 import AdminPrivateRoutes from './AdminPrivateRoutes.jsx';
+import PostDetails from '../Components/Posts/PostDetails/PostDetails.jsx';
 
 
 

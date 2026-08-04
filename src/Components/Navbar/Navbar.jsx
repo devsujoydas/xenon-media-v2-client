@@ -16,8 +16,7 @@ import { useLogOut } from "../../hooks/useLogOut.js";
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
   const [humbarger, setHumbarger] = useState(1);
-  const navigate = useNavigate();
-
+ 
   const logOut = useLogOut();
 
   return (
@@ -39,12 +38,7 @@ const Navbar = () => {
           <div className=" space-y-6 ">
             {/* nav logo  */}
             <div className="">
-              <Link
-                to={"/"}
-                className="text-2xl md:text-3xl font-bold font-family-winds text-blue-600"
-              >
-                Xenly
-              </Link>
+              <NavLogo/>
             </div>
 
             <NavSearch />

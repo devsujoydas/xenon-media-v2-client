@@ -13,7 +13,7 @@ const SideNavbar = () => {
   const { user } = useAuth();
   const logOut = useLogOut();
   const deleteAccount = useDeleteAccount();
-
+  console.log(user);
   const [showEdit, setShowEdit] = useState(false);
 
   return (
@@ -29,17 +29,19 @@ const SideNavbar = () => {
             }
             alt=""
           />
-          <h1 className="absolute bottom-0 right-1 md:w-4 w-3 md:h-4 h-3 bg-green-400 border-2 border-white rounded-full"></h1>
+          {user.activeStatus.online && (
+            <h1 className="absolute bottom-0 right-1 md:w-4 w-3 md:h-4 h-3 bg-green-400 border-2 border-white rounded-full"></h1>
+          )}
         </Link>
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="border border-zinc-400 md:text-2xl p-2 md:p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+        {/* <div className="border border-zinc-400 md:text-2xl p-2 md:p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
           <LuMessageCircleMore className="" />
         </div>
         <div className="border border-zinc-400 md:text-2xl p-2 md:p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
           <LuBell className="" />
-        </div>
+        </div> */}
 
         <div className="relative">
           <div
@@ -51,6 +53,7 @@ const SideNavbar = () => {
 
           {/* Dropdown */}
           <div
+            onMouseLeave={() => setShowEdit(!showEdit)}
             className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
               showEdit
                 ? "opacity-100 translate-y-0"

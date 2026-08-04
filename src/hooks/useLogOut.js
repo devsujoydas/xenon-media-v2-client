@@ -33,8 +33,8 @@ export const useLogOut = () => {
     if (!result.isConfirmed) return;
 
     try {
-      localStorage.removeItem("accessToken");
       await api.post("/auth/logout");
+      localStorage.removeItem("accessToken");
       queryClient.setQueryData(["profile"], null); 
       toast.success("Logged out successfully");
     } catch (err) {

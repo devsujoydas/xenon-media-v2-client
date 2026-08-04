@@ -66,7 +66,7 @@ const UserProfileTop = ({ user, posts }) => {
         )}
         {/* Profile Info */}
         <div className="px-5 sm:px-8 pb-6">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between -mt-14 sm:-mt-16">
+          <div className="flex flex-row items-end justify-between -mt-14 sm:-mt-16">
             <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full  border-4 border-white shadow-lg shrink-0 bg-zinc-100 relative">
               <img
                 className="w-full h-full object-cover rounded-full"
@@ -96,11 +96,13 @@ const UserProfileTop = ({ user, posts }) => {
                   Edit profile
                 </button>
               ) : (
-                <FollowButton
-                  followersCount={followersCount}
-                  setfollowersCount={setfollowersCount}
-                  anotherUser={user}
-                />
+                <div className="">
+                  <FollowButton
+                    followersCount={followersCount}
+                    setfollowersCount={setfollowersCount}
+                    anotherUser={user}
+                  />
+                </div>
               )}
             </div>
           </div>

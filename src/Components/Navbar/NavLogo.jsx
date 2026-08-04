@@ -6,7 +6,7 @@ const NavLogo = () => {
     <div className="">
       <Link
         to={"/"}
-        className="text-2xl font-bold font-family-winds text-blue-600 "
+        className="text-2xl md:text-3xl font-bold font-family-winds text-blue-600 "
       >
         Xenly
       </Link>

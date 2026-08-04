@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import PostCard from "../../Components/PostCard/PostCard";
+ 
 import { useSavedPosts } from "../../hooks/postHooks/useSavedPosts";
+import PostCard from "../../Components/Posts/PostCard/PostCard";
+
 
 const SavedPostItem = ({ post }) => (
   <Link

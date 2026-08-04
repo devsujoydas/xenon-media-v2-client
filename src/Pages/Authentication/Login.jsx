@@ -142,14 +142,14 @@ const Login = () => {
             </form>
 
             {/* Divider */}
-            <div className="flex items-center my-6">
+            {/* <div className="flex items-center my-6">
               <div className="flex-1 border-t"></div>
               <span className="px-4 text-sm text-zinc-400">or</span>
               <div className="flex-1 border-t"></div>
-            </div>
+            </div> */}
 
             {/* Google */}
-            <SignInWithGoogle />
+            {/* <SignInWithGoogle /> */}
           </div>
         </div>
       </div>

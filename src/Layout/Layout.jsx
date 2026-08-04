@@ -2,18 +2,9 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Components/Navbar/Navbar";
 import Loading from "../Components/Loading/Loading";
 import { useAuth } from "../AuthProvider/AuthProviderNew";
-import { useEffect } from "react";
-import api from "../services/api";
 
 const Layout = () => {
   const { loading } = useAuth();
-
-  useEffect(() => {
-    const activeStatus = async () => {
-      await api.post("/users/active-status");
-    };
-    activeStatus();
-  }, [loading]);
 
   return (
     <div className="">

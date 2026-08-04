@@ -2,8 +2,10 @@
  
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useTimeAgo } from "../../hooks/useTimeAgo";
-import ThreeDotMenu from "../Posts/ThreeDotMenu";
+ 
+ 
+import { useTimeAgo } from "../../../hooks/useTimeAgo";
+import ThreeDotMenu from "./ThreeDotMenu";
 
 const DEFAULT_AVATAR = "/default-avatar.png";
 

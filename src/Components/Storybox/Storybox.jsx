@@ -3,15 +3,22 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { useUsers } from "../../hooks/userHooks/useUsers";
+import { useAuth } from "../../AuthProvider/AuthProviderNew";
 
 const Storybox = () => {
   const { data } = useUsers();
+  const { user } = useAuth();
 
+const followedUsers = data?.users?.filter((u) =>
+  u.followers?.includes(user._id)
+);
+
+  console.log(followedUsers);
   return (
     <div className="bg-white md:p-5 p-2 rounded-xl shadow-xl">
       <div className="w-full  overflow-hidden ">
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-2 py-2">
-          {data?.users.map((user, idx) => (
+          {followedUsers?.map((user, idx) => (
             <div key={idx} className="shrink-0">
               <Link to={`/profile/${user?.username}`} className="relative">
                 <img

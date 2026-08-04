@@ -1,8 +1,11 @@
 import axios from "axios";
 
+// const backendURL = "http://localhost:5000/api/v2";
+const backendURL = "https://xenly-backend.vercel.app/api/v2"
+
 const api = axios.create({
   // baseURL: "http://localhost:5000/api/v2",
-  baseURL: "https://xenly-backend.vercel.app/api/v2",
+  baseURL: backendURL,
   withCredentials: true,
 });
 
@@ -45,11 +48,7 @@ api.interceptors.response.use(
 
       isRefreshing = true;
       try {
-        const { data } = await axios.get(
-          // "http://localhost:5000/api/v2/auth/refresh",
-          "https://xenly-backend.vercel.app/api/v2/auth/refresh",
-          { withCredentials: true },
-        );
+        const { data } = await axios.get(backendURL, { withCredentials: true });
 
         const newToken = data.accessToken;
         localStorage.setItem("accessToken", newToken);
