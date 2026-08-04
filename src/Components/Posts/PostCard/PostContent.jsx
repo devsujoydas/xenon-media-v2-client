@@ -42,8 +42,8 @@ const PostContent = ({ post }) => {
         <div className="border border-gray-100 rounded-lg md:px-0 px-2">
           <Link to={`/post/${post._id}`}>
             <img
-              src={post.postImg.url}
               alt="Post"
+              src={post.postImg.url}
               loading="lazy"
               className="w-full object-contain rounded-lg md:max-h-[550px] max-h-90"
             />

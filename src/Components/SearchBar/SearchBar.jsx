@@ -7,14 +7,14 @@ import { useUsers } from "../../hooks/userHooks/useUsers";
 import { usePosts } from "../../hooks/postHooks/usePosts";
 import UploadPostModal from "../Modals/UploadPostModal";
 
-const SearchBar = () => {
+const SearchBar = ({setIsOpen}) => {
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
 
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(query.trim()), 300);
@@ -74,7 +74,8 @@ const SearchBar = () => {
 
   return (
     <div>
-      <UploadPostModal isOpen={isOpen} setIsOpen={setIsOpen} />
+  
+
       <div
         ref={wrapperRef}
         className="lg:mt-0 mt-16 bg-white lg:py-6 py-4 md:px-10 px-5 flex md:gap-5 gap-3 justify-between items-center border-b border-zinc-400 relative"
@@ -96,7 +97,7 @@ const SearchBar = () => {
           />
 
           {showResults && (
-            <div className="absolute top-full left-0 right-0 bg-white border border-zinc-300 rounded-md mt-1 max-h-72 overflow-y-auto shadow-lg z-50 text-xs">
+            <div className="absolute top-full left-0 right-0 bg-white border border-zinc-300 rounded-md mt-1 max-h-72 overflow-y-auto shadow-lg z-48 text-xs">
               {loading && (
                 <p className="p-3 text-center text-gray-500">Loading...</p>
               )}
@@ -111,7 +112,7 @@ const SearchBar = () => {
                     No results found
                   </p>
                 )}
-                
+
               {users.length > 0 && (
                 <div>
                   <h3 className="px-3 py-2 font-semibold text-gray-700 bg-gray-50 sticky top-0">

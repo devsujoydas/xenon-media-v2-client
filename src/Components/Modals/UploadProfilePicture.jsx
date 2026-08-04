@@ -71,7 +71,7 @@ export default function UploadProfilePicture({
       });
 
       queryClient.setQueryData(["profile"], res.data.user);
-      
+
       if (res.data.post) {
         queryClient.setQueryData(["my-posts"], (old) => [
           res.data.post,

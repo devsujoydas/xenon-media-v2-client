@@ -1,23 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import Nav from "./Nav";
 import Swal from "sweetalert2";
 
-import { FiAlertTriangle } from "react-icons/fi";
-import { IoCloseSharp } from "react-icons/io5";
+import { FiAlertTriangle, FiLogOut } from "react-icons/fi";
+import { IoCloseSharp, IoSettingsOutline } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import NavSearch from "./NavSearch.jsx";
-import toast from "react-hot-toast";
 import { useAuth } from "../../AuthProvider/AuthProviderNew.jsx";
 import NavLogo from "./NavLogo.jsx";
 import { useLogOut } from "../../hooks/useLogOut.js";
+import { Lock, Settings } from "lucide-react";
+import { useDeleteAccount } from "../../hooks/useDeleteAccount.js";
+import { FaUserSlash } from "react-icons/fa";
+import ChangePasswordModal from "../Modals/ChangePasswordModal.jsx";
 
-const Navbar = () => {
-  const { user, signOutUser } = useAuth();
+const Navbar = ({ setShowChangePassModal }) => {
+  const { user } = useAuth();
   const [humbarger, setHumbarger] = useState(1);
- 
+
   const logOut = useLogOut();
+  const deleteAccount = useDeleteAccount();
+  const [showEdit, setShowEdit] = useState(false);
 
   return (
     <div className="lg:sticky left-0 top-0 ">
@@ -38,7 +43,7 @@ const Navbar = () => {
           <div className=" space-y-6 ">
             {/* nav logo  */}
             <div className="">
-              <NavLogo/>
+              <NavLogo />
             </div>
 
             <NavSearch />
@@ -46,8 +51,6 @@ const Navbar = () => {
           </div>
 
           <div className="space-y-5">
-      
-
             <hr className="text-zinc-300" />
 
             <div className=" flex justify-between items-center cursor-pointer">
@@ -72,9 +75,46 @@ const Navbar = () => {
                   </div>
                 </div>
               </Link>
-              <button onClick={() => logOut()}>
-                <RxExit className="text-3xl cursor-pointer m-3" />
-              </button>
+              <div
+                onClick={() => setShowEdit(!showEdit)}
+                className="p-3 rounded-full bg-white/80 shadow-md cursor-pointer hover:bg-white transition relative"
+              >
+                <IoSettingsOutline className="text-2xl text-zinc-700" />
+
+                <div
+                  onMouseLeave={() => setShowEdit(!showEdit)}
+                  className={`absolute bottom-12 right-5 z-40 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
+                    showEdit
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <div className="p-2" onClick={() => setHumbarger(!humbarger)}>
+                    <button
+                      onClick={() => setShowChangePassModal(true)}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
+                    >
+                      <Lock size={14} className="text-zinc-500" />
+                      Change Password
+                    </button>
+                    <button
+                      onClick={logOut}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
+                    >
+                      <FiLogOut className="text-zinc-500" />
+                      Log Out
+                    </button>
+
+                    <button
+                      onClick={deleteAccount}
+                      className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
+                    >
+                      <FaUserSlash />
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -107,10 +147,7 @@ const Navbar = () => {
 
             <div className=" ">
               <hr className="text-zinc-300 pb-3" />
-              <div
-                onClick={() => setHumbarger(!humbarger)}
-                className=" flex justify-between items-center cursor-pointer"
-              >
+              <div className=" flex justify-between items-center cursor-pointer">
                 <Link to={`/profile`}>
                   <div className="flex items-center gap-2">
                     <div className="w-12 h-12 overflow-hidden rounded-full">
@@ -134,9 +171,50 @@ const Navbar = () => {
                     </div>
                   </div>
                 </Link>
-                <button onClick={() => logOut()}>
-                  <RxExit className="text-2xl cursor-pointer m-3" />
-                </button>
+
+                <div
+                  onClick={() => setShowEdit(!showEdit)}
+                  className="p-3 rounded-full bg-white/80 shadow-md cursor-pointer hover:bg-white transition relative"
+                >
+                  <IoSettingsOutline className="text-2xl text-zinc-700" />
+
+                  <div
+                    onMouseLeave={() => setShowEdit(!showEdit)}
+                    className={`absolute bottom-12 right-5 z-40 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
+                      showEdit
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-2 pointer-events-none"
+                    }`}
+                  >
+                    <div
+                      className="p-2"
+                      onClick={() => setHumbarger(!humbarger)}
+                    >
+                      <button
+                        onClick={() => setShowChangePassModal(true)}
+                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
+                      >
+                        <Lock size={14} className="text-zinc-500" />
+                        Change Password
+                      </button>
+                      <button
+                        onClick={logOut}
+                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
+                      >
+                        <FiLogOut className="text-zinc-500" />
+                        Log Out
+                      </button>
+
+                      <button
+                        onClick={deleteAccount}
+                        className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-red-600 transition hover:bg-red-50 cursor-pointer"
+                      >
+                        <FaUserSlash />
+                        Delete Account
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

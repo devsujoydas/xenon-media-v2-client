@@ -13,7 +13,6 @@ const followedUsers = data?.users?.filter((u) =>
   u.followers?.includes(user._id)
 );
 
-  console.log(followedUsers);
   return (
     <div className="bg-white md:p-5 p-2 rounded-xl shadow-xl">
       <div className="w-full  overflow-hidden ">

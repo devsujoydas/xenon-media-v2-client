@@ -1,10 +1,21 @@
 // pages/ManagePosts.jsx
 import React, { useState, useMemo } from "react";
-import { Search, Trash2, Heart, Share2, MessageCircle, X, AlertTriangle, Check, Ban } from "lucide-react";
+import {
+  Search,
+  Trash2,
+  Heart,
+  Share2,
+  MessageCircle,
+  X,
+  AlertTriangle,
+  Check,
+  Ban,
+} from "lucide-react";
 import { usePosts } from "../../../hooks/postHooks/usePosts";
 import { useDeletePost } from "../../../hooks/postHooks/useDeletePost";
 import { useUpdatePostStatus } from "../../../hooks/postHooks/useUpdatePostStatus";
- 
+import PageHelmet from "../../../Components/PageHelmet/PageHelmet";
+
 const statusStyles = {
   pending: "bg-amber-50 text-amber-600",
   approved: "bg-emerald-50 text-emerald-600",
@@ -34,7 +45,7 @@ const ManagePosts = () => {
         (p) =>
           p.content?.toLowerCase().includes(q) ||
           p.author?.name?.toLowerCase().includes(q) ||
-          p.author?.username?.toLowerCase().includes(q)
+          p.author?.username?.toLowerCase().includes(q),
       );
     }
     return list;
@@ -59,6 +70,10 @@ const ManagePosts = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      <PageHelmet
+        title="Manage Posts | Xenly Admin"
+        description="Review and manage posts across the platform."
+      />
       {/* Header */}
       <header className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-3">
         <div>
@@ -113,28 +128,44 @@ const ManagePosts = () => {
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
-                    <td className="px-5 py-4"><div className="h-3 w-40 bg-gray-200 rounded" /></td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-40 bg-gray-200 rounded" />
+                    </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-gray-200" />
                         <div className="h-3 w-20 bg-gray-200 rounded" />
                       </div>
                     </td>
-                    <td className="px-5 py-4"><div className="h-3 w-24 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4"><div className="h-3 w-16 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4"><div className="h-3 w-20 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4 text-right"><div className="h-3 w-8 bg-gray-200 rounded ml-auto" /></td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-24 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-16 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-20 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="h-3 w-8 bg-gray-200 rounded ml-auto" />
+                    </td>
                   </tr>
                 ))
               ) : filteredPosts.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-14 text-center text-gray-400 text-sm">
+                  <td
+                    colSpan={6}
+                    className="px-5 py-14 text-center text-gray-400 text-sm"
+                  >
                     No posts found
                   </td>
                 </tr>
               ) : (
                 filteredPosts.map((post) => (
-                  <tr key={post._id} className="hover:bg-gray-50/60 transition-colors">
+                  <tr
+                    key={post._id}
+                    className="hover:bg-gray-50/60 transition-colors"
+                  >
                     <td className="px-5 py-3.5 max-w-xs">
                       <div className="flex items-center gap-3">
                         {post.postImg?.url && (
@@ -152,7 +183,10 @@ const ManagePosts = () => {
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2">
                         <img
-                          src={post.author?.profileImage?.url || "/default_profile.webp"}
+                          src={
+                            post.author?.profileImage?.url ||
+                            "/default_profile.webp"
+                          }
                           alt={post.author?.name}
                           className="w-8 h-8 rounded-full object-cover border border-gray-100"
                         />
@@ -185,7 +219,8 @@ const ManagePosts = () => {
                     <td className="px-5 py-3.5">
                       <span
                         className={`px-2 py-1 rounded-md text-xs font-medium capitalize ${
-                          statusStyles[post.status] || "bg-gray-100 text-gray-600"
+                          statusStyles[post.status] ||
+                          "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {post.status}
@@ -202,7 +237,9 @@ const ManagePosts = () => {
                       <div className="flex items-center justify-end gap-1.5">
                         {post.status !== "approved" && (
                           <button
-                            onClick={() => handleStatusChange(post._id, "approved")}
+                            onClick={() =>
+                              handleStatusChange(post._id, "approved")
+                            }
                             disabled={updating}
                             title="Approve"
                             className="p-1.5 rounded-lg text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition-colors disabled:opacity-50"
@@ -212,7 +249,9 @@ const ManagePosts = () => {
                         )}
                         {post.status !== "rejected" && (
                           <button
-                            onClick={() => handleStatusChange(post._id, "rejected")}
+                            onClick={() =>
+                              handleStatusChange(post._id, "rejected")
+                            }
                             disabled={updating}
                             title="Reject"
                             className="p-1.5 rounded-lg text-amber-600 bg-amber-50 hover:bg-amber-100 transition-colors disabled:opacity-50"

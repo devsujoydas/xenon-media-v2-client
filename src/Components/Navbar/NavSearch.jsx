@@ -92,7 +92,7 @@ const NavSearch = () => {
 
         {/* Results Dropdown */}
         {showResults && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-zinc-300 rounded-md mt-1 max-h-72 overflow-y-auto shadow-lg z-50 text-xs">
+          <div className="absolute top-full left-0 right-0 bg-white border border-zinc-300 rounded-md mt-1 max-h-72 overflow-y-auto shadow-lg z-40 text-xs">
             {loading && (
               <p className="p-3 text-center text-gray-500">Loading...</p>
             )}

@@ -7,14 +7,18 @@ import api from "../../services/api";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import NavLogo from "../../Components/Navbar/NavLogo";
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const Signup = () => {
   const [show, setShow] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const signUpHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const fName = e.target.firstname.value;
     const lName = e.target.lastname.value;
     const name = `${fName} ${lName}`;
@@ -27,14 +31,24 @@ const Signup = () => {
         queryClient.setQueryData(["profile"], res.data.user);
         localStorage.setItem("accessToken", res.data.accessToken);
         toast.success(res.data.message);
+
+        navigate("/profile"); // অথবা যেখানে নিতে চাও
       })
       .catch((err) => {
-        toast.error(err.response?.data?.message);
+        toast.error(err.response?.data?.message || err.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   return (
     <div className="  min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-0">
+      <PageHelmet
+        title="Create Account | Xenly"
+        description="Create your Xenly account and join the community today."
+      />
+
       <div className="w-full max-w-md md:max-w-xl lg:max-w-4xl xl:max-w-6xl  rounded-2xl overflow-hidden xl:grid xl:grid-cols-2 shadow-lg border border-zinc-100 p-4">
         {/* Image Section */}
         <div className="hidden xl:block">
@@ -150,8 +164,21 @@ const Signup = () => {
               </div>
 
               {/* Submit */}
-              <button className="mt-2 bg-black text-white py-3 sm:py-4 rounded-full hover:bg-zinc-700 transition cursor-pointer">
-                Create Account
+              <button
+                type="submit"
+                disabled={loading}
+                className={`mt-2 py-3 sm:py-4 rounded-full transition flex items-center justify-center gap-2
+    ${
+      loading
+        ? "bg-zinc-500 cursor-not-allowed text-white"
+        : "bg-black hover:bg-zinc-700 text-white cursor-pointer"
+    }`}
+              >
+                {loading && (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                )}
+
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
             </form>
 

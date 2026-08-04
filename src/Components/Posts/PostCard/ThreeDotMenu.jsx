@@ -11,13 +11,18 @@ import {
 import { useDeletePost } from "../../../hooks/postHooks/usePostActions";
 import UpdatePostModal from "../../Modals/UpdatePostModal";
 
-const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
+const ThreeDotMenu = ({
+  post,
+  variant = "feed",
+  onRemove,
+  setShowMenu,
+  editPostHandler,
+}) => {
   const { user } = useAuth();
   const saved = useIsPostSaved(post._id);
   const { mutate: toggleSave, isPending: savePending } = useToggleSavePost();
   const { deletePost, deleting } = useDeletePost();
   const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const isAuthor = user?._id === post?.author?._id;
 
@@ -50,11 +55,6 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
     setShowMenu(false);
   };
 
-  const editPostHandler = () => {
-    setShowUpdateModal(true);
-    setShowMenu(false);
-  };
-
   return (
     <>
       <div
@@ -64,18 +64,15 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
         <button onClick={sharePostHandler} className={menuItemStyle}>
           <FaCopy className="text-zinc-600" /> Copy URL
         </button>
+        <button onClick={handleSaveToggle} className={menuItemStyle}>
+          <FaBookmark className={saved ? "text-indigo-600" : "text-zinc-600"} />
+          {saved ? "Remove Saved" : "Save Post"}
+        </button>
 
-        {isAuthor ? (
+        {isAuthor && (
           <>
             <button onClick={editPostHandler} className={menuItemStyle}>
               <MdEdit className="text-zinc-600" /> Edit Post
-            </button>
-
-            <button onClick={handleSaveToggle} className={menuItemStyle}>
-              <FaBookmark
-                className={saved ? "text-indigo-600" : "text-zinc-600"}
-              />
-              {saved ? "Remove Saved" : "Save Post"}
             </button>
 
             <hr className="my-2 border-zinc-200" />
@@ -110,45 +107,8 @@ const ThreeDotMenu = ({ post, variant = "feed", onRemove, setShowMenu }) => {
               </div>
             )}
           </>
-        ) : (
-          <>
-            <button onClick={handleSaveToggle} className={menuItemStyle}>
-              <FaBookmark
-                className={saved ? "text-indigo-600" : "text-zinc-600"}
-              />
-              {saved ? "Remove Saved" : "Save Post"}
-            </button>
-
-            <hr className="my-2 border-zinc-200" />
-
-            <button
-              className={menuItemStyle}
-              onClick={() => setShowMenu(false)}
-            >
-              <FaCircleMinus className="text-zinc-600" /> Not Interested
-            </button>
-            <button
-              className={menuItemStyle}
-              onClick={() => setShowMenu(false)}
-            >
-              <MdVisibilityOff className="text-zinc-600" /> Hide Post
-            </button>
-            <button
-              className={`${menuItemStyle} ${destructiveStyle}`}
-              onClick={() => setShowMenu(false)}
-            >
-              <FaFlag /> Report Post
-            </button>
-          </>
         )}
       </div>
-
-      {/* ✅ Modal component টা এখানে render হচ্ছে */}
-      <UpdatePostModal
-        isOpen={showUpdateModal}
-        setIsOpen={setShowUpdateModal}
-        post={post}
-      />
     </>
   );
 };

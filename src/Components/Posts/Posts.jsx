@@ -25,7 +25,7 @@ const Posts = ({ posts, isLoading, isFetching }) => {
 
   // 3️⃣ Success state
   return (
-    <div className="grid md:gap-5 gap-2 ">
+    <div className="grid md:gap-3 gap-2 ">
       {posts.map((post) => (
         <PostCard key={post._id} post={post} variant="feed" />
       ))}

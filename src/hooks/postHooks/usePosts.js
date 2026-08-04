@@ -43,5 +43,6 @@ export const useUserPosts = (userId) => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     refetchOnMount: false,
+    retry: false,
   });
 };

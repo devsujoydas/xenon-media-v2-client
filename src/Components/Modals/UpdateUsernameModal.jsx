@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { IoClose } from "react-icons/io5";
+import { X } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import api from "../../services/api";
 import { useQueryClient } from "@tanstack/react-query";
@@ -8,25 +8,37 @@ import { useQueryClient } from "@tanstack/react-query";
 const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [usernameMessage, setUsernameMessage] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const queryClient = useQueryClient();
-  
+
+  if (!showUsernameModal) return null;
+
+  const handleClose = () => {
+    setError("");
+    setSuccess("");
+    setShowUsernameModal(false);
+  };
+
   const updateUsernameHandler = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
 
     const username = e.target.username.value.trim();
 
     if (!username) {
-      setUsernameMessage("Username cannot be empty!");
+      setError("Username cannot be empty");
       return;
     }
 
     setLoading(true);
-    setUsernameMessage("");
 
     try {
       const res = await api.put("/users/profile", { username });
       queryClient.setQueryData(["profile"], res.data.user);
+
+      setSuccess("Username updated successfully");
 
       Swal.fire({
         title: "Username updated successfully!",
@@ -35,78 +47,74 @@ const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
         showConfirmButton: false,
       });
 
-      setShowUsernameModal(false);
-    } catch (error) {
-      const message = error.response?.data?.message || "Something went wrong!";
-      setUsernameMessage(message);
-      Swal.fire({
-        title: message,
-        icon: "error",
-      });
+      setTimeout(() => {
+        handleClose();
+      }, 1000);
+    } catch (err) {
+      const message =
+        err.response?.data?.message || "Something went wrong. Try again.";
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
 
-  if (!showUsernameModal) return null;
-
   return (
     <div
-      onClick={() => setShowUsernameModal(false)}
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-all animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 animate-fadeIn"
+      onClick={handleClose}
     >
       <div
+        className="w-full max-w-md bg-white rounded-2xl p-6 sm:p-8 relative"
         onClick={(e) => e.stopPropagation()}
-        className="relative bg-white w-full max-w-md mx-4 rounded-2xl shadow-xl p-6 md:p-8 transition-all"
       >
         <button
-          onClick={() => setShowUsernameModal(false)}
-          className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100 transition-all"
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-zinc-500 hover:text-black cursor-pointer"
         >
-          <IoClose className="text-2xl text-gray-700 hover:text-gray-900" />
+          <X size={20} />
         </button>
 
-        <h1 className="text-2xl md:text-3xl font-semibold text-center text-blue-600 mb-6">
+        <h2 className="text-xl sm:text-2xl font-semibold mb-1">
           Update Username
-        </h1>
+        </h2>
+        <p className="text-sm text-zinc-500 mb-6">
+          Choose a new username for your account.
+        </p>
 
-        <form onSubmit={updateUsernameHandler} className="space-y-4">
+        <form onSubmit={updateUsernameHandler} className="grid gap-4">
+          {/* Username */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
-              Username
-            </label>
-            <input
-              onClick={() => setUsernameMessage("")}
-              defaultValue={user?.username}
-              name="username"
-              type="text"
-              placeholder="Enter new username"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
-            />
-            {usernameMessage && (
-              <p className="text-sm text-red-600 font-medium mt-2">
-                {usernameMessage}
-              </p>
-            )}
+            <label className="font-medium text-sm">Username</label>
+            <div className="relative mt-1 border focus-within:border-zinc-400 border-zinc-300 rounded-full px-4 py-3 flex items-center">
+              <input
+                type="text"
+                name="username"
+                defaultValue={user?.username}
+                onFocus={() => setError("")}
+                className="w-full outline-none"
+                placeholder="Enter new username"
+              />
+            </div>
           </div>
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          {success && <p className="text-sm text-green-600">{success}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg text-white font-medium flex justify-center items-center gap-3 transition-all active:scale-95 ${
-              loading
-                ? "bg-blue-500 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-500"
-            }`}
+            className={`mt-2 py-3 rounded-full transition flex items-center justify-center gap-2
+    ${
+      loading
+        ? "bg-zinc-500 cursor-not-allowed text-white"
+        : "bg-black hover:bg-zinc-700 text-white cursor-pointer"
+    }`}
           >
-            {loading ? (
-              <>
-                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Updating...</span>
-              </>
-            ) : (
-              "Update"
+            {loading && (
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
             )}
+            {loading ? "Updating..." : "Update"}
           </button>
         </form>
       </div>

@@ -81,7 +81,7 @@ const ShareModal = ({ isOpen, setIsOpen, url, title = "Check this post out" }) =
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center animate-fadeIn px-4">
+    <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center animate-fadeIn px-4 animate-fadeIn">
       <div
         ref={modalRef}
         className="bg-white rounded-2xl shadow-xl w-[420px] max-w-full relative flex flex-col overflow-hidden"

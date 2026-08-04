@@ -17,7 +17,7 @@ import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 
 import PrivateRoute from './PrivateRoutes.jsx';
 import AnimatedLayout from '../Layout/AnimatedLayout.jsx';
-import PageNotFound from '../Pages/ErrorPage/ErrorPage.jsx';
+import PageNotFound from '../Pages/PageNotFound/PageNotFound.jsx';
 
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
 import Signup from '../Pages/Authentication/Signup.jsx';

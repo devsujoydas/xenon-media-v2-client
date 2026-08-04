@@ -34,8 +34,8 @@ export const useLogOut = () => {
 
     try {
       await api.post("/auth/logout");
-      localStorage.removeItem("accessToken");
       queryClient.setQueryData(["profile"], null); 
+      localStorage.removeItem("accessToken");
       toast.success("Logged out successfully");
     } catch (err) {
       toast.error(err.response?.data?.message || "Logout failed");

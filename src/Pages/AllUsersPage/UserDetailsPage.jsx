@@ -9,6 +9,7 @@ import SideNavbar from "../../Components/SideNavbar/SideNavbar";
 import { getCurrentUserId } from "../../hooks/userHooks/Currentuser";
 import PostSkeleton from "../../Components/Posts/PostSkeleton";
 import PostCard from "../../Components/Posts/PostCard/PostCard";
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const UserDetailsPage = () => {
   const { data } = useLoaderData();
@@ -20,8 +21,17 @@ const UserDetailsPage = () => {
   return (
     <div className="mrelative min-h-screen flex md:flex-row flex-col bg-[#f1f5fa] lg:mt-0 mt-12">
       {/* Cover */}
+
+      <PageHelmet
+        title={`${AnotherUser.name} (@${AnotherUser.username}) | Xenly`}
+        description={
+          AnotherUser.bio || `View ${AnotherUser.name}'s profile on Xenly.`
+        }
+        image={AnotherUser.profileImage?.url}
+      />
+
       <div className=" md:w-4/5 overflow-y-auto scroll-smooth md:py-5 py-6 lg:px-5 px-3 space-y-5">
-      <UserProfileTop user={AnotherUser} posts={userPosts} />
+        <UserProfileTop user={AnotherUser} posts={userPosts} />
 
         {isOwnProfile && <PostFrom />}
 
@@ -29,7 +39,7 @@ const UserDetailsPage = () => {
         <div className=" mt-5">
           {isLoading && (
             <div className="">
-              <PostSkeleton/>
+              <PostSkeleton />
             </div>
           )}
 
@@ -49,7 +59,7 @@ const UserDetailsPage = () => {
         </div>
       </div>
 
-      <div className="md:w-2/5 border-l border-zinc-300 bg-white h-screen md:sticky md:top-0 overflow-y-auto">
+      <div className="md:w-2/5 border-l border-zinc-300 bg-white h-fit md:h-screen  md:sticky md:top-0 overflow-y-auto">
         <SideNavbar />
 
         <div className="w-full mt-8 px-4 space-y-4">

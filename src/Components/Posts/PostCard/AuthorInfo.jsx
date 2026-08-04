@@ -1,15 +1,22 @@
 // PostCard/AuthorInfo.jsx
- 
+
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
- 
- 
+
 import { useTimeAgo } from "../../../hooks/useTimeAgo";
 import ThreeDotMenu from "./ThreeDotMenu";
 
 const DEFAULT_AVATAR = "/default-avatar.png";
 
-const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove }) => {
+const AuthorInfo = ({
+  post,
+  user,
+  showMenu,
+  setShowMenu,
+  variant,
+  onRemove,
+  editPostHandler,
+}) => {
   const timeAgo = useTimeAgo(post.createdAt);
   const isOwnProfile = post?.author?._id === user?._id;
 
@@ -42,6 +49,7 @@ const AuthorInfo = ({ post, user, showMenu, setShowMenu, variant, onRemove }) =>
             variant={variant}
             onRemove={onRemove}
             setShowMenu={setShowMenu}
+            editPostHandler={editPostHandler}
           />
         )}
       </div>

@@ -1,19 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { IoClose } from "react-icons/io5";
-import {
-  FaUserAlt,
-  FaPhoneAlt,
-  FaGlobe,
-  FaFacebook,
-  FaGithub,
-  FaLinkedin,
-  FaYoutube,
-  FaTwitter,
-  FaInstagram,
-  FaMapMarkerAlt,
-  FaCity,
-} from "react-icons/fa";
+import { X } from "lucide-react";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import api from "../../services/api";
 import { useQueryClient } from "@tanstack/react-query";
@@ -22,12 +9,11 @@ const UpdateProfileModal = ({
   showUpdateInfoModal,
   setShowUpdateInfoModal,
 }) => {
-  // NOTE: assumes useAuth exposes `user` + `setUser`.
-  // If your AuthProvider actually exposes `userData` / `setUserData`,
-  // rename below (or better, rename the provider to `user` everywhere for consistency).
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+
+  const handleClose = () => setShowUpdateInfoModal(false);
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
@@ -56,7 +42,7 @@ const UpdateProfileModal = ({
       const res = await api.put("/users/profile", payload);
       queryClient.setQueryData(["profile"], res.data.user);
       Swal.fire("Profile updated successfully!", "", "success");
-      setShowUpdateInfoModal(false);
+      handleClose();
     } catch (error) {
       const message = error.response?.data?.message || "Something went wrong";
       Swal.fire("Update Failed!", message, "error");
@@ -65,65 +51,65 @@ const UpdateProfileModal = ({
     }
   };
 
-  const InputField = ({ icon, name, defaultValue, placeholder }) => (
-    <div
-      className="flex items-center gap-3 rounded-xl px-4 py-3 
-                    bg-white border border-gray-200 shadow-sm
-                    focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100
-                    transition"
-    >
-      <span className="text-gray-400">{icon}</span>
-      <input
-        name={name}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-        className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
-      />
+  const InputField = ({ name, defaultValue, placeholder, label }) => (
+    <div>
+      {label && <label className="font-medium text-sm">{label}</label>}
+      <div
+        className={`relative ${label ? "mt-1" : ""} border focus-within:border-zinc-400 border-zinc-300 rounded-full px-4 py-3 flex items-center`}
+      >
+        <input
+          name={name}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          className="w-full outline-none text-sm text-zinc-700 placeholder-zinc-400"
+        />
+      </div>
     </div>
   );
 
+  if (!showUpdateInfoModal) return null;
+
   return (
     <div
-      onClick={() => setShowUpdateInfoModal(false)}
-      className={`fixed inset-0 flex justify-center items-center 
-      backdrop-blur-sm bg-black/40 transition-all duration-300
-      ${showUpdateInfoModal ? "z-40 opacity-100" : "opacity-0 pointer-events-none"}`}
+      onClick={handleClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 animate-fadeIn"
     >
       <form
         onClick={(e) => e.stopPropagation()}
         onSubmit={updateProfileHandler}
-        className="relative bg-white w-full sm:w-[90%] md:w-[70%] lg:w-[55%] xl:w-[45%]
-                   mx-4 sm:mx-6 rounded-2xl shadow-2xl 
-                   p-4 sm:p-6 md:p-8 lg:p-10 
-                   space-y-6 sm:space-y-8 transform transition-all duration-300 
-                   scale-95 opacity-100 animate-fadeIn overflow-y-auto max-h-[90vh]"
+        className="relative bg-white w-full max-w-md sm:max-w-lg md:max-w-4xl rounded-2xl p-6 sm:p-8
+                   space-y-6 max-h-[90vh] overflow-y-auto"
       >
         <button
           type="button"
-          onClick={() => setShowUpdateInfoModal(false)}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 
-                     hover:bg-gray-100 rounded-full p-2 transition"
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-zinc-500 hover:text-black cursor-pointer"
         >
-          <IoClose size={26} />
+          <X size={20} />
         </button>
 
-        <h1 className="text-center text-2xl md:text-3xl font-semibold text-blue-600">
-          Update Profile Info
-        </h1>
+        <div>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-1">
+            Update Profile Info
+          </h2>
+          <p className="text-sm text-zinc-500">
+            Keep your profile details up to date.
+          </p>
+        </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 mb-3">
+          <h3 className="text-sm font-medium text-zinc-500 mb-3">
             Profile Info
-          </h2>
-          <div className="space-y-4">
+          </h3>
+          <div className="grid gap-4">
             <InputField
-              icon={<FaUserAlt className="text-blue-500" />}
+              label="Name"
               name="name"
               defaultValue={user?.name}
               placeholder="Your full name"
             />
             <InputField
-              icon={<FaUserAlt />}
+              label="Bio"
               name="bio"
               defaultValue={user?.bio}
               placeholder="Enter bio"
@@ -132,54 +118,54 @@ const UpdateProfileModal = ({
         </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 mb-3">
+          <h3 className="text-sm font-medium text-zinc-500 mb-3">
             Contact Info
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          </h3>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             <InputField
-              icon={<FaPhoneAlt className="text-blue-500" />}
+              label="Phone"
               name="phone"
               defaultValue={user?.contactInfo?.phone}
               placeholder="Phone number"
             />
             <InputField
-              icon={<FaGlobe className="text-green-500" />}
+              label="Website"
               name="website"
               defaultValue={user?.contactInfo?.website}
               placeholder="Website URL"
             />
             <InputField
-              icon={<FaFacebook className="text-blue-600" />}
+              label="Facebook"
               name="facebook"
               defaultValue={user?.contactInfo?.facebook}
               placeholder="Facebook URL"
             />
             <InputField
-              icon={<FaGithub className="text-gray-800" />}
+              label="Github"
               name="github"
               defaultValue={user?.contactInfo?.github}
               placeholder="Github URL"
             />
             <InputField
-              icon={<FaLinkedin className="text-blue-700" />}
+              label="LinkedIn"
               name="linkedin"
               defaultValue={user?.contactInfo?.linkedin}
               placeholder="LinkedIn URL"
             />
             <InputField
-              icon={<FaTwitter className="text-sky-500" />}
+              label="Twitter / X"
               name="twitter"
               defaultValue={user?.contactInfo?.twitter}
               placeholder="Twitter / X URL"
             />
             <InputField
-              icon={<FaInstagram className="text-pink-600" />}
+              label="Instagram"
               name="instagram"
               defaultValue={user?.contactInfo?.instagram}
               placeholder="Instagram URL"
             />
             <InputField
-              icon={<FaYoutube className="text-red-600" />}
+              label="YouTube"
               name="youtube"
               defaultValue={user?.contactInfo?.youtube}
               placeholder="YouTube URL"
@@ -188,16 +174,18 @@ const UpdateProfileModal = ({
         </div>
 
         <div>
-          <h2 className="text-sm font-medium text-gray-500 mb-3">Location</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <h3 className="text-sm font-medium text-zinc-500 mb-3">
+            Location
+          </h3>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
             <InputField
-              icon={<FaMapMarkerAlt className="text-orange-500" />}
+              label="From"
               name="from"
               defaultValue={user?.location?.from}
               placeholder="Your hometown"
             />
             <InputField
-              icon={<FaCity className="text-purple-600" />}
+              label="Lives in"
               name="livesIn"
               defaultValue={user?.location?.livesIn}
               placeholder="Current city"
@@ -208,20 +196,17 @@ const UpdateProfileModal = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 rounded-lg text-white text-sm font-medium
-                     bg-gradient-to-r from-blue-600 to-blue-500
-                     hover:from-blue-700 hover:to-blue-600 
-                     transition-all flex justify-center items-center gap-3
-                     shadow-md hover:shadow-lg disabled:opacity-60 cursor-pointer"
+          className={`w-full py-3 rounded-full transition flex items-center justify-center gap-2
+    ${
+      isLoading
+        ? "bg-zinc-500 cursor-not-allowed text-white"
+        : "bg-black hover:bg-zinc-700 text-white cursor-pointer"
+    }`}
         >
-          {isLoading ? (
-            <>
-              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Updating...
-            </>
-          ) : (
-            "Update"
+          {isLoading && (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           )}
+          {isLoading ? "Updating..." : "Update"}
         </button>
       </form>
     </div>

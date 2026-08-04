@@ -1,9 +1,17 @@
 // pages/ManageUsers.jsx
 import React, { useState, useMemo } from "react";
-import { Search, Trash2, ShieldCheck, ShieldOff, X, AlertTriangle } from "lucide-react";
+import {
+  Search,
+  Trash2,
+  ShieldCheck,
+  ShieldOff,
+  X,
+  AlertTriangle,
+} from "lucide-react";
 import { useUsers } from "../../../hooks/userHooks/useUsers";
 import { useDeleteUser } from "../../../hooks/userHooks/useDeleteUser";
- 
+import PageHelmet from "../../../Components/PageHelmet/PageHelmet";
+
 const ManageUsers = () => {
   const { data, isLoading } = useUsers();
   const users = data?.users || [];
@@ -21,7 +29,7 @@ const ManageUsers = () => {
       (u) =>
         u.name?.toLowerCase().includes(q) ||
         u.username?.toLowerCase().includes(q) ||
-        u.email?.toLowerCase().includes(q)
+        u.email?.toLowerCase().includes(q),
     );
   }, [users, search]);
 
@@ -42,6 +50,11 @@ const ManageUsers = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      <PageHelmet
+        title="Manage Users | Xenly Admin"
+        description="View and manage all registered users."
+      />
+
       {/* Header */}
       <header className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div>
@@ -92,33 +105,53 @@ const ManageUsers = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-4"><div className="h-3 w-32 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4"><div className="h-3 w-14 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4"><div className="h-3 w-16 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4"><div className="h-3 w-10 bg-gray-200 rounded" /></td>
-                    <td className="px-5 py-4 text-right"><div className="h-3 w-8 bg-gray-200 rounded ml-auto" /></td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-32 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-14 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-16 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="h-3 w-10 bg-gray-200 rounded" />
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <div className="h-3 w-8 bg-gray-200 rounded ml-auto" />
+                    </td>
                   </tr>
                 ))
               ) : filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-14 text-center text-gray-400 text-sm">
+                  <td
+                    colSpan={6}
+                    className="px-5 py-14 text-center text-gray-400 text-sm"
+                  >
                     No users found
                   </td>
                 </tr>
               ) : (
                 filteredUsers.map((user) => (
-                  <tr key={user._id} className="hover:bg-gray-50/60 transition-colors">
+                  <tr
+                    key={user._id}
+                    className="hover:bg-gray-50/60 transition-colors"
+                  >
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
                         <div className="relative shrink-0">
                           <img
-                            src={user.profileImage?.url || "/default_profile.webp"}
+                            src={
+                              user.profileImage?.url || "/default_profile.webp"
+                            }
                             alt={user.name}
                             className="w-9 h-9 rounded-full object-cover border border-gray-100"
                           />
                           <span
                             className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white ${
-                              user.activeStatus?.online ? "bg-emerald-500" : "bg-gray-300"
+                              user.activeStatus?.online
+                                ? "bg-emerald-500"
+                                : "bg-gray-300"
                             }`}
                           />
                         </div>
@@ -126,7 +159,9 @@ const ManageUsers = () => {
                           <p className="font-medium text-gray-800 leading-tight">
                             {user.name}
                           </p>
-                          <p className="text-xs text-gray-400">@{user.username}</p>
+                          <p className="text-xs text-gray-400">
+                            @{user.username}
+                          </p>
                         </div>
                       </div>
                     </td>
@@ -137,8 +172,8 @@ const ManageUsers = () => {
                           user.role === "admin"
                             ? "bg-blue-50 text-blue-600"
                             : user.role === "ceo"
-                            ? "bg-violet-50 text-violet-600"
-                            : "bg-gray-100 text-gray-600"
+                              ? "bg-violet-50 text-violet-600"
+                              : "bg-gray-100 text-gray-600"
                         }`}
                       >
                         {user.role}
@@ -197,8 +232,11 @@ const ManageUsers = () => {
               Delete this user?
             </h3>
             <p className="text-sm text-gray-500 mb-3">
-              <span className="font-medium text-gray-700">{userToDelete.name}</span>{" "}
-              (@{userToDelete.username}) will be permanently removed. This action cannot be undone.
+              <span className="font-medium text-gray-700">
+                {userToDelete.name}
+              </span>{" "}
+              (@{userToDelete.username}) will be permanently removed. This
+              action cannot be undone.
             </p>
 
             {errorMsg && (

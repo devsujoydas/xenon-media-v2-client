@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
- 
+
 import { useSavedPosts } from "../../hooks/postHooks/useSavedPosts";
 import PostCard from "../../Components/Posts/PostCard/PostCard";
-
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const SavedPostItem = ({ post }) => (
   <Link
@@ -34,9 +34,13 @@ const SavedPosts = () => {
 
   return (
     <div className="bg-[#f1f5fa] min-h-screen grid grid-cols-1 lg:grid-cols-9">
+      <PageHelmet
+        title="Saved Posts | Xenly"
+        description="Access all your saved posts in one place."
+      />
       {/* Left: Saved Posts Feed */}
       <div className="lg:col-span-6 flex flex-col h-screen">
-        <div className="md:sticky top-0 z-10 bg-[#f1f5fa] px-5 py-4">
+        <div className="md:sticky top-0 z-10 bg-[#f1f5fa] px-3 py-3">
           <h1 className="md:text-2xl text-xl font-semibold text-blue-600">
             Saved Posts
           </h1>

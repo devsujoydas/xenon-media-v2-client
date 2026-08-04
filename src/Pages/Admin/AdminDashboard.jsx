@@ -16,6 +16,7 @@ import PostsPerMonthChart from "./Charts/PostsPerMonthChart";
 import { useAuth } from "../../AuthProvider/AuthProviderNew";
 import { useUsers } from "../../hooks/userHooks/useUsers";
 import { usePosts } from "../../hooks/postHooks/usePosts";
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
@@ -40,7 +41,7 @@ const AdminDashboard = () => {
   const totalPosts = postList.length;
   const totalReacts = postList.reduce(
     (sum, p) => sum + (p.reacts?.length || 0),
-    0
+    0,
   );
   const pendingPosts = postList.filter((p) => p.status === "pending").length;
 
@@ -81,6 +82,10 @@ const AdminDashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
+      <PageHelmet
+        title="Admin Dashboard | Xenly"
+        description="Manage users, posts, reports, and platform analytics."
+      />
       {/* Header */}
       <header className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
         <div>

@@ -1,15 +1,32 @@
-import { useState, } from "react";
+import { useMemo, useState } from "react";
 import UserCard from "./UserCard";
 import { useUsers } from "../../hooks/userHooks/useUsers";
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const AllUsersPage = () => {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useUsers();
+  const users = data?.users || [];
+
+  const filteredUsers = useMemo(() => {
+    if (!search.trim()) return users;
+    const q = search.toLowerCase();
+    return users.filter(
+      (u) =>
+        u.name?.toLowerCase().includes(q) ||
+        u.username?.toLowerCase().includes(q) ||
+        u.email?.toLowerCase().includes(q),
+    );
+  }, [users, search]);
 
   return (
-    <div className="min-h-screen md:mt-0 mt-10 bg-[#f1f5fa]">
-      <div className="mx-auto px-6 py-10">
+    <div className="min-h-screen md:pt-0 pt-16 bg-[#f1f5fa]">
+      <PageHelmet
+        title="People | Xenly"
+        description="Discover and connect with people on Xenly."
+      />
+      <div className="mx-auto px-3 py-3">
         <header className="mb-8">
           <h1 className="text-xl md:text-3xl font-semibold text-[#14231F]">
             All Users
@@ -41,13 +58,13 @@ const AllUsersPage = () => {
           </div>
         )}
 
-        {isLoading && data?.users.length === 0 && (
+        {isLoading && filteredUsers.length === 0 && (
           <p className="text-center text-[#5B6B65] py-16">No users found</p>
         )}
 
         {!isLoading && data?.users.length > 0 && (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-            {data?.users.map((user) => (
+            {filteredUsers.map((user) => (
               <UserCard key={user._id} user={user} />
             ))}
           </div>

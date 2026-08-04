@@ -8,16 +8,22 @@ import { useDeleteAccount } from "../../hooks/useDeleteAccount";
 import { useLogOut } from "../../hooks/useLogOut";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserSlash } from "react-icons/fa";
+import ChangePasswordModal from "../Modals/ChangePasswordModal";
+import { Lock } from "lucide-react";
 
 const SideNavbar = () => {
   const { user } = useAuth();
   const logOut = useLogOut();
   const deleteAccount = useDeleteAccount();
-  console.log(user);
   const [showEdit, setShowEdit] = useState(false);
+  const [showChangePassModal, setShowChangePassModal] = useState(false);
 
   return (
     <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
+      <ChangePasswordModal
+        isOpen={showChangePassModal}
+        onClose={() => setShowChangePassModal(false)}
+      />
       <div className=" cursor-pointer active:scale-95 transition-all">
         <Link to={`/profile`} className="relative">
           <img
@@ -29,7 +35,7 @@ const SideNavbar = () => {
             }
             alt=""
           />
-          {user.activeStatus.online && (
+          {user?.activeStatus?.online && (
             <h1 className="absolute bottom-0 right-1 md:w-4 w-3 md:h-4 h-3 bg-green-400 border-2 border-white rounded-full"></h1>
           )}
         </Link>
@@ -54,13 +60,20 @@ const SideNavbar = () => {
           {/* Dropdown */}
           <div
             onMouseLeave={() => setShowEdit(!showEdit)}
-            className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
+            className={`absolute right-0 z-40 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
               showEdit
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-2 pointer-events-none"
             }`}
           >
             <div className="p-2">
+              <button
+                onClick={() => setShowChangePassModal(true)}
+                className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
+              >
+                <Lock size={14} className="text-zinc-500" />
+                Change Password
+              </button>
               <button
                 onClick={logOut}
                 className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"

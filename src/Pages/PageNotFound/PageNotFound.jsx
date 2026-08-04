@@ -2,11 +2,15 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import pagenotfoundimg from "../../../public/LottieAnimations/404 planet animation.json";
+import PageHelmet from "../../Components/PageHelmet/PageHelmet";
 
 const PageNotFound = () => {
   return (
     <div className="relative flex flex-col items-center justify-center h-screen text-center px-4 overflow-hidden bg-gradient-to-br from-purple-600 to-indigo-500">
-      
+      <PageHelmet
+        title="404 - Page Not Found | Xenly"
+        description="The page you're looking for doesn't exist."
+      />
       {/* Floating background circles */}
       <motion.div
         className="absolute w-72 h-72 bg-white rounded-full opacity-10 top-[-50px] left-[-50px]"
@@ -28,8 +32,6 @@ const PageNotFound = () => {
       >
         <Lottie animationData={pagenotfoundimg} loop={true} />
       </motion.div>
-
-      
 
       {/* Subtext */}
       <motion.p
@@ -56,7 +58,6 @@ const PageNotFound = () => {
           Go Back Home
         </Link>
       </motion.div>
-
     </div>
   );
 };

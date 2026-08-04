@@ -92,9 +92,9 @@ const Nav = () => {
               <span className="font-semibold ">Admin Panel</span>
             </div>
           </NavLink>
+          <div className="bg-zinc-200 h-1.5"></div>
         </>
       )}
-      <div className="bg-zinc-200 h-1.5"></div>
     </div>
   );
 };
