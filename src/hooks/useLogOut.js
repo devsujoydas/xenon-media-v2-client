@@ -13,8 +13,6 @@ const swalWithTailwind = Swal.mixin({
   buttonsStyling: false,
 });
 
-// khaite parbo boite parbo jigaitee problem
-
 
 export const useLogOut = () => {
   const queryClient = useQueryClient(); 
