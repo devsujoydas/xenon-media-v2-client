@@ -115,7 +115,7 @@ const UserProfileTop = ({ user, posts }) => {
                 <div className="bg-green-400 h-4 w-4 rounded-full  border border-white "></div>
               ) : (
                 <span>
-                  {user.activeStatus.online ? (
+                  {user?.activeStatus?.online ? (
                     <p className="bg-green-400 h-3.5 w-3.5 rounded-full  border border-white"></p>
                   ) : (
                     <p className="bg-gray-400 h-3.5 w-3.5 rounded-full  border border-white"></p>

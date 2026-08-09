@@ -7,7 +7,7 @@ import { useCreateComment } from "../../../hooks/postHooks/useComments";
 const CommentForm = ({ post, user, onCreated }) => {
   const [text, setText] = useState("");
   const { createComment, submitting } = useCreateComment(
-    post._id,
+    post?._id,
     (newComment) => {
       onCreated?.(newComment);
       setText("");

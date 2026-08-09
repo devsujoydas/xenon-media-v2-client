@@ -2,6 +2,7 @@
 import { useState, useCallback } from "react";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
+import CommentSkeleton from "./CommentSkeleton";
 import { useAuth } from "../../../AuthProvider/AuthProviderNew"; 
 import { useComments } from "../../../hooks/postHooks/useComments";
 
@@ -55,7 +56,11 @@ const CommentBox = ({ post }) => {
 
       <div className="flex-1 overflow-y-auto mt-3 pr-2 scrollbar-hide flex flex-col gap-3">
         {loading && (
-          <p className="text-sm text-gray-400 text-center mt-10">Loading comments...</p>
+          <div className="flex flex-col gap-4 mt-2">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <CommentSkeleton key={idx} />
+            ))}
+          </div>
         )}
 
         {!loading && commentsData?.comments?.length > 0 ? (

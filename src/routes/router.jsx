@@ -59,7 +59,6 @@ export const router = createBrowserRouter([
             <PostDetails />
           </AnimatedLayout>
         ),
-        loader: async ({ params }) => await api.get(`/posts/post/${params.id}`),
       },
       {
         path: '/users',
@@ -67,8 +66,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/profile/:username',
-        element: <UserDetailsPage />,
-        loader: async ({params}) => await api.get(`/users/profile/${params.username}`),
+        element: <UserDetailsPage />, 
       },
    
 
