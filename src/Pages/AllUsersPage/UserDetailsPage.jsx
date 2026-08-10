@@ -93,7 +93,7 @@ const UserDetailsPage = () => {
       <div className="md:w-2/5 border-l border-zinc-300 bg-white h-fit md:h-screen md:sticky md:top-0 overflow-y-auto">
         <SideNavbar />
 
-        <div className="w-full mt-8 px-4 space-y-4">
+        <div className="w-full mt-2 px-4 space-y-4">
           {user ? (
             <ContactInfo user={user} />
           ) : (
